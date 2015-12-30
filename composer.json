@@ -1,0 +1,35 @@
+{
+  "name": "sgc-fireball/libphp",
+  "description": "General useful PHP Library",
+  "keywords": ["php", "library"],
+  "homepage": "https://www.hrdns.de",
+  "authors": [
+    {
+      "name": "Richard Huelsberg",
+      "email": "rh+github@hrdns.de",
+      "homepage": "https://www.hrdns.de",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "email": "rh+github@hrdns.de"
+  },
+  "type": "library",
+  "require": {
+    "php": ">=5.5.9"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "*",
+    "squizlabs/php_codesniffer": "~2.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "HRDNS\\": "HRDNS"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "HRDNS\\Tests\\": "HRDNS/Tests"
+    }
+  }
+}
