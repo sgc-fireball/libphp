@@ -1,9 +1,22 @@
 # HRDNS libphp
 
-## PHP Code Sniffer (phpcs)
+## Composer
 
-    phpcs --standard=phpcs.xml ./
+```bash
+cd ./libphp
+composer install
+```
+
+## How to run PHP Code Sniffer (phpcs)
+
+```bash
+cd ./libphp
+phpcs
+```
     
-## PHPUnit (phpunit)
+## How to run PHPUnit (phpunit)
 
-    phpunit ./HRDNS/Tests/
+```bash
+cd ./libphp
+phpunit
+```

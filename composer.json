@@ -24,12 +24,13 @@
   },
   "autoload": {
     "psr-4": {
-      "HRDNS\\": "HRDNS"
+      "HRDNS\\": "src/HRDNS"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "HRDNS\\Tests\\": "HRDNS/Tests"
+      "HRDNS\\": "src/HRDNS",
+      "HRDNS\\Tests\\": "tests/HRDNS"
     }
   }
 }
