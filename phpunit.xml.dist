@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="vendor/autoload.php" colors="true">
+
+    <testsuites>
+        <testsuite name="PHPUnit">
+            <directory suffix=".php">tests/HRDNS</directory>
+        </testsuite>
+        <testsuite name="PHP">
+            <directory suffix=".phpt">tests/HRDNS</directory>
+        </testsuite>
+    </testsuites>
+
+    <php>
+        <const name="PHPUNIT" value="1"/>
+    </php>
+
+</phpunit>
