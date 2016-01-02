@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="sgc-fireball/libphp">
+    <description>The HRDNS coding standard for php files.</description>
+
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+
+    <rule ref="PSR1">
+        <exclude name="PSR1.Classes.ClassDeclaration.MissingNamespace"/>
+    </rule>
+
+    <rule ref="PSR2">
+        <exclude name="PSR2.Classes.ClassDeclaration.CloseBraceAfterBody"/>
+    </rule>
+
+    <rule ref="Zend">
+        <exclude name="Zend.NamingConventions.ValidVariableName"/>
+        <exclude name="Zend.NamingConventions.ValidVariableName.MemberVarContainsNumbers"/>
+        <exclude name="Zend.NamingConventions.ValidVariableName.StringVarContainsNumbers"/>
+    </rule>
+
+    <rule ref="Generic.CodeAnalysis.EmptyStatement"/>
+
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="120"/>
+            <property name="absoluteLineLimit" value="120"/>
+        </properties>
+    </rule>
+
+    <rule ref="Generic.Files.LineLength.MaxExceeded">
+        <type>warning</type>
+    </rule>
+
+    <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman">
+        <exclude name="Generic.Functions.OpeningFunctionBraceBsdAllman.BraceOnSameLine"/>
+    </rule>
+
+    <rule ref="Generic.PHP.LowerCaseConstant"/>
+
+    <rule ref="Squiz.Commenting.ClassComment">
+        <exclude name="Squiz.Commenting.ClassComment.TagNotAllowed"/>
+        <exclude name="Squiz.Commenting.ClassComment.Missing"/>
+    </rule>
+
+    <rule ref="Squiz.Commenting.DocCommentAlignment"/>
+
+    <rule ref="Squiz.Commenting.FunctionComment">
+        <exclude name="Squiz.Commenting.FunctionComment.IncorrectParamVarName"/>
+        <exclude name="Squiz.Commenting.FunctionComment.Missing"/>
+        <exclude name="Squiz.Commenting.FunctionComment.MissingParamComment"/>
+        <exclude name="Squiz.Commenting.FunctionComment.SpacingAfterParamType"/>
+        <exclude name="Squiz.Commenting.FunctionComment.EmptyThrows"/>
+    </rule>
+
+    <rule ref="Squiz.Commenting.FunctionCommentThrowTag"/>
+
+    <rule ref="Squiz.Classes.ClassFileName"/>
+
+    <rule ref="Squiz.Strings.DoubleQuoteUsage">
+        <exclude name="Squiz.Strings.DoubleQuoteUsage.ContainsVar"/>
+    </rule>
+
+    <rule ref="Squiz.ControlStructures.ForLoopDeclaration">
+        <exclude name="Squiz.ControlStructures.ForLoopDeclaration.SpacingBeforeFirst"/>
+        <exclude name="Squiz.ControlStructures.ForLoopDeclaration.SpacingBeforeSecond"/>
+    </rule>
+
+    <arg value="s"/>
+    <arg name="colors"/>
+
+    <file>src/</file>
+
+</ruleset>
