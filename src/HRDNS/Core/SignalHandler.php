@@ -109,12 +109,10 @@ class SignalHandler
     {
         if (!is_callable($fnc)) {
             trigger_error(sprintf('%s :: parameter 1 must be callable!', __METHOD__), E_USER_ERROR);
-
             return false;
         }
         $id = uniqid('signal_handler');
         self::$signalHandler[$id] = $fnc;
-
         return $id;
     }
 
@@ -123,7 +121,6 @@ class SignalHandler
         if (isset(self::$signalHandler[$id])) {
             unset(self::$signalHandler[$id]);
         }
-
         return true;
     }
 

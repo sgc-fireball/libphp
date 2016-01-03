@@ -2,15 +2,19 @@
 Testing \HRDNS\Core\SignalHandler - catch
 --FILE--
 <?php
+
+declare(ticks = 1);
+
 $basePath = preg_replace('/\/tests\/.*/','',__DIR__);
 require_once($basePath.'/vendor/autoload.php');
+
 use HRDNS\Core\SignalHandler;
 
 function handler($signal)
 {
     switch ($signal) {
         case SignalHandler::SIGINT:
-            echo 'SIGINT';
+            echo "SIGINT\n";
             break;
     }
     return true;

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2016-01-03
+- adding TCP Server with tests
+- adding example echo-server.php
+
 ## 2016-01-02
 - add CHANGELOG.md
 - add EventHandler
