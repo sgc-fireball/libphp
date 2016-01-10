@@ -7,6 +7,9 @@ php:
 
 sudo: false
 
+before_script:
+  - composer install --dev
+
 script: composer test
 
 # https://docs.travis-ci.com/user/notifications/
