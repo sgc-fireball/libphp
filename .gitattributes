@@ -1,3 +1,6 @@
+.gitattributes text eol=lf export-ignore
+.gitignore text eol=lf export-ignore
+.travis.yml text eol=lf export-ignore
 * text=auto
 *.php text eol=lf
 *.phpt text eol=lf
