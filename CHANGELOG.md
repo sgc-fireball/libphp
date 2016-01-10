@@ -2,6 +2,7 @@
 
 ## 2016-01-10
 - implement travis-ci.org support
+- implement TCPClient with tests
 
 ## 2016-01-03
 - adding TCP Server with tests

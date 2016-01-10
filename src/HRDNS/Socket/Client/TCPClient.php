@@ -1,6 +1,6 @@
 <?php
 
-namespace src\HRDNS\Socket\Client;
+namespace HRDNS\Socket\Client;
 
 class TCPClient
 {
@@ -36,11 +36,14 @@ class TCPClient
     /**
      * @param integer $port
      * @return static
+     * @throws \Exception
      */
     public function setPort($port)
     {
         $port = (int)$port;
-        $port = 0 < $port && $port < 65535 ? $port : $this->port;
+        if ($port < 1 || $port > 65535) {
+            throw new \Exception('The port ' . $port . ' is not allowed.');
+        }
         $this->port = $port;
         return $this;
     }
@@ -60,11 +63,14 @@ class TCPClient
     /**
      * @param integer $bufferLength
      * @return static
+     * @throws \Exception
      */
     public function setBufferLength($bufferLength)
     {
         $bufferLength = (int)$bufferLength;
-        $bufferLength = ($bufferLength % 8) === 0 ? $bufferLength : $this->bufferLength;
+        if (($bufferLength % 8) !== 0) {
+            throw new \Exception('The buffer length must be divisible by 8.');
+        }
         $this->bufferLength = $bufferLength;
         return $this;
     }
@@ -79,12 +85,12 @@ class TCPClient
             return $this;
         }
         $this->socket = @socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
-        if ($this->socket === null) {
+        if ($this->socket === false) {
             $errNo = @socket_last_error($this->socket);
             $errStr = @socket_strerror($errNo);
             throw new \Exception(
                 sprintf(
-                    'ERROR[%d] tcp://%s:%s - %s',
+                    'ERROR[%d] create tcp://%s:%s - %s',
                     $errNo,
                     $this->host,
                     $this->port,
@@ -97,7 +103,7 @@ class TCPClient
             $this->socket,
             SOL_SOCKET,
             SO_RCVTIMEO,
-            array(
+            array (
                 'sec' => $this->timeoutSeconds,
                 'usec' => $this->timeoutUSeconds
             )
@@ -106,19 +112,18 @@ class TCPClient
             $this->socket,
             SOL_SOCKET,
             SO_SNDTIMEO,
-            array(
+            array (
                 'sec' => $this->timeoutSeconds,
                 'usec' => $this->timeoutUSeconds
             )
         );
 
-        @socket_set_nonblock($this->socket);
-        if (!@socket_connect($this->socket, $this->host, $this->port)) {
+        if (@socket_connect($this->socket, $this->host, $this->port) === false) {
             $errNo = @socket_last_error($this->socket);
             $errStr = @socket_strerror($errNo);
             throw new \Exception(
                 sprintf(
-                    'ERROR[%d] tcp://%s:%s - %s',
+                    'ERROR[%d] connect tcp://%s:%s - %s',
                     $errNo,
                     $this->host,
                     $this->port,
@@ -126,6 +131,8 @@ class TCPClient
                 )
             );
         }
+        socket_set_nonblock($this->socket);
+
         return $this;
     }
 
