@@ -111,10 +111,10 @@ class UDPClient
         if (!$length) {
             return false;
         }
-        if (!@socket_recvfrom($this->socket,$buffer,$length,MSG_DONTWAIT,$src,$spt)) {
+        if (!@socket_recvfrom($this->socket, $buffer, $length, MSG_DONTWAIT, $src, $spt)) {
             return false;
         }
-        if ( $this->host !== $src || $this->port !== $spt ) {
+        if ($this->host !== $src || $this->port !== $spt) {
             return false;
         }
         return $buffer;
@@ -128,7 +128,7 @@ class UDPClient
     public function write($buffer, $length = null)
     {
         $length = $length === null ? mb_strlen($buffer) : $length;
-        return @socket_sendto($this->socket,$buffer,$length,0,$this->host,$this->port);
+        return @socket_sendto($this->socket, $buffer, $length, 0, $this->host, $this->port);
     }
 
     /**
