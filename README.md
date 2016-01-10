@@ -1,7 +1,5 @@
 # HRDNS libphp [![Build Status](https://travis-ci.org/sgc-fireball/libphp.svg)](https://travis-ci.org/sgc-fireball/libphp)
 
-[![Travis CI Build Status]]
-
 ## Installation
 
 Install the latest version with
