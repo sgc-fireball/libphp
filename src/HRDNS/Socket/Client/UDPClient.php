@@ -127,7 +127,7 @@ class UDPClient
      */
     public function write($buffer, $length = null)
     {
-        $length = $length === null ? mb_strlen($buffer) : $length;
+        $length = $length === null ? strlen($buffer) : $length;
         return @socket_sendto($this->socket, $buffer, $length, 0, $this->host, $this->port);
     }
 

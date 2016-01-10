@@ -171,7 +171,7 @@ abstract class UDPServer
     public function send(Client $client, $buffer, $length = null)
     {
         $this->onOutgoing($client, $buffer);
-        $length = $length === null ? mb_strlen($buffer) : $length;
+        $length = $length === null ? strlen($buffer) : $length;
         if ($length === 0) {
             return false;
         }

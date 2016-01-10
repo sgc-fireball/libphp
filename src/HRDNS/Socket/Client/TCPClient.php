@@ -159,7 +159,7 @@ class TCPClient
         if (!is_resource($this->socket) || empty($buffer)) {
             return false;
         }
-        $length = $length === null ? mb_strlen($buffer) : $length;
+        $length = $length === null ? strlen($buffer) : $length;
         return @socket_write($this->socket, $buffer, $length);
     }
 
