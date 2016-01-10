@@ -16,11 +16,16 @@
   },
   "type": "library",
   "require": {
-    "php": ">=5.5.9"
+    "php": ">=5.5.9",
+    "psr/log": "~1.0"
   },
   "require-dev": {
     "phpunit/phpunit": "*",
     "squizlabs/php_codesniffer": "~2.5"
+  },
+  "suggest": {
+    "monolog/monolog": "Allow you a better debbuging",
+    "php-console/php-console": "Allow you to debug php code in the browser"
   },
   "autoload": {
     "psr-4": {
@@ -32,5 +37,11 @@
       "HRDNS\\": "src/HRDNS",
       "HRDNS\\Tests\\": "tests/HRDNS"
     }
+  },
+  "scripts": {
+    "test": [
+      "phpcs",
+      "phpunit"
+    ]
   }
 }

@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2016-01-10
+- implement travis-ci.org support
+
 ## 2016-01-03
 - adding TCP Server with tests
 - adding example echo-server.php

@@ -1,10 +1,13 @@
-# HRDNS libphp
+# HRDNS libphp [![Build Status](https://travis-ci.org/sgc-fireball/libphp.svg)](https://travis-ci.org/sgc-fireball/libphp)
 
-## Composer
+[![Travis CI Build Status]]
+
+## Installation
+
+Install the latest version with
 
 ```bash
-cd ./libphp
-composer install
+composer require sgc-fireball/libphp
 ```
 
 ## How to run PHP Code Sniffer (phpcs)
@@ -20,3 +23,9 @@ phpcs
 cd ./libphp
 phpunit
 ```
+
+## About
+
+### Author
+
+Richard Hülsberg - <rh+github@hrdns.de> - <https://www.hrdns.de>
