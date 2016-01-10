@@ -8,14 +8,23 @@ Install the latest version with
 composer require sgc-fireball/libphp
 ```
 
-## How to run PHP Code Sniffer (phpcs)
+## Tests
+
+### Run all tests
+
+```bash
+cd ./libphp
+composer test
+```
+
+### Test it with PHP Code Sniffer
 
 ```bash
 cd ./libphp
 phpcs
 ```
-    
-## How to run PHPUnit (phpunit)
+   
+### Test it with PHPUnit
 
 ```bash
 cd ./libphp
