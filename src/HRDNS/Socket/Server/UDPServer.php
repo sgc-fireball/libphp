@@ -2,7 +2,7 @@
 
 namespace HRDNS\Socket\Server;
 
-abstract class TCPServer
+abstract class UDPServer
 {
 
     /** @var integer */
@@ -16,9 +16,6 @@ abstract class TCPServer
 
     /** @var resource */
     private $masterSocket = null;
-
-    /** @var integer */
-    private $maxClients = 20;
 
     /** @var bool */
     private $isTerminated = false;
@@ -99,16 +96,13 @@ abstract class TCPServer
      */
     public function bind()
     {
-        $this->masterSocket = @socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
-        @socket_set_option($this->masterSocket, SOL_SOCKET, SO_REUSEADDR, 1);
-        @socket_set_nonblock($this->masterSocket);
-
+        $this->masterSocket = @socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
         if ($this->masterSocket === null) {
             $errNo = @socket_last_error($this->masterSocket);
             $errStr = @socket_strerror($errNo);
             throw new \Exception(
                 sprintf(
-                    'ERROR[%d] tcp://%s:%s - %s',
+                    'ERROR[%d] udp://%s:%s - %s',
                     $errNo,
                     $this->listen,
                     $this->port,
@@ -122,21 +116,7 @@ abstract class TCPServer
             $errStr = @socket_strerror($errNo);
             throw new \Exception(
                 sprintf(
-                    'ERROR[%d] tcp://%s:%s - %s',
-                    $errNo,
-                    $this->listen,
-                    $this->port,
-                    $errStr
-                )
-            );
-        }
-
-        if (@socket_listen($this->masterSocket, $this->maxClients) === false) {
-            $errNo = @socket_last_error($this->masterSocket);
-            $errStr = @socket_strerror($errNo);
-            throw new \Exception(
-                sprintf(
-                    'ERROR[%d] tcp://%s:%s - %s',
+                    'ERROR[%d] udp://%s:%s - %s',
                     $errNo,
                     $this->listen,
                     $this->port,
@@ -155,25 +135,10 @@ abstract class TCPServer
     public function listen($limit = -1)
     {
         while (!$this->isTerminated && ($limit > 0 || $limit == -1)) {
-            $this->workOnMasterSocket();
-
             $limit = $limit == -1 ? -1 : $limit - 1;
-            $read = $write = $except = array ();
-            foreach ($this->clients as $client) {
-                $read[] = $client->getSocket();
-            }
-
-            @socket_select($read, $write, $except, $this->timeoutSeconds, $this->timeoutUSeconds);
-            $this->workOnClientSockets($read);
-
-            foreach ($this->clients as $client) {
-                if ($this->isTerminated) {
-                    break;
-                }
-                $this->onTick($client);
-            }
+            $this->workOnMasterSocket();
+            $this->workOnClientSockets();
         }
-
         return $this;
     }
 
@@ -192,12 +157,7 @@ abstract class TCPServer
      */
     public function disconnect(Client $client, $closeByPeer = false)
     {
-        if ($client->getSocket() === null) {
-            return $this;
-        }
         $this->onDisconnect($client, $closeByPeer);
-        @socket_close($client->getSocket());
-        $client->setSocket(null);
         unset($this->clients[$client->getId()]);
         return $this;
     }
@@ -210,15 +170,12 @@ abstract class TCPServer
      */
     public function send(Client $client, $buffer, $length = null)
     {
-        if ($client->getSocket() === null || empty($buffer)) {
-            return false;
-        }
         $this->onOutgoing($client, $buffer);
         $length = $length === null ? mb_strlen($buffer) : $length;
         if ($length === 0) {
             return false;
         }
-        return @socket_write($client->getSocket(), $buffer, $length);
+        return @socket_sendto($this->masterSocket, $buffer, $length, 0, $client->getHost(), $client->getPort());
     }
 
     /**
@@ -226,15 +183,28 @@ abstract class TCPServer
      */
     private function workOnMasterSocket()
     {
-        $socket = @socket_accept($this->masterSocket);
-        if (is_resource($socket)) {
-            @socket_getpeername($socket, $src, $spt);
-            $client = new Client();
-            $client->setSocket($socket);
-            $client->setHost($src);
-            $client->setPort($spt);
-            $this->clients[$client->getId()] = $client;
-            $this->onConnect($client);
+        if (@socket_recvfrom(
+            $this->masterSocket,
+            $buffer,
+            $this->bufferLength,
+            MSG_DONTWAIT,
+            $src,
+            $spt
+        )
+        ) {
+            $client = $this->getClientByIpAndPort($src, $spt);
+            if (!($client instanceof Client)) {
+                $client = new Client();
+                $client->setHost($src);
+                $client->setPort($spt);
+                $this->clients[$client->getId()] = $client;
+                $this->onConnect($client);
+            }
+            $client->setAttribute(
+                'timeout',
+                microtime(true) + $this->timeoutSeconds + ($this->timeoutUSeconds / 1000)
+            );
+            $this->onIncoming($client, $buffer);
         }
         return $this;
     }
@@ -245,52 +215,39 @@ abstract class TCPServer
      */
     private function workOnClientSockets(array $read = array ())
     {
-        /** @var resource $socket */
-        foreach ($read as $socket) {
+        foreach ($this->clients as $client) {
             if ($this->isTerminated) {
                 break;
             }
 
-            $client = $this->getClientBySocket($socket);
-            if (!$client) {
-                @socket_close($socket);
+            /** check timeouts **/
+            if ($client->getAttribute('timeout') < microtime(true)) {
+                $this->disconnect($client, false);
                 continue;
             }
 
-            $this->workOnClientSocket($client);
+            /** handle tick **/
+            $this->onTick($client);
         }
 
         return $this;
     }
 
     /**
-     * @param Client $client
-     * @return static
-     */
-    private function workOnClientSocket(Client $client)
-    {
-        $bytes = @socket_recv($client->getSocket(), $buffer, $this->bufferLength, 0);
-        if ($bytes !== 0 && $bytes !== false) {
-            $this->onIncoming($client, $buffer);
-            return $this;
-        }
-        $this->disconnect($client, true);
-        return $this;
-    }
-
-    /**
-     * @param resource $socket
+     * @param string $src
+     * @param int $spt
      * @return Client|null
      */
-    private function getClientBySocket($socket)
+    private function getClientByIpAndPort($src, $spt)
     {
-        if (!is_resource($socket)) {
-            return null;
-        }
         foreach ($this->clients as $client) {
-            if ($client->getSocket() == $socket) {
-                return $client;
+            if ($client->getHost() != $src) {
+                continue;
             }
+            if ($client->getPort() != $spt) {
+                continue;
+            }
+            return $client;
         }
         return null;
     }

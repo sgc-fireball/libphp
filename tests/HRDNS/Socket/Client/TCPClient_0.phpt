@@ -9,6 +9,8 @@ use \HRDNS\Socket\Client\TCPClient;
 
 try {
 
+    $timeout = 3;
+
     $result = dns_get_record('gmail.com', DNS_MX);
     $result = isset($result[0]) ? $result[0] : array ();
     $result = isset($result['target']) ? $result['target'] : '';
@@ -22,10 +24,10 @@ try {
     $client->setHost($result);
     $client->setPort(25);
     $client->setBufferLength(1024);
-    $client->setTimeout(3, 0);
+    $client->setTimeout($timeout, 0);
     $client->connect();
 
-    $end = time() + 3;
+    $end = time() + $timeout;
     $data = false;
     while ($data === false && time() < $end) {
         $data = $client->read();

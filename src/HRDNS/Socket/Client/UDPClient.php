@@ -2,7 +2,7 @@
 
 namespace HRDNS\Socket\Client;
 
-class TCPClient
+class UDPClient
 {
 
     /** @var string */
@@ -84,13 +84,13 @@ class TCPClient
         if (is_resource($this->socket)) {
             return $this;
         }
-        $this->socket = @socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+        $this->socket = @socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
         if ($this->socket === false) {
             $errNo = @socket_last_error($this->socket);
             $errStr = @socket_strerror($errNo);
             throw new \Exception(
                 sprintf(
-                    'ERROR[%d] create tcp://%s:%s - %s',
+                    'ERROR[%d] create udp://%s:%s - %s',
                     $errNo,
                     $this->host,
                     $this->port,
@@ -98,41 +98,6 @@ class TCPClient
                 )
             );
         }
-
-        @socket_set_option(
-            $this->socket,
-            SOL_SOCKET,
-            SO_RCVTIMEO,
-            array (
-                'sec' => $this->timeoutSeconds,
-                'usec' => $this->timeoutUSeconds
-            )
-        );
-        @socket_set_option(
-            $this->socket,
-            SOL_SOCKET,
-            SO_SNDTIMEO,
-            array (
-                'sec' => $this->timeoutSeconds,
-                'usec' => $this->timeoutUSeconds
-            )
-        );
-
-        if (@socket_connect($this->socket, $this->host, $this->port) === false) {
-            $errNo = @socket_last_error($this->socket);
-            $errStr = @socket_strerror($errNo);
-            throw new \Exception(
-                sprintf(
-                    'ERROR[%d] connect tcp://%s:%s - %s',
-                    $errNo,
-                    $this->host,
-                    $this->port,
-                    $errStr
-                )
-            );
-        }
-        socket_set_nonblock($this->socket);
-
         return $this;
     }
 
@@ -143,10 +108,16 @@ class TCPClient
     public function read($length = null)
     {
         $length = $length === null ? $this->bufferLength : $length;
-        if (!is_resource($this->socket) || !$length) {
+        if (!$length) {
             return false;
         }
-        return @socket_read($this->socket, $length);
+        if (!@socket_recvfrom($this->socket,$buffer,$length,MSG_DONTWAIT,$src,$spt)) {
+            return false;
+        }
+        if ( $this->host !== $src || $this->port !== $spt ) {
+            return false;
+        }
+        return $buffer;
     }
 
     /**
@@ -156,11 +127,8 @@ class TCPClient
      */
     public function write($buffer, $length = null)
     {
-        if (!is_resource($this->socket) || empty($buffer)) {
-            return false;
-        }
         $length = $length === null ? mb_strlen($buffer) : $length;
-        return @socket_write($this->socket, $buffer, $length);
+        return @socket_sendto($this->socket,$buffer,$length,0,$this->host,$this->port);
     }
 
     /**
