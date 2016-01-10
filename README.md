@@ -26,4 +26,4 @@ phpunit
 
 ### Author
 
-Richard Hülsberg - <rh+github@hrdns.de> - <https://www.hrdns.de>
+Richard Hülsberg - [rh+github@hrdns.de](mailto:rh+github@hrdns.de) - <https://www.hrdns.de>
