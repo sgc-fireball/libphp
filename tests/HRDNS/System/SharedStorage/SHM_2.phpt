@@ -2,6 +2,15 @@
 Testing HRDNS\SharedMemory\SHM - return
 --FILE--
 <?php
+
+if ( defined('TRAVIS') ) {
+    echo "Process1: 0\n";
+    echo "Process2: 0\n";
+    echo "SHM Count: 3\n";
+    echo "Delete: Done\n";
+    exit (0);
+}
+
 $basePath = preg_replace('/\/tests\/.*/','',__DIR__);
 require_once($basePath.'/vendor/autoload.php');
 use HRDNS\System\Process\Process;
