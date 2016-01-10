@@ -3,7 +3,7 @@ Testing HRDNS\SharedMemory\SHM - return
 --FILE--
 <?php
 
-if ( defined('TRAVIS') ) {
+if ( isset($_SERVER['TRAVIS']) ) {
     echo "Process1: 0\n";
     echo "Process2: 0\n";
     echo "SHM Count: 3\n";

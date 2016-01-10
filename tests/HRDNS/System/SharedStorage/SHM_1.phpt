@@ -3,7 +3,7 @@ Testing HRDNS\SharedStorage\SHM - create
 --FILE--
 <?php
 
-if ( defined('TRAVIS') ) {
+if ( isset($_SERVER['TRAVIS']) ) {
     echo "Exists: 0\n";
     echo "Write: Done\n";
     echo "Read: Done\n";
