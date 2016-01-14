@@ -166,7 +166,7 @@ class Daemon implements LoggerInterface
             return false;
         }
         $pidFile = $this->getPidFile();
-        if ($pidFile->isFile()) {
+        if (!$pidFile->isFile()) {
             return false;
         }
         $pid = $pidFile->read(4096);
