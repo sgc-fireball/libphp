@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2016-01-15
+- require phpcpd
+- optimize code
+- rename Client to ServerClient
+
 ## 2016-01-10
 - implement travis-ci.org support
 - implement TCPClient with tests

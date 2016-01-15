@@ -2,7 +2,7 @@
 
 namespace HRDNS\Socket\Server;
 
-class Client
+class ServerClient
 {
 
     /** @var string */

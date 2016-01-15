@@ -2,93 +2,8 @@
 
 namespace HRDNS\Socket\Server;
 
-abstract class UDPServer
+abstract class UDPServer extends Server
 {
-
-    /** @var integer */
-    private $port = 20;
-
-    /** @var string */
-    private $listen = '0.0.0.0';
-
-    /** @var integer */
-    private $bufferLength = 8192;
-
-    /** @var resource */
-    private $masterSocket = null;
-
-    /** @var bool */
-    private $isTerminated = false;
-
-    /** @var Client[] */
-    private $clients = array ();
-
-    /** @var integer */
-    private $timeoutSeconds = 1;
-
-    /** @var integer */
-    private $timeoutUSeconds = 0;
-
-    /**
-     * @param string $listen
-     * @return static
-     */
-    public function setListen($listen)
-    {
-        $this->listen = $listen;
-        return $this;
-    }
-
-    /**
-     * @param integer $port
-     * @return static
-     * @throws \Exception
-     */
-    public function setPort($port)
-    {
-        $port = (int)$port;
-        if ($port < 1 || $port > 65535) {
-            throw new \Exception('The port ' . $port . ' is not allowed.');
-        }
-        $this->port = $port;
-        return $this;
-    }
-
-    /**
-     * @param integer $bufferLength
-     * @return static
-     * @throws \Exception
-     */
-    public function setBufferLength($bufferLength)
-    {
-        $bufferLength = (int)$bufferLength;
-        if (($bufferLength % 8) !== 0) {
-            throw new \Exception('The buffer length must be divisible by 8.');
-        }
-        $this->bufferLength = $bufferLength;
-        return $this;
-    }
-
-    /**
-     * @param integer $timeoutSeconds
-     * @param integer $timeoutUSeconds
-     * @return static
-     */
-    public function setTimeout($timeoutSeconds, $timeoutUSeconds)
-    {
-        $this->timeoutSeconds = (int)$timeoutSeconds;
-        $this->timeoutUSeconds = (int)$timeoutUSeconds;
-        return $this;
-    }
-
-    /**
-     * @return static
-     */
-    public function terminated()
-    {
-        $this->isTerminated = true;
-        return $this;
-    }
 
     /**
      * @return static
@@ -143,19 +58,11 @@ abstract class UDPServer
     }
 
     /**
-     * @return boolean
-     */
-    public function hasTerminated()
-    {
-        return $this->isTerminated;
-    }
-
-    /**
-     * @param Client $client
+     * @param ServerClient $client
      * @param bool $closeByPeer
      * @return static
      */
-    public function disconnect(Client $client, $closeByPeer = false)
+    public function disconnect(ServerClient $client, $closeByPeer = false)
     {
         $this->onDisconnect($client, $closeByPeer);
         unset($this->clients[$client->getId()]);
@@ -163,12 +70,12 @@ abstract class UDPServer
     }
 
     /**
-     * @param Client $client
+     * @param ServerClient $client
      * @param string $buffer
      * @param integer|null $length
      * @return boolean|integer
      */
-    public function send(Client $client, $buffer, $length = null)
+    public function send(ServerClient $client, $buffer, $length = null)
     {
         $this->onOutgoing($client, $buffer);
         $length = $length === null ? strlen($buffer) : $length;
@@ -181,7 +88,7 @@ abstract class UDPServer
     /**
      * @return static
      */
-    private function workOnMasterSocket()
+    protected function workOnMasterSocket()
     {
         if (@socket_recvfrom(
             $this->masterSocket,
@@ -193,8 +100,8 @@ abstract class UDPServer
         )
         ) {
             $client = $this->getClientByIpAndPort($src, $spt);
-            if (!($client instanceof Client)) {
-                $client = new Client();
+            if (!($client instanceof ServerClient)) {
+                $client = new ServerClient();
                 $client->setHost($src);
                 $client->setPort($spt);
                 $this->clients[$client->getId()] = $client;
@@ -213,7 +120,7 @@ abstract class UDPServer
      * @param resource[] $read
      * @return static
      */
-    private function workOnClientSockets(array $read = array ())
+    protected function workOnClientSockets(array $read = array ())
     {
         foreach ($this->clients as $client) {
             if ($this->isTerminated) {
@@ -236,9 +143,9 @@ abstract class UDPServer
     /**
      * @param string $src
      * @param int $spt
-     * @return Client|null
+     * @return ServerClient|null
      */
-    private function getClientByIpAndPort($src, $spt)
+    protected function getClientByIpAndPort($src, $spt)
     {
         foreach ($this->clients as $client) {
             if ($client->getHost() != $src) {
@@ -250,49 +157,6 @@ abstract class UDPServer
             return $client;
         }
         return null;
-    }
-
-    /**
-     * @param Client $client
-     * @return void
-     */
-    abstract public function onConnect(Client $client);
-
-    /**
-     * @param Client $client
-     * @param string $buffer
-     * @return void
-     */
-    abstract public function onIncoming(Client $client, $buffer);
-
-    /**
-     * @param Client $client
-     * @param string $buffer
-     * @return void
-     */
-    abstract public function onOutgoing(Client $client, $buffer);
-
-    /**
-     * @param Client $client
-     * @param bool $closeByPeer
-     * @return void
-     */
-    abstract public function onDisconnect(Client $client, $closeByPeer = false);
-
-    /**
-     * @param Client $client
-     * @return void
-     */
-    abstract public function onTick(Client $client);
-
-    public function __destruct()
-    {
-        $this->terminated();
-        foreach ($this->clients as $client) {
-            $this->disconnect($client, false);
-        }
-        @socket_close($this->masterSocket);
-        $this->masterSocket = null;
     }
 
 }

@@ -2,94 +2,19 @@
 
 namespace HRDNS\Socket\Server;
 
-abstract class TCPServer
+abstract class TCPServer extends Server
 {
 
     /** @var integer */
-    private $port = 20;
-
-    /** @var string */
-    private $listen = '0.0.0.0';
-
-    /** @var integer */
-    private $bufferLength = 8192;
-
-    /** @var resource */
-    private $masterSocket = null;
-
-    /** @var integer */
-    private $maxClients = 20;
-
-    /** @var bool */
-    private $isTerminated = false;
-
-    /** @var Client[] */
-    private $clients = array ();
-
-    /** @var integer */
-    private $timeoutSeconds = 1;
-
-    /** @var integer */
-    private $timeoutUSeconds = 0;
+    protected $maxClients = 20;
 
     /**
-     * @param string $listen
+     * @param int $maxClients
      * @return static
      */
-    public function setListen($listen)
+    public function setMaxClients($maxClients)
     {
-        $this->listen = $listen;
-        return $this;
-    }
-
-    /**
-     * @param integer $port
-     * @return static
-     * @throws \Exception
-     */
-    public function setPort($port)
-    {
-        $port = (int)$port;
-        if ($port < 1 || $port > 65535) {
-            throw new \Exception('The port ' . $port . ' is not allowed.');
-        }
-        $this->port = $port;
-        return $this;
-    }
-
-    /**
-     * @param integer $bufferLength
-     * @return static
-     * @throws \Exception
-     */
-    public function setBufferLength($bufferLength)
-    {
-        $bufferLength = (int)$bufferLength;
-        if (($bufferLength % 8) !== 0) {
-            throw new \Exception('The buffer length must be divisible by 8.');
-        }
-        $this->bufferLength = $bufferLength;
-        return $this;
-    }
-
-    /**
-     * @param integer $timeoutSeconds
-     * @param integer $timeoutUSeconds
-     * @return static
-     */
-    public function setTimeout($timeoutSeconds, $timeoutUSeconds)
-    {
-        $this->timeoutSeconds = (int)$timeoutSeconds;
-        $this->timeoutUSeconds = (int)$timeoutUSeconds;
-        return $this;
-    }
-
-    /**
-     * @return static
-     */
-    public function terminated()
-    {
-        $this->isTerminated = true;
+        $this->maxClients = max(1,(int)$maxClients);
         return $this;
     }
 
@@ -178,19 +103,11 @@ abstract class TCPServer
     }
 
     /**
-     * @return boolean
-     */
-    public function hasTerminated()
-    {
-        return $this->isTerminated;
-    }
-
-    /**
-     * @param Client $client
+     * @param ServerClient $client
      * @param bool $closeByPeer
      * @return static
      */
-    public function disconnect(Client $client, $closeByPeer = false)
+    public function disconnect(ServerClient $client, $closeByPeer = false)
     {
         if ($client->getSocket() === null) {
             return $this;
@@ -203,12 +120,12 @@ abstract class TCPServer
     }
 
     /**
-     * @param Client $client
+     * @param ServerClient $client
      * @param string $buffer
      * @param integer|null $length
      * @return boolean|integer
      */
-    public function send(Client $client, $buffer, $length = null)
+    public function send(ServerClient $client, $buffer, $length = null)
     {
         if ($client->getSocket() === null || empty($buffer)) {
             return false;
@@ -224,12 +141,12 @@ abstract class TCPServer
     /**
      * @return static
      */
-    private function workOnMasterSocket()
+    protected function workOnMasterSocket()
     {
         $socket = @socket_accept($this->masterSocket);
         if (is_resource($socket)) {
             @socket_getpeername($socket, $src, $spt);
-            $client = new Client();
+            $client = new ServerClient();
             $client->setSocket($socket);
             $client->setHost($src);
             $client->setPort($spt);
@@ -243,7 +160,7 @@ abstract class TCPServer
      * @param resource[] $read
      * @return static
      */
-    private function workOnClientSockets(array $read = array ())
+    protected function workOnClientSockets(array $read = array ())
     {
         /** @var resource $socket */
         foreach ($read as $socket) {
@@ -264,10 +181,10 @@ abstract class TCPServer
     }
 
     /**
-     * @param Client $client
+     * @param ServerClient $client
      * @return static
      */
-    private function workOnClientSocket(Client $client)
+    protected function workOnClientSocket(ServerClient $client)
     {
         $bytes = @socket_recv($client->getSocket(), $buffer, $this->bufferLength, 0);
         if ($bytes !== 0 && $bytes !== false) {
@@ -280,9 +197,9 @@ abstract class TCPServer
 
     /**
      * @param resource $socket
-     * @return Client|null
+     * @return ServerClient|null
      */
-    private function getClientBySocket($socket)
+    protected function getClientBySocket($socket)
     {
         if (!is_resource($socket)) {
             return null;
@@ -293,49 +210,6 @@ abstract class TCPServer
             }
         }
         return null;
-    }
-
-    /**
-     * @param Client $client
-     * @return void
-     */
-    abstract public function onConnect(Client $client);
-
-    /**
-     * @param Client $client
-     * @param string $buffer
-     * @return void
-     */
-    abstract public function onIncoming(Client $client, $buffer);
-
-    /**
-     * @param Client $client
-     * @param string $buffer
-     * @return void
-     */
-    abstract public function onOutgoing(Client $client, $buffer);
-
-    /**
-     * @param Client $client
-     * @param bool $closeByPeer
-     * @return void
-     */
-    abstract public function onDisconnect(Client $client, $closeByPeer = false);
-
-    /**
-     * @param Client $client
-     * @return void
-     */
-    abstract public function onTick(Client $client);
-
-    public function __destruct()
-    {
-        $this->terminated();
-        foreach ($this->clients as $client) {
-            $this->disconnect($client, false);
-        }
-        @socket_close($this->masterSocket);
-        $this->masterSocket = null;
     }
 
 }
