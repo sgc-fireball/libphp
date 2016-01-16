@@ -203,6 +203,8 @@ class Daemon implements LoggerInterface
 
     /**
      * @param string $pidPath
+     * @return static
+     * @throws \InvalidArgumentException
      */
     public function setPidPath($pidPath)
     {
@@ -213,6 +215,7 @@ class Daemon implements LoggerInterface
             throw new \InvalidArgumentException('The folder ' . $pidPath . ' is not writeable.');
         }
         $this->pidPath = $pidPath;
+        return $this;
     }
 
     /**
