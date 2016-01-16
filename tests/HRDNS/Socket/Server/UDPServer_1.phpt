@@ -6,26 +6,26 @@ $basePath = preg_replace('/\/tests\/.*/','',__DIR__);
 require_once($basePath.'/vendor/autoload.php');
 
 use \HRDNS\Socket\Server\UDPServer;
-use \HRDNS\Socket\Server\Client;
+use \HRDNS\Socket\Server\ServerClient;
 
 class Server extends UDPServer
 {
 
     /**
-     * @param Client $client
+     * @param ServerClient $client
      * @return void
      */
-    public function onConnect(Client $client)
+    public function onConnect(ServerClient $client)
     {
         echo __METHOD__."\n";
     }
 
     /**
-     * @param Client $client
+     * @param ServerClient $client
      * @param string $buffer
      * @return void
      */
-    public function onIncoming(Client $client, $buffer)
+    public function onIncoming(ServerClient $client, $buffer)
     {
         printf("%s - %s\n",__METHOD__,trim($buffer));
         $msg = (trim($buffer) == 'foo' ? 'bar' : '???')."\n";
@@ -33,30 +33,30 @@ class Server extends UDPServer
     }
 
     /**
-     * @param Client $client
+     * @param ServerClient $client
      * @param string $buffer
      * @return void
      */
-    public function onOutgoing(Client $client, $buffer)
+    public function onOutgoing(ServerClient $client, $buffer)
     {
         printf("%s - %s\n",__METHOD__,trim($buffer));
     }
 
     /**
-     * @param Client $client
+     * @param ServerClient $client
      * @param bool $closeByPeer
      * @return void
      */
-    public function onDisconnect(Client $client, $closeByPeer = false)
+    public function onDisconnect(ServerClient $client, $closeByPeer = false)
     {
         echo __METHOD__."\n";
     }
 
     /**
-     * @param Client $client
+     * @param ServerClient $client
      * @return void
      */
-    public function onTick(Client $client)
+    public function onTick(ServerClient $client)
     {
         static $time;
         $time = isset($time) ? $time : 0;
