@@ -71,7 +71,7 @@ class Daemon implements LoggerInterface
      * @static
      * @return self
      */
-    static public function getInstance()
+    public static function getInstance()
     {
         if (self::$instance !== null) {
             return self::$instance;

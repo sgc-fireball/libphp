@@ -25,7 +25,7 @@ class File extends \SplFileObject
      */
     public function read($length)
     {
-        if (version_compare(phpversion(), "5.5.11", '<')) {
+        if (version_compare(phpversion(), '5.5.11', '<')) {
             trigger_error(
                 sprintf(
                     '%s is not supported on PHP %s < 5.5.11.',
@@ -54,11 +54,11 @@ class File extends \SplFileObject
     }
 
     /**
-     * @return booleanean|string
+     * @return boolean|string
      */
     public function tail()
     {
-        if (version_compare(phpversion(), "5.5.11", '<')) {
+        if (version_compare(phpversion(), '5.5.11', '<')) {
             trigger_error(
                 sprintf(
                     '%s is not supported on PHP %s < 5.5.11.',
