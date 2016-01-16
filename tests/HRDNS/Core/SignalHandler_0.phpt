@@ -21,7 +21,7 @@ function handler($signal)
 }
 
 SignalHandler::init();
-SignalHandler::addListner('handler');
+SignalHandler::addListener('handler');
 usleep(100);
 posix_kill(posix_getpid(),SignalHandler::SIGINT);
 usleep(100);

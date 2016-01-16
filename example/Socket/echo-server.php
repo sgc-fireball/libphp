@@ -103,7 +103,7 @@ try {
     echo "DONE\n";
 
     SignalHandler::init();
-    SignalHandler::addListner(function ($signal) use ($server) {
+    SignalHandler::addListener(function ($signal) use ($server) {
         echo "\n\n*** TERMINATED BY SIGNAL " . $signal . " ***\n\n";
         $server->terminated();
         return true;

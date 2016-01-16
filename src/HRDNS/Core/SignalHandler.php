@@ -105,7 +105,7 @@ class SignalHandler
         }
     }
 
-    public static function addListner($fnc)
+    public static function addListener($fnc)
     {
         if (!is_callable($fnc)) {
             trigger_error(sprintf('%s :: parameter 1 must be callable!', __METHOD__), E_USER_ERROR);
@@ -116,7 +116,7 @@ class SignalHandler
         return $id;
     }
 
-    public static function removeListner($id)
+    public static function removeListener($id)
     {
         if (isset(self::$signalHandler[$id])) {
             unset(self::$signalHandler[$id]);
