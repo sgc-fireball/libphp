@@ -11,29 +11,34 @@ require_once($basePath.'/vendor/autoload.php');
 
 use HRDNS\System\Process\Daemon;
 
-$daemon = Daemon::getInstance();
-if ( $daemon->getProcessName() == 'Daemon' ) {
-    $daemon->setProcessName('Daemon_0');
+try {
+    $daemon = Daemon::getInstance();
+    $daemon->setPidPath('.');
+    if ( $daemon->getProcessName() == 'Daemon' ) {
+        $daemon->setProcessName('Daemon_0');
+    }
+    printf("ProcessName: %s\n",$daemon->getProcessName());
+    printf("PidDirPath: %s\n",$daemon->getPidPath());
+    printf("PidFilePath: %s\n",$daemon->getPidPathname());
+
+    printf("IsDaemonRunning: %s\n",$daemon->isDaemonAlreadyRunning()?'true':'false');
+
+    $daemon->start();
+
+    printf("IsDaemonRunning: %s\n",$daemon->isDaemonAlreadyRunning()?'true':'false');
+
+    $daemon->stop();
+
+    printf("IsDaemonRunning: %s\n",$daemon->isDaemonAlreadyRunning()?'true':'false');
+} catch (Exception $e) {
+    printf("ERROR[%d] %s\n%s\n", $e->getCode(), $e->getMessage(), $e->getTraceAsString());
 }
-printf("ProcessName: %s\n",$daemon->getProcessName());
-printf("PidDirPath: %s\n",$daemon->getPidPath());
-printf("PidFilePath: %s\n",$daemon->getPidPathname());
-
-printf("IsDaemonRunning: %s\n",$daemon->isDaemonAlreadyRunning()?'true':'false');
-
-$daemon->start();
-
-printf("IsDaemonRunning: %s\n",$daemon->isDaemonAlreadyRunning()?'true':'false');
-
-$daemon->stop();
-
-printf("IsDaemonRunning: %s\n",$daemon->isDaemonAlreadyRunning()?'true':'false');
 
 ?>
 --EXPECT--
 ProcessName: Daemon_0
-PidDirPath: /var/run/Daemon_0
-PidFilePath: /var/run/Daemon_0/daemon.pid
+PidDirPath: .
+PidFilePath: ./daemon.pid
 IsDaemonRunning: false
 IsDaemonRunning: true
 IsDaemonRunning: false

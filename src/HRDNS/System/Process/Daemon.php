@@ -52,7 +52,7 @@ class Daemon implements LoggerInterface
     /**
      * @var string
      */
-    protected $pidPath = '/var/run/%s';
+    protected $pidPath = '/var/run';
 
     /** @var File */
     protected $pidFile = null;
@@ -103,6 +103,7 @@ class Daemon implements LoggerInterface
         $this->groupId = posix_getgid();
         $this->pid = posix_getpid();
         $this->parentPid = posix_getppid();
+        $this->pidPath = sprintf('/var/run/%s', $this->processName);
     }
 
     /**
@@ -197,7 +198,21 @@ class Daemon implements LoggerInterface
      */
     public function getPidPath()
     {
-        return sprintf($this->pidPath, $this->processName);
+        return $this->pidPath;
+    }
+
+    /**
+     * @param string $pidPath
+     */
+    public function setPidPath($pidPath)
+    {
+        if ( !is_dir($pidPath) ) {
+            throw new \InvalidArgumentException('The folder ' . $pidPath . ' does not exists.');
+        }
+        if ( !is_writeable($pidPath) ) {
+            throw new \InvalidArgumentException('The folder ' . $pidPath . ' is not writeable.');
+        }
+        $this->pidPath = $pidPath;
     }
 
     /**
