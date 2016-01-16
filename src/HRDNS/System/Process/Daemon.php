@@ -206,10 +206,10 @@ class Daemon implements LoggerInterface
      */
     public function setPidPath($pidPath)
     {
-        if ( !is_dir($pidPath) ) {
+        if (!is_dir($pidPath)) {
             throw new \InvalidArgumentException('The folder ' . $pidPath . ' does not exists.');
         }
-        if ( !is_writeable($pidPath) ) {
+        if (!is_writeable($pidPath)) {
             throw new \InvalidArgumentException('The folder ' . $pidPath . ' is not writeable.');
         }
         $this->pidPath = $pidPath;
