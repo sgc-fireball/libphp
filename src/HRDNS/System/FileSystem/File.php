@@ -25,18 +25,22 @@ class File extends \SplFileObject
      */
     public function read($length)
     {
-        if (version_compare(phpversion(), 5.11, '>=')) {
-            return parent::fread($length);
+        if (version_compare(phpversion(), "5.5.11", '<')) {
+            trigger_error(
+                sprintf(
+                    '%s is not supported on PHP %s < 5.5.11.',
+                    __METHOD__,
+                    phpversion()
+                ),
+                E_USER_WARNING
+            );
+            $buffer = '';
+            while ( strlen($buffer) < $length && !$this->eof() ) {
+                $buffer .= $this->fgets();
+            }
+            return $buffer;
         }
-        trigger_error(
-            sprintf(
-                '%s is not supported on PHP %s < 5.11.',
-                __METHOD__,
-                phpversion()
-            )
-        );
-
-        return '';
+        return parent::fread($length);
     }
 
     /**
@@ -54,17 +58,18 @@ class File extends \SplFileObject
      */
     public function tail()
     {
-        if (version_compare(phpversion(), 5.11, '<')) {
+        if (version_compare(phpversion(), "5.5.11", '<')) {
             trigger_error(
                 sprintf(
-                    '%s is not supported on PHP %s < 5.11.',
+                    '%s is not supported on PHP %s < 5.5.11.',
                     __METHOD__,
                     phpversion()
-                )
+                ),
+                E_USER_ERROR
             );
-
             return false;
         }
+
         $file = new File($this->getPathname(), 'r');
         if ($file->fseek(0, SEEK_END) == - 1) {
             return false;
@@ -112,7 +117,6 @@ class File extends \SplFileObject
     public function openFile($open_mode = 'a+', $use_include_path = false, $context = null)
     {
         $className = get_class($this);
-
         return new $className($this->getPathname($open_mode, $use_include_path, $context));
     }
 

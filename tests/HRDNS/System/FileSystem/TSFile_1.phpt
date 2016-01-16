@@ -7,7 +7,7 @@ if (version_compare(phpversion(),5.11,'<')) {
     exit(0);
 }
 
-$basePath = preg_replace('/\/tests\/.*/','',__DIR__);
+$basePath = preg_replace('/\/tests\/.*/','',realpath(__DIR__));
 require_once($basePath.'/vendor/autoload.php');
 
 use HRDNS\System\FileSystem\TSFile;

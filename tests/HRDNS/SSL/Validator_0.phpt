@@ -2,13 +2,13 @@
 Testing HRDNS\SSL\Validator - verify
 --FILE--
 <?php
-$basePath = preg_replace('/\/tests\/.*/','',__DIR__);
+$basePath = preg_replace('/\/tests\/.*/','',realpath(__DIR__));
 require_once($basePath.'/vendor/autoload.php');
 
 use HRDNS\SSL\Validator;
 
 $validator = new Validator();
-$result = $validator->verify('www.google.com',443);
+$result = $validator->verify('www.hrdns.de',443);
 
 echo 'Host: '.$result['host']."\n";
 echo 'Port: '.$result['port']."\n";
@@ -20,7 +20,7 @@ echo 'tls1_1 = '.(isset($result['protocol']['tls1_1'])&&$result['protocol']['tls
 echo 'tls1_2 = '.(isset($result['protocol']['tls1_2'])&&$result['protocol']['tls1_2']>0?'true':'false')."\n";
 ?>
 --EXPECT--
-Host: www.google.com
+Host: www.hrdns.de
 Port: 443
 Protocol:
 ssl2 = false

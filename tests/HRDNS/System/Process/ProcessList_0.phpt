@@ -3,7 +3,7 @@ Testing HRDNS\System\Process\ProcessList - SIGKILL
 --FILE--
 <?php
 
-$basePath = preg_replace('/\/tests\/.*/','',__DIR__);
+$basePath = preg_replace('/\/tests\/.*/','',realpath(__DIR__));
 require_once($basePath.'/vendor/autoload.php');
 
 use HRDNS\System\Process\ProcessList;

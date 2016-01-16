@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2016-01-16 
+- fixing travis.ci checks
+- implement Daemon test
+- fix require autoload.php
+
 ## 2016-01-15
 - require phpcpd
 - optimize code
