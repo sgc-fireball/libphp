@@ -4,7 +4,7 @@ namespace HRDNS\Socket\Server;
 
 abstract class Server
 {
-    
+
     /** @var integer */
     protected $port = 20;
 
@@ -37,7 +37,7 @@ abstract class Server
     public function setListen($listen)
     {
         $block = '([\d]{1,2}|1[\d]{1,2}|2(1|2|3|4|5)[\d]{1})';
-        if ( !preg_match('/^'.$block.'{3}\.'.$block.'$/',$listen) ) {
+        if (!preg_match('/^' . $block . '{3}\.' . $block . '$/', $listen)) {
             throw new \InvalidArgumentException('The listen ip ' . $listen . ' is invalid.');
         }
         $this->listen = $listen;

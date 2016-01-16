@@ -14,7 +14,7 @@ abstract class TCPServer extends Server
      */
     public function setMaxClients($maxClients)
     {
-        $this->maxClients = max(1,(int)$maxClients);
+        $this->maxClients = max(1, (int)$maxClients);
         return $this;
     }
 
