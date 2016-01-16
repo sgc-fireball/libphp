@@ -2,8 +2,8 @@
 Testing \HRDNS\Socket\Server\TCPServer - check bind
 --FILE--
 <?php
-$basePath = preg_replace('/\/tests\/.*/','',__DIR__);
-require_once($basePath.'/vendor/autoload.php');
+$basePath = preg_replace('/\/tests\/.*/', '', __DIR__);
+require_once($basePath . '/vendor/autoload.php');
 
 use \HRDNS\Socket\Server\UDPServer;
 use \HRDNS\Socket\Server\ServerClient;
@@ -17,7 +17,7 @@ class Server extends UDPServer
      */
     public function onConnect(ServerClient $client)
     {
-        echo __METHOD__."\n";
+        echo __METHOD__ . "\n";
     }
 
     /**
@@ -27,7 +27,7 @@ class Server extends UDPServer
      */
     public function onIncoming(ServerClient $client, $buffer)
     {
-        echo __METHOD__."\n";
+        echo __METHOD__ . "\n";
     }
 
     /**
@@ -37,7 +37,7 @@ class Server extends UDPServer
      */
     public function onOutgoing(ServerClient $client, $buffer)
     {
-        echo __METHOD__."\n";
+        echo __METHOD__ . "\n";
     }
 
     /**
@@ -47,7 +47,7 @@ class Server extends UDPServer
      */
     public function onDisconnect(ServerClient $client, $closeByPeer = false)
     {
-        echo __METHOD__."\n";
+        echo __METHOD__ . "\n";
     }
 
     /**
@@ -56,7 +56,7 @@ class Server extends UDPServer
      */
     public function onTick(ServerClient $client)
     {
-        echo __METHOD__."\n";
+        echo __METHOD__ . "\n";
     }
 
 }
@@ -69,7 +69,7 @@ try {
     $server->listen(10);
     echo "DONE\n";
 } catch (\Exception $e) {
-    echo "FAIL\n";
+    printf("ERROR[%d] %s\n%s\n", $e->getCode(), $e->getMessage(), $e->getTraceAsString());
 }
 ?>
 --EXPECT--

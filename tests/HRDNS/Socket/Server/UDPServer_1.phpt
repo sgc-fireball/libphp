@@ -2,8 +2,8 @@
 Testing \HRDNS\Socket\Server\UDPServer - client connect
 --FILE--
 <?php
-$basePath = preg_replace('/\/tests\/.*/','',__DIR__);
-require_once($basePath.'/vendor/autoload.php');
+$basePath = preg_replace('/\/tests\/.*/', '', __DIR__);
+require_once($basePath . '/vendor/autoload.php');
 
 use \HRDNS\Socket\Server\UDPServer;
 use \HRDNS\Socket\Server\ServerClient;
@@ -17,7 +17,7 @@ class Server extends UDPServer
      */
     public function onConnect(ServerClient $client)
     {
-        echo __METHOD__."\n";
+        echo __METHOD__ . "\n";
     }
 
     /**
@@ -27,9 +27,9 @@ class Server extends UDPServer
      */
     public function onIncoming(ServerClient $client, $buffer)
     {
-        printf("%s - %s\n",__METHOD__,trim($buffer));
-        $msg = (trim($buffer) == 'foo' ? 'bar' : '???')."\n";
-        $this->send($client,$msg);
+        printf("%s - %s\n", __METHOD__, trim($buffer));
+        $msg = (trim($buffer) == 'foo' ? 'bar' : '???') . "\n";
+        $this->send($client, $msg);
     }
 
     /**
@@ -39,7 +39,7 @@ class Server extends UDPServer
      */
     public function onOutgoing(ServerClient $client, $buffer)
     {
-        printf("%s - %s\n",__METHOD__,trim($buffer));
+        printf("%s - %s\n", __METHOD__, trim($buffer));
     }
 
     /**
@@ -49,7 +49,7 @@ class Server extends UDPServer
      */
     public function onDisconnect(ServerClient $client, $closeByPeer = false)
     {
-        echo __METHOD__."\n";
+        echo __METHOD__ . "\n";
     }
 
     /**
@@ -64,7 +64,7 @@ class Server extends UDPServer
             return;
         }
         $time = time();
-        echo __METHOD__."\n";
+        echo __METHOD__ . "\n";
     }
 
 }
@@ -77,20 +77,20 @@ try {
     $server->bind();
     $server->listen(1);
 
-    $client = socket_create(AF_INET,SOCK_DGRAM,SOL_UDP);
-    socket_connect($client,'127.0.0.1',$port);
+    $client = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
+    socket_connect($client, '127.0.0.1', $port);
 
     $server->listen(1);
-    socket_write($client,"foo\n");
+    socket_write($client, "foo\n");
 
     $server->listen(1);
-    $data = trim(socket_read($client,8192));
+    $data = trim(socket_read($client, 8192));
     var_dump($data);
 
     socket_close($client);
 
 } catch (\Exception $e) {
-    echo "FAIL\n";
+    printf("ERROR[%d] %s\n%s\n", $e->getCode(), $e->getMessage(), $e->getTraceAsString());
 }
 ?>
 --EXPECT--

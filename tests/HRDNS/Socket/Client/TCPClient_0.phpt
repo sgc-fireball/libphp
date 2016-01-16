@@ -40,8 +40,7 @@ try {
 
     echo (preg_match('/^2/', $data) ? "DONE" : "FAIL") . "\n";
 } catch (\Exception $e) {
-    echo $e->getMessage();
-    echo "FAIL\n";
+    printf("ERROR[%d] %s\n%s\n", $e->getCode(), $e->getMessage(), $e->getTraceAsString());
 }
 ?>
 --EXPECT--
