@@ -5,8 +5,8 @@ namespace HRDNS\System\FileSystem;
 class File extends \SplFileObject
 {
 
-    /** @var integer  */
-    protected $tailSeek = - 1;
+    /** @var integer */
+    protected $tailSeek = -1;
 
     /**
      * @param mixed $file_name
@@ -20,7 +20,7 @@ class File extends \SplFileObject
     }
 
     /**
-     * @param integer  $length
+     * @param integer $length
      * @return mixed
      */
     public function read($length)
@@ -35,7 +35,7 @@ class File extends \SplFileObject
                 E_USER_WARNING
             );
             $buffer = '';
-            while ( strlen($buffer) < $length && !$this->eof() ) {
+            while (strlen($buffer) < $length && !$this->eof()) {
                 $buffer .= $this->fgets();
             }
             return $buffer;
@@ -71,14 +71,14 @@ class File extends \SplFileObject
         }
 
         $file = new File($this->getPathname(), 'r');
-        if ($file->fseek(0, SEEK_END) == - 1) {
+        if ($file->fseek(0, SEEK_END) == -1) {
             return false;
         }
         $end = $file->ftell();
         if ($end === false) {
             return false;
         }
-        if ($this->tailSeek === - 1) {
+        if ($this->tailSeek === -1) {
             $this->tailSeek = $end;
         }
         if ($end < 0) {
@@ -87,7 +87,7 @@ class File extends \SplFileObject
         if ($end <= $this->tailSeek) {
             return '';
         }
-        if ($file->fseek($this->tailSeek) == - 1) {
+        if ($file->fseek($this->tailSeek) == -1) {
             return false;
         }
         $content = $file->fread(4096);

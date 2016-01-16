@@ -98,7 +98,7 @@ class Daemon implements LoggerInterface
 
         $this->fqdn = $system['nodename'];
         $this->hostname = preg_replace('/\..*/', '', $this->fqdn);
-        $this->processName = str_replace(array('.phpt','.php'), '', $startFile);
+        $this->processName = str_replace(array ('.phpt', '.php'), '', $startFile);
         $this->userId = posix_getuid();
         $this->groupId = posix_getgid();
         $this->pid = posix_getpid();
