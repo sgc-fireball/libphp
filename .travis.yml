@@ -1,10 +1,24 @@
+# http://lint.travis-ci.org/
+
 language: php
 
 php:
   - 5.5
   - 5.6
+  - 7.0
+  - hhvm
 
 sudo: false
+
+branches:
+    only:
+        - master
+        - /^\d+\.\d+\.\d+$/
+
+matrix:
+  allow_failures:
+    - php: hhvm
+    - php: 7.0
 
 before_script:
   - composer install --dev
@@ -17,5 +31,3 @@ notifications:
     - rh+github@hrdns.de
   on_success: never
   on_failure: change
-
-# http://lint.travis-ci.org/
