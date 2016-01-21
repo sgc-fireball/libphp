@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 2016-01-21
+- fixing method names cymk2* and *2cymk
+- implement phpmd
+- update phpcs and phpunit configurations
+- update phpdoc "@return self" and "@return $this"
+
 ## 2016-01-16 
 - fixing travis.ci checks
 - implement Daemon test

@@ -9,14 +9,15 @@ class File extends \SplFileObject
     protected $tailSeek = -1;
 
     /**
-     * @param mixed $file_name
-     * @param string $open_mode
-     * @param boolean $use_include_path
+     * @param mixed $fileName
+     * @param string $openMode
+     * @param boolean $useIncludePath
      * @param resource $context
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
-    public function __construct($file_name, $open_mode = 'a+', $use_include_path = false, $context = null)
+    public function __construct($fileName, $openMode = 'a+', $useIncludePath = false, $context = null)
     {
-        parent::__construct($file_name, $open_mode, $use_include_path, $context);
+        parent::__construct($fileName, $openMode, $useIncludePath, $context);
     }
 
     /**
@@ -55,6 +56,7 @@ class File extends \SplFileObject
 
     /**
      * @return boolean|string
+     * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     public function tail()
     {
@@ -109,15 +111,16 @@ class File extends \SplFileObject
     }
 
     /**
-     * @param string $open_mode
-     * @param boolean $use_include_path
+     * @param string $openMode
+     * @param boolean $useIncludePath
      * @param resource $context
      * @return File
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
-    public function openFile($open_mode = 'a+', $use_include_path = false, $context = null)
+    public function openFile($openMode = 'a+', $useIncludePath = false, $context = null)
     {
         $className = get_class($this);
-        return new $className($this->getPathname($open_mode, $use_include_path, $context));
+        return new $className($this->getPathname($openMode, $useIncludePath, $context));
     }
 
 }

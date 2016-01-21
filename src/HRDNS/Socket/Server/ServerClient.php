@@ -2,11 +2,17 @@
 
 namespace HRDNS\Socket\Server;
 
+/**
+ * Class ServerClient
+ *
+ * @package HRDNS\Socket\Server
+ * @SuppressWarnings(PHPMD.ShortVariable)
+ */
 class ServerClient
 {
 
     /** @var string */
-    private $id = null;
+    private $id = '';
 
     /** @var resource|null */
     private $socket = null;

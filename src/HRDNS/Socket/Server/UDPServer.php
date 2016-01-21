@@ -61,6 +61,7 @@ abstract class UDPServer extends Server
      * @param ServerClient $client
      * @param bool $closeByPeer
      * @return static
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
     public function disconnect(ServerClient $client, $closeByPeer = false)
     {
@@ -117,10 +118,9 @@ abstract class UDPServer extends Server
     }
 
     /**
-     * @param resource[] $read
      * @return static
      */
-    protected function workOnClientSockets(array $read = array ())
+    protected function workOnClientSockets()
     {
         foreach ($this->clients as $client) {
             if ($this->isTerminated) {

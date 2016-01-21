@@ -106,6 +106,7 @@ abstract class TCPServer extends Server
      * @param ServerClient $client
      * @param bool $closeByPeer
      * @return static
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
     public function disconnect(ServerClient $client, $closeByPeer = false)
     {

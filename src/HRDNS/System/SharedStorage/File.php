@@ -9,7 +9,7 @@ class File
     protected $file = null;
 
     /** @var resource */
-    protected $fp = null;
+    protected $filePointer = null;
 
     /**
      * @return integer
@@ -51,15 +51,15 @@ class File
         if (!$this->selfLock('r')) {
             return null;
         }
-        fseek($this->fp, 0, SEEK_END);
-        $size = ftell($this->fp);
+        fseek($this->filePointer, 0, SEEK_END);
+        $size = ftell($this->filePointer);
         if ($size === 0) {
             $this->selfUnlock();
 
             return null;
         }
-        fseek($this->fp, 0, SEEK_SET);
-        $data = (string)fread($this->fp, $size);
+        fseek($this->filePointer, 0, SEEK_SET);
+        $data = (string)fread($this->filePointer, $size);
         $this->selfUnlock();
 
         return $data;
@@ -75,7 +75,7 @@ class File
         if (!$this->selfLock('w')) {
             return false;
         }
-        $result = fwrite($this->fp, $data, mb_strlen($data, 'UTF-8')) !== false;
+        $result = fwrite($this->filePointer, $data, mb_strlen($data, 'UTF-8')) !== false;
         $this->selfUnlock();
 
         return $result;
@@ -100,18 +100,18 @@ class File
      */
     protected function selfLock($mode)
     {
-        $this->fp = @fopen($this->file, $mode);
+        $this->filePointer = @fopen($this->file, $mode);
         $errors = 0;
-        while (!@flock($this->fp, LOCK_EX | LOCK_SH)) {
+        while (!@flock($this->filePointer, LOCK_EX | LOCK_SH)) {
             usleep(5000);
             $errors ++;
             if ($errors > 10) {
-                @fclose($this->fp);
-                $this->fp = false;
+                @fclose($this->filePointer);
+                $this->filePointer = false;
             }
         }
 
-        return is_resource($this->fp);
+        return is_resource($this->filePointer);
     }
 
     /**
@@ -119,10 +119,10 @@ class File
      */
     protected function selfUnlock()
     {
-        if (is_resource($this->fp)) {
-            @fclose($this->fp);
+        if (is_resource($this->filePointer)) {
+            @fclose($this->filePointer);
         }
-        $this->fp = null;
+        $this->filePointer = null;
     }
 
 }

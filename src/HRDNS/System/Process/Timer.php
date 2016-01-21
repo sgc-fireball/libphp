@@ -2,8 +2,6 @@
 
 namespace HRDNS\System\Process;
 
-use HRDNS\System\Process\Timer\Timeout;
-
 declare(ticks = 10);
 
 class Timer
@@ -51,7 +49,7 @@ class Timer
     protected $intervals = array();
 
     /**
-     * @return self
+     * @return static
      */
     public static function getInstance()
     {
@@ -92,6 +90,7 @@ class Timer
      * checkTimeouts
      *
      * @return void
+     * @SuppressWarnings(PHPMD.ElseExpression)
      */
     protected function checkTimeouts()
     {
@@ -109,8 +108,8 @@ class Timer
                 continue;
             }
             if (is_callable($timeout->func)) {
-                $func = $timeout->func;
-                $func();
+                $fnc = $timeout->func;
+                $fnc();
             } else {
                 call_user_func($timeout->func);
             }
@@ -123,6 +122,7 @@ class Timer
      * checkIntervals
      *
      * @return void
+     * @SuppressWarnings(PHPMD.ElseExpression)
      */
     protected function checkIntervals()
     {
@@ -132,17 +132,14 @@ class Timer
         if ($this->lastIntervalCheck === $this->currentTime) {
             return;
         }
-        /**
-         * @var string $id
-         * @var Timer\Interval $interval
-         */
-        foreach ($this->intervals as $id => $interval) {
+        /** @var Timer\Interval $interval */
+        foreach ($this->intervals as $interval) {
             if (($this->currentTime - $interval->interval) < $interval->lastRun) {
                 continue;
             }
             if (is_callable($interval->func)) {
-                $func = $interval->func;
-                $func();
+                $fnc = $interval->func;
+                $fnc();
             } else {
                 call_user_func($interval->func);
             }
@@ -152,63 +149,68 @@ class Timer
     }
 
     /**
-     * @param callable|array|string $func
-     * @param integer  $timeoutTime
-     * @return mixed
+     * @param callable|string $fnc
+     * @param integer $timeoutTime
+     * @return string|boolean
      */
-    public function addTimeout($func, $timeoutTime = 1)
+    public function addTimeout($fnc, $timeoutTime = 1)
     {
+        if (!is_callable($fnc)) {
+            trigger_error(sprintf('%s :: parameter 1 must be callable or a function name!!', __METHOD__), E_USER_ERROR);
+            return false;
+        }
         $timeout = new Timer\Timeout(
             array(
-                'func' => $func,
+                'func' => $fnc,
                 'run' => $this->currentTime + (int)($timeoutTime * 1000)
             )
         );
         $this->timeouts[$timeout->id] = $timeout;
-
         return $timeout->id;
     }
 
     /**
-     * @param string $id
-     * @return self
+     * @param string $timerId
+     * @return static
      */
-    public function clearTimeout($id)
+    public function clearTimeout($timerId)
     {
-        if (isset($this->timeouts[$id])) {
-            unset($this->timeouts[$id]);
+        if (isset($this->timeouts[$timerId])) {
+            unset($this->timeouts[$timerId]);
         }
-
         return $this;
     }
 
     /**
-     * @param callable|array|string $func
-     * @param integer  $intervalTime
-     * @return mixed
+     * @param callable $fnc
+     * @param integer $intervalTime
+     * @return string|boolean
      */
-    public function addInterval($func, $intervalTime = 1)
+    public function addInterval(callable $fnc, $intervalTime = 1)
     {
+        if (!is_callable($fnc)) {
+            trigger_error(sprintf('%s :: parameter 1 must be callable or a function name!!', __METHOD__), E_USER_ERROR);
+            return false;
+        }
         $interval = new Timer\Interval(
             array(
-                'func' => $func,
+                'func' => $fnc,
                 'lastRun' => $this->currentTime,
                 'interval' => (int)($intervalTime * 1000)
             )
         );
         $this->intervals[$interval->id] = $interval;
-
         return $interval->id;
     }
 
     /**
-     * @param string $id
-     * @return self
+     * @param string $intervalId
+     * @return static
      */
-    public function clearInterval($id)
+    public function clearInterval($intervalId)
     {
-        if (isset($this->intervals[$id])) {
-            unset($this->intervals[$id]);
+        if (isset($this->intervals[$intervalId])) {
+            unset($this->intervals[$intervalId]);
         }
 
         return $this;

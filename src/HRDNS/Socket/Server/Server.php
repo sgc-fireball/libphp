@@ -137,6 +137,7 @@ abstract class Server
      * @param ServerClient $client
      * @param bool $closeByPeer
      * @return void
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
     abstract public function onDisconnect(ServerClient $client, $closeByPeer = false);
 
@@ -150,6 +151,7 @@ abstract class Server
      * @param ServerClient $client
      * @param bool $closeByPeer
      * @return static
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
     abstract public function disconnect(ServerClient $client, $closeByPeer = false);
 

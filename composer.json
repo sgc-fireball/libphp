@@ -22,7 +22,8 @@
   "require-dev": {
     "phpunit/phpunit": "*",
     "squizlabs/php_codesniffer": "~2.5",
-    "sebastian/phpcpd": "~2.0"
+    "sebastian/phpcpd": "~2.0",
+    "phpmd/phpmd": "~2.3"
   },
   "suggest": {
     "monolog/monolog": "Allow you a better debbuging",
@@ -42,7 +43,8 @@
   "scripts": {
     "test": [
       "phpcs",
-      "phpunit"
+      "phpunit",
+      "phpmd src/ text cleancode,codesize,controversial,design,naming,unusedcode --suffixes php"
     ]
   }
 }

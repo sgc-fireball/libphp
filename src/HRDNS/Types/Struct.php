@@ -29,7 +29,7 @@ class Struct
     /**
      * @param mixed $key
      * @param mixed $value
-     * @return self
+     * @return static
      * @throws \Exception
      */
     public function __set($key, $value)
@@ -73,7 +73,7 @@ class Struct
 
     /**
      * @param array $data
-     * @return self
+     * @return static
      */
     public function setArray(array $data)
     {
@@ -91,7 +91,7 @@ class Struct
 
     /**
      * @param string $json
-     * @return self
+     * @return static
      * @throws \Exception
      */
     public function loadFromJSON($json)
@@ -115,7 +115,7 @@ class Struct
 
     /**
      * @param string $serialize
-     * @return self
+     * @return static
      * @throws \Exception
      */
     public function loadFromSerialize($serialize)
@@ -147,6 +147,8 @@ class Struct
      * @param XML $xml
      * @param array $data
      * @return void
+     * @SuppressWarnings(PHPMD.ElseExpression)
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     public function appendDataXml(XML &$xml, array &$data)
     {

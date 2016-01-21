@@ -6,6 +6,7 @@ namespace HRDNS\System\Process;
  * Class Process
  *
  * @package HRDNS\System\Process
+ * @SuppressWarnings(PHPMD.ShortVariable)
  */
 class Process
 {
@@ -21,7 +22,7 @@ class Process
     protected $options = array();
 
     /** @var string */
-    protected $id = null;
+    protected $id = '';
 
     /** @var integer  */
     protected $pid = 0;
@@ -60,7 +61,7 @@ class Process
     /**
      * @param string $key
      * @param mixed $value
-     * @return self
+     * @return static
      */
     public function addOption($key, $value)
     {
@@ -88,7 +89,8 @@ class Process
 
     /**
      * @param callable|string $command
-     * @return self|boolean
+     * @return static|boolean
+     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
      */
     public function setCommand($command)
     {
@@ -146,7 +148,9 @@ class Process
 
     /**
      * @param array $whiteList
-     * @return self
+     * @return static
+     * @SuppressWarnings(PHPMD.NPathComplexity)
+     * @SuppressWarnings(PHPMD.ExitExpression)
      */
     public function start(array $whiteList = array())
     {
@@ -155,10 +159,9 @@ class Process
         if ($this->pid == -1) {
             trigger_error('Could not fork.', E_CORE_ERROR);
             exit(255);
-        } else {
-            if ($this->pid) {
-                return $this;
-            }
+        }
+        if ($this->pid) {
+            return $this;
         }
         $this->pid = posix_getpid();
         $whiteList = array_merge($whiteList, array('this', 'whiteList'));

@@ -6,6 +6,9 @@ namespace HRDNS\Types;
  * Class XML
  *
  * @package HRDNS\Types
+ * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+ * @SuppressWarnings(PHPMD.NPathComplexity)
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class XML
 {
@@ -44,7 +47,8 @@ class XML
 
     /**
      * @param boolean $root
-     * @return self
+     * @return static
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
     public function setRoot($root = false)
     {
@@ -55,7 +59,7 @@ class XML
     /**
      * @return boolean
      */
-    public function getRoot()
+    public function isRoot()
     {
         return $this->root;
     }
@@ -70,7 +74,7 @@ class XML
 
     /**
      * @param string $name
-     * @return self
+     * @return static
      */
     public function setName($name)
     {
@@ -88,7 +92,7 @@ class XML
 
     /**
      * @param string $value
-     * @return self
+     * @return static
      */
     public function setValue($value)
     {
@@ -107,14 +111,14 @@ class XML
     /**
      * @return boolean
      */
-    public function getCData()
+    public function isCData()
     {
         return $this->cData;
     }
 
     /**
      * @param boolean $cData
-     * @return self
+     * @return static
      */
     public function setCData($cData)
     {
@@ -132,7 +136,7 @@ class XML
 
     /**
      * @param string $name
-     * @return boolean
+     * @return mixed|boolean
      */
     public function getAttribute($name)
     {
@@ -142,7 +146,7 @@ class XML
 
     /**
      * @param array $attributes
-     * @return self
+     * @return static
      */
     public function setAttributes(array $attributes = array ())
     {
@@ -153,7 +157,7 @@ class XML
     /**
      * @param string $name
      * @param mixed $value
-     * @return self
+     * @return static
      */
     public function setAttribute($name, $value = null)
     {
@@ -163,7 +167,7 @@ class XML
 
     /**
      * @param self|array $xml
-     * @return self|boolean
+     * @return static|boolean
      */
     public function appendChild($xml)
     {
@@ -188,7 +192,7 @@ class XML
 
     /**
      * @param string $charset
-     * @return self
+     * @return static
      */
     public function setCharset($charset)
     {
@@ -202,7 +206,7 @@ class XML
      * @param integer $tagStart
      * @param integer $skipWhite
      * @param integer $caseFolding
-     * @return self|boolean
+     * @return static|boolean
      */
     public function parse($xml, $charset = 'UTF-8', $tagStart = 0, $skipWhite = 1, $caseFolding = 0)
     {
@@ -213,7 +217,7 @@ class XML
         xml_parser_set_option($xmlParser, XML_OPTION_SKIP_WHITE, $skipWhite);
         xml_parser_set_option($xmlParser, XML_OPTION_CASE_FOLDING, $caseFolding);
         xml_parser_set_option($xmlParser, XML_OPTION_TARGET_ENCODING, $this->charset);
-        xml_parse_into_struct($xmlParser, $xml, $xmlArray, $index);
+        xml_parse_into_struct($xmlParser, $xml, $xmlArray);
         xml_parser_free($xmlParser);
 
         $result = $this->internalParse($xmlArray);
@@ -249,13 +253,13 @@ class XML
         $xmlArray = array ();
         $currentXml++;
 
-        $i = $currentXml;
-        while ($i < count($option)) {
+        $deep = $currentXml;
+        while ($deep < count($option)) {
 
-            $currentXmlArray = $option[$i];
+            $currentXmlArray = $option[$deep];
 
             if ($currentXmlArray['type'] == 'close') {
-                return array ($xmlArray, $i);
+                return array ($xmlArray, $deep);
             }
 
             $xmlObject = new static('');
@@ -266,28 +270,28 @@ class XML
             );
 
             if ($currentXmlArray['type'] == 'open') {
-                $result = $this->internalParse($option, $i++);
+                $result = $this->internalParse($option, $deep++);
                 if (!empty($result)) {
-                    list ($children, $i) = $result;
+                    list ($children, $deep) = $result;
                     $xmlObject->appendChild($children);
                 }
             }
 
             $xmlArray[$xmlObject->getName()][] = $xmlObject;
 
-            $i++;
+            $deep++;
         }
 
-        return array ($xmlArray, $i);
+        return array ($xmlArray, $deep);
     }
 
     /**
-     * @param boolean $searchNode
+     * @param string|null $searchNode
      * @return array
      */
-    public function getChildren($searchNode = false)
+    public function getChildren($searchNode = null)
     {
-        if ($searchNode === false) {
+        if (!$searchNode) {
             return $this->children;
         }
         foreach ($this->children as $nodeName => $children) {
@@ -301,16 +305,15 @@ class XML
     /**
      * @param string $nodeName
      * @param integer $note
-     * @return self|boolean
+     * @return static|boolean
      */
     public function getChild($nodeName, $note = 0)
     {
         if (isset($this->children[$nodeName][$note])) {
             return $this->children[$nodeName][$note];
-        } else {
-            if ($this->getName() == $nodeName) {
-                return $this;
-            }
+        }
+        if ($this->getName() == $nodeName) {
+            return $this;
         }
         return false;
     }
@@ -327,7 +330,8 @@ class XML
 
     /**
      * @param string $nodeName
-     * @return self|boolean
+     * @return static|boolean
+     * @SuppressWarnings(PHPMD.ElseExpression)
      */
     public function getNode($nodeName)
     {
@@ -360,7 +364,8 @@ class XML
     }
 
     /**
-     * @return self|boolean
+     * @return static|boolean
+     * @SuppressWarnings(PHPMD.ElseExpression)
      */
     public function next()
     {
@@ -393,17 +398,18 @@ class XML
     }
 
     /**
-     * @param integer $i
+     * @param integer $deep
      * @return string
+     * @SuppressWarnings(PHPMD.ElseExpression)
      */
-    public function getXML($i = -1)
+    public function getXML($deep = -1)
     {
-        $i++;
+        $deep++;
         $xml = '';
-        if ($this->getRoot()) {
+        if ($this->isRoot()) {
             $xml .= '<' . '?xml version="1.0" encoding="' . $this->charset . '" ?' . '>' . PHP_EOL;
         }
-        $xml .= $this->padding($i);
+        $xml .= $this->padding($deep);
         $xml .= '<' . $this->getName();
         foreach ($this->attributes as $attribute => $value) {
             $xml .= ' ' . $attribute . '="' . $this->escape($value) . '"';
@@ -423,20 +429,14 @@ class XML
                 }
             } else {
                 $xml .= '>' . PHP_EOL;
-                /**
-                 * @var string $nodeName
-                 * @var self[] $children
-                 */
-                foreach ($this->children as $nodeName => $children) {
-                    /**
-                     * @var integer $index
-                     * @var self $child
-                     */
-                    foreach ($children as $index => $child) {
-                        $xml .= $child->getXML($i);
+                /** @var self[] $children */
+                foreach ($this->children as $children) {
+                    /** @var self $child */
+                    foreach ($children as $child) {
+                        $xml .= $child->getXML($deep);
                     }
                 }
-                $xml .= $this->padding($i);
+                $xml .= $this->padding($deep);
             }
             $xml .= '</' . $this->getName() . '>' . PHP_EOL;
         }
@@ -458,24 +458,24 @@ class XML
     }
 
     /**
-     * @param integer $j
-     * @return string
-     */
-    public function padding($j = 0)
-    {
-        $value = '';
-        for ($i = 0 ; $i < $j ; $i++) {
-            $value .= '    ';
-        }
-        return $value;
-    }
-
-    /**
      * @return string
      */
     public function __toString()
     {
         return $this->getXML();
+    }
+
+    /**
+     * @param integer $deep
+     * @return string
+     */
+    public function padding($deep = 0)
+    {
+        $value = '';
+        for ($count = 0 ; $count < $deep ; $count++) {
+            $value .= '    ';
+        }
+        return $value;
     }
 
 }

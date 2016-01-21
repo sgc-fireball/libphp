@@ -62,19 +62,17 @@ class ProcessList implements \Iterator
 
     /**
      * @param Process $process
-     * @return self
+     * @return static
      */
     public function addProcess(Process $process)
     {
-        $id = $process->getId();
-        $this->processes[$id] = $process;
-
+        $this->processes[$process->getId()] = $process;
         return $this;
     }
 
     /**
      * @param int $worker
-     * @return self
+     * @return static
      */
     public function setWorker($worker)
     {
@@ -99,7 +97,7 @@ class ProcessList implements \Iterator
     }
 
     /**
-     * @return self
+     * @return static
      */
     public function start()
     {
@@ -137,6 +135,7 @@ class ProcessList implements \Iterator
 
     /**
      * @return array
+     * @SuppressWarnings(PHPMD.ElseExpression)
      */
     public function getStats()
     {
@@ -169,14 +168,14 @@ class ProcessList implements \Iterator
     /**
      * @param integer  $signal
      * @param integer  $sec
-     * @return self
+     * @return static
      */
     public function stop($signal = null, $sec = 3)
     {
         $signal = $signal === null ? SIGTERM : $signal;
         /** @var Process $process */
         foreach ($this->processes as $process) {
-            $process->stop($sec);
+            $process->stop($signal, $sec);
         }
 
         return $this;
