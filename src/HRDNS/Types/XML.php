@@ -47,7 +47,7 @@ class XML
 
     /**
      * @param boolean $root
-     * @return static
+     * @return self
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
     public function setRoot($root = false)
@@ -74,7 +74,7 @@ class XML
 
     /**
      * @param string $name
-     * @return static
+     * @return self
      */
     public function setName($name)
     {
@@ -92,7 +92,7 @@ class XML
 
     /**
      * @param string $value
-     * @return static
+     * @return self
      */
     public function setValue($value)
     {
@@ -118,7 +118,7 @@ class XML
 
     /**
      * @param boolean $cData
-     * @return static
+     * @return self
      */
     public function setCData($cData)
     {
@@ -146,7 +146,7 @@ class XML
 
     /**
      * @param array $attributes
-     * @return static
+     * @return self
      */
     public function setAttributes(array $attributes = array ())
     {
@@ -157,7 +157,7 @@ class XML
     /**
      * @param string $name
      * @param mixed $value
-     * @return static
+     * @return self
      */
     public function setAttribute($name, $value = null)
     {
@@ -167,7 +167,7 @@ class XML
 
     /**
      * @param self|array $xml
-     * @return static|boolean
+     * @return self|boolean
      */
     public function appendChild($xml)
     {
@@ -192,7 +192,7 @@ class XML
 
     /**
      * @param string $charset
-     * @return static
+     * @return self
      */
     public function setCharset($charset)
     {
@@ -206,7 +206,7 @@ class XML
      * @param integer $tagStart
      * @param integer $skipWhite
      * @param integer $caseFolding
-     * @return static|boolean
+     * @return self|boolean
      */
     public function parse($xml, $charset = 'UTF-8', $tagStart = 0, $skipWhite = 1, $caseFolding = 0)
     {
@@ -262,7 +262,7 @@ class XML
                 return array ($xmlArray, $deep);
             }
 
-            $xmlObject = new static('');
+            $xmlObject = new self('');
             $xmlObject->setName(isset($currentXmlArray['tag']) ? $currentXmlArray['tag'] : 'noname');
             $xmlObject->setValue(isset($currentXmlArray['value']) ? $currentXmlArray['value'] : '');
             $xmlObject->setAttributes(
@@ -305,7 +305,7 @@ class XML
     /**
      * @param string $nodeName
      * @param integer $note
-     * @return static|boolean
+     * @return self|boolean
      */
     public function getChild($nodeName, $note = 0)
     {
@@ -330,7 +330,7 @@ class XML
 
     /**
      * @param string $nodeName
-     * @return static|boolean
+     * @return self|boolean
      * @SuppressWarnings(PHPMD.ElseExpression)
      */
     public function getNode($nodeName)
@@ -364,7 +364,7 @@ class XML
     }
 
     /**
-     * @return static|boolean
+     * @return self|boolean
      * @SuppressWarnings(PHPMD.ElseExpression)
      */
     public function next()

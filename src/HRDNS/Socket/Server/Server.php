@@ -31,7 +31,7 @@ abstract class Server
 
     /**
      * @param string $listen
-     * @return static
+     * @return self
      * @throws \InvalidArgumentException
      */
     public function setListen($listen)
@@ -46,7 +46,7 @@ abstract class Server
 
     /**
      * @param integer $port
-     * @return static
+     * @return self
      * @throws \InvalidArgumentException
      */
     public function setPort($port)
@@ -61,7 +61,7 @@ abstract class Server
 
     /**
      * @param integer $bufferLength
-     * @return static
+     * @return self
      * @throws \InvalidArgumentException
      */
     public function setBufferLength($bufferLength)
@@ -77,7 +77,7 @@ abstract class Server
     /**
      * @param integer $timeoutSeconds
      * @param integer $timeoutUSeconds
-     * @return static
+     * @return self
      */
     public function setTimeout($timeoutSeconds, $timeoutUSeconds)
     {
@@ -87,7 +87,7 @@ abstract class Server
     }
 
     /**
-     * @return static
+     * @return self
      */
     public function terminated()
     {
@@ -150,7 +150,7 @@ abstract class Server
     /**
      * @param ServerClient $client
      * @param bool $closeByPeer
-     * @return static
+     * @return self
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
     abstract public function disconnect(ServerClient $client, $closeByPeer = false);

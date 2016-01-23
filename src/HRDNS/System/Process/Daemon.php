@@ -76,7 +76,7 @@ class Daemon implements LoggerInterface
 
     /**
      * @static
-     * @return static
+     * @return self
      */
     public static function getInstance()
     {
@@ -174,7 +174,7 @@ class Daemon implements LoggerInterface
 
     /**
      * @param string $instance
-     * @return static
+     * @return self
      */
     public function setInstanceName($instance)
     {
@@ -184,7 +184,7 @@ class Daemon implements LoggerInterface
 
     /**
      * @param string $processName
-     * @return static
+     * @return self
      */
     public function setProcessName($processName)
     {
@@ -210,7 +210,7 @@ class Daemon implements LoggerInterface
 
     /**
      * @param string $pidPath
-     * @return static
+     * @return self
      * @throws \InvalidArgumentException
      */
     public function setPidPath($pidPath)
@@ -272,7 +272,7 @@ class Daemon implements LoggerInterface
 
     /**
      * @param integer $userId
-     * @return static
+     * @return self
      * @throws \Exception
      */
     public function setUserId($userId)
@@ -293,7 +293,7 @@ class Daemon implements LoggerInterface
 
     /**
      * @param integer $groupId
-     * @return static
+     * @return self
      * @throws \Exception
      */
     public function setGroupId($groupId)
@@ -322,7 +322,7 @@ class Daemon implements LoggerInterface
     }
 
     /**
-     * @return static
+     * @return self
      * @throws \Exception
      */
     public function start()
@@ -352,7 +352,7 @@ class Daemon implements LoggerInterface
     }
 
     /**
-     * @return static
+     * @return self
      */
     public function stop()
     {
@@ -371,7 +371,7 @@ class Daemon implements LoggerInterface
 
     /**
      * @param LoggerInterface $logger
-     * @return static
+     * @return self
      */
     public function setLogger(LoggerInterface $logger)
     {
@@ -383,7 +383,7 @@ class Daemon implements LoggerInterface
     /**
      * @param string $message
      * @param array $context
-     * @return static
+     * @return self
      */
     public function emergency($message, array $context = array ())
     {
@@ -398,7 +398,7 @@ class Daemon implements LoggerInterface
     /**
      * @param string $message
      * @param array $context
-     * @return static
+     * @return self
      */
     public function alert($message, array $context = array ())
     {
@@ -413,7 +413,7 @@ class Daemon implements LoggerInterface
     /**
      * @param string $message
      * @param array $context
-     * @return static
+     * @return self
      */
     public function critical($message, array $context = array ())
     {
@@ -428,7 +428,7 @@ class Daemon implements LoggerInterface
     /**
      * @param string $message
      * @param array $context
-     * @return static
+     * @return self
      */
     public function error($message, array $context = array ())
     {
@@ -443,7 +443,7 @@ class Daemon implements LoggerInterface
     /**
      * @param string $message
      * @param array $context
-     * @return static
+     * @return self
      */
     public function warning($message, array $context = array ())
     {
@@ -458,7 +458,7 @@ class Daemon implements LoggerInterface
     /**
      * @param string $message
      * @param array $context
-     * @return static
+     * @return self
      */
     public function notice($message, array $context = array ())
     {
@@ -473,7 +473,7 @@ class Daemon implements LoggerInterface
     /**
      * @param string $message
      * @param array $context
-     * @return static
+     * @return self
      */
     public function info($message, array $context = array ())
     {
@@ -488,7 +488,7 @@ class Daemon implements LoggerInterface
     /**
      * @param string $message
      * @param array $context
-     * @return static
+     * @return self
      */
     public function debug($message, array $context = array ())
     {
@@ -504,7 +504,7 @@ class Daemon implements LoggerInterface
      * @param mixed $level
      * @param string $message
      * @param array $context
-     * @return static
+     * @return self
      */
     public function log($level, $message, array $context = array ())
     {

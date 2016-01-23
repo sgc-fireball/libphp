@@ -2,16 +2,19 @@
 Testing \HRDNS\Core\EventHandler - add and fire an event
 --FILE--
 <?php
-$basePath = preg_replace('/\/tests\/.*/','',realpath(__DIR__));
-require_once($basePath.'/vendor/autoload.php');
+$basePath = preg_replace('/\/tests\/.*/', '', realpath(__DIR__));
+require_once($basePath . '/tests/bootstrap.php');
 
 use \HRDNS\Core\EventHandler;
 
 $clicked = false;
 $eventHandler = EventHandler::get();
-$eventHandler->addEvent('click',function()use(&$clicked){
-    $clicked = true;
-});
+$eventHandler->addEvent(
+    'click',
+    function () use (&$clicked) {
+        $clicked = true;
+    }
+);
 
 var_dump($clicked);
 $eventHandler->fireEvent('click');

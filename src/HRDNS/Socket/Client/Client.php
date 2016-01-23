@@ -25,7 +25,7 @@ abstract class Client
 
     /**
      * @param string $host
-     * @return static
+     * @return self
      */
     public function setHost($host)
     {
@@ -35,7 +35,7 @@ abstract class Client
 
     /**
      * @param integer $port
-     * @return static
+     * @return self
      * @throws \Exception
      */
     public function setPort($port)
@@ -51,7 +51,7 @@ abstract class Client
     /**
      * @param integer $timeoutSeconds
      * @param integer $timeoutUSeconds
-     * @return static
+     * @return self
      */
     public function setTimeout($timeoutSeconds, $timeoutUSeconds)
     {
@@ -62,7 +62,7 @@ abstract class Client
 
     /**
      * @param integer $bufferLength
-     * @return static
+     * @return self
      * @throws \Exception
      */
     public function setBufferLength($bufferLength)
@@ -76,7 +76,7 @@ abstract class Client
     }
 
     /**
-     * @return static
+     * @return self
      */
     public function disconnect()
     {

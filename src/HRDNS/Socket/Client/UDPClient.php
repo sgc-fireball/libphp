@@ -6,7 +6,7 @@ class UDPClient extends Client
 {
 
     /**
-     * @return static
+     * @return self
      * @throws \Exception
      */
     public function connect()

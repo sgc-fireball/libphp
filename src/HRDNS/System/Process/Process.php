@@ -61,7 +61,7 @@ class Process
     /**
      * @param string $key
      * @param mixed $value
-     * @return static
+     * @return self
      */
     public function addOption($key, $value)
     {
@@ -89,7 +89,7 @@ class Process
 
     /**
      * @param callable|string $command
-     * @return static|boolean
+     * @return self|boolean
      * @SuppressWarnings(PHPMD.UnusedLocalVariable)
      */
     public function setCommand($command)
@@ -148,7 +148,7 @@ class Process
 
     /**
      * @param array $whiteList
-     * @return static
+     * @return self
      * @SuppressWarnings(PHPMD.NPathComplexity)
      * @SuppressWarnings(PHPMD.ExitExpression)
      */

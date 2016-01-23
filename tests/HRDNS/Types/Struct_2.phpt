@@ -4,9 +4,12 @@ Testing HRDNS\Types\Struct - get serialize
 <?php
 require_once(__DIR__ . '/../../../vendor/autoload.php');
 use HRDNS\Types\Struct;
-$struct = new Struct(array(
-    'test' => 'test',
-));
+
+$struct = new Struct(
+    array (
+        'test' => 'test',
+    )
+);
 echo $struct->getSerialize();
 ?>
 --EXPECT--

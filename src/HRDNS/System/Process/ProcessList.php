@@ -62,7 +62,7 @@ class ProcessList implements \Iterator
 
     /**
      * @param Process $process
-     * @return static
+     * @return self
      */
     public function addProcess(Process $process)
     {
@@ -72,7 +72,7 @@ class ProcessList implements \Iterator
 
     /**
      * @param int $worker
-     * @return static
+     * @return self
      */
     public function setWorker($worker)
     {
@@ -97,7 +97,7 @@ class ProcessList implements \Iterator
     }
 
     /**
-     * @return static
+     * @return self
      */
     public function start()
     {
@@ -168,7 +168,7 @@ class ProcessList implements \Iterator
     /**
      * @param integer  $signal
      * @param integer  $sec
-     * @return static
+     * @return self
      */
     public function stop($signal = null, $sec = 3)
     {

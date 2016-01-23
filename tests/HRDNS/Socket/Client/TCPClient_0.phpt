@@ -16,7 +16,7 @@ try {
     $result = isset($result['target']) ? $result['target'] : '';
 
     if (!$result) {
-        echo "FAIL";
+        echo 'FAIL';
         exit(1);
     }
 
@@ -38,7 +38,7 @@ try {
     $client->write("quit\n");
     $client->disconnect();
 
-    echo (preg_match('/^2/', $data) ? "DONE" : "FAIL") . "\n";
+    echo (preg_match('/^2/', $data) ? 'DONE' : 'FAIL') . "\n";
 } catch (\Exception $e) {
     printf("ERROR[%d] %s\n%s\n", $e->getCode(), $e->getMessage(), $e->getTraceAsString());
 }

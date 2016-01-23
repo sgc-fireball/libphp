@@ -3,68 +3,70 @@ Testing HRDNS\SharedMemory\SHM - return
 --FILE--
 <?php
 
-if ( isset($_SERVER['TRAVIS']) ) {
+if (isset($_SERVER['TRAVIS'])) {
     echo "Process1: 0\n";
     echo "Process2: 0\n";
     echo "SHM Count: 3\n";
     echo "Delete: Done\n";
-    exit (0);
+    exit(0);
 }
 
-$basePath = preg_replace('/\/tests\/.*/','',realpath(__DIR__));
-require_once($basePath.'/vendor/autoload.php');
+$basePath = preg_replace('/\/tests\/.*/', '', realpath(__DIR__));
+require_once($basePath . '/tests/bootstrap.php');
 use HRDNS\System\Process\Process;
 use HRDNS\System\SharedStorage\SHM;
 
 $process1 = new Process();
-$process1->addOption('shm',0);
-$process1->setCommand(function(Process $Process) {
-    $shmKey = $Process->getOption('shm');
-    if (!$shmKey ) {
-        return 1;
+$process1->addOption('shm', 0);
+$process1->setCommand(
+    function (Process $Process) {
+        $shmKey = $Process->getOption('shm');
+        if (!$shmKey) {
+            return 1;
+        }
+        $shm = new SHM($shmKey);
+        if (!$shm->exists()) {
+            return 2;
+        }
+        $count = (int)$shm->read();
+        $count++;
+        if (!$shm->write($count)) {
+            return 3;
+        }
+        return 0;
     }
-    $shm = new SHM($shmKey);
-    if (!$shm->exists() ) {
-        return 2;
-    }
-    $count = (int)$shm->read();
-    $count++;
-    if (!$shm->write($count) ) {
-        return 3;
-    }
-    return 0;
-});
+);
 
 $process2 = clone $process1;
 
 $shm = new SHM();
-if ( $shm->exists() ) {
-    printf("Test SHM Key %d already exists. Abort test to preventing damage the system!\n",$shm->getKey());
+if ($shm->exists()) {
+    printf("Test SHM Key %d already exists. Abort test to preventing damage the system!\n", $shm->getKey());
     exit(1);
 }
-if (!$shm->write(1) ) {
-    printf("Could not write 1 to shm key %d\n",$shm->getKey());
+if (!$shm->write(1)) {
+    printf("Could not write 1 to shm key %d\n", $shm->getKey());
     exit(2);
 }
 
-$process1->addOption('shm',$shm->getKey());
-$process2->addOption('shm',$shm->getKey());
+$process1->addOption('shm', $shm->getKey());
+$process2->addOption('shm', $shm->getKey());
 
-if ( $process1->start() ) {
+if ($process1->start()) {
     do {
         usleep(500);
-    } while ( $process1->isRunning() );
+    } while ($process1->isRunning());
 }
-if ( $process2->start() ) {
+if ($process2->start()) {
     do {
         usleep(500);
-    } while ( $process2->isRunning() );
+    } while ($process2->isRunning());
 }
 
-printf("Process1: %d\n",$process1->getExitCode());
-printf("Process2: %d\n",$process2->getExitCode());
-printf("SHM Count: %d\n",$shm->read());
-printf("Delete: %s\n",$shm->delete()?'Done':'Fail');
+printf("Process1: %d\n", $process1->getExitCode());
+printf("Process2: %d\n", $process2->getExitCode());
+printf("SHM Count: %d\n", $shm->read());
+printf("Delete: %s\n", $shm->delete() ? 'Done' : 'Fail');
 ?>
 --EXPECT--
 Process1: 0

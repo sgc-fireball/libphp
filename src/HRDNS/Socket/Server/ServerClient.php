@@ -41,7 +41,7 @@ class ServerClient
 
     /**
      * @param resource|null $socket
-     * @return static
+     * @return self
      */
     public function setSocket($socket)
     {
@@ -55,7 +55,7 @@ class ServerClient
     /**
      * @param string $key
      * @param mixed $value
-     * @return static
+     * @return self
      */
     public function setAttribute($key, $value)
     {
@@ -85,7 +85,7 @@ class ServerClient
 
     /**
      * @param string $host
-     * @return static
+     * @return self
      */
     public function setHost($host)
     {
@@ -103,7 +103,7 @@ class ServerClient
 
     /**
      * @param integer $port
-     * @return static
+     * @return self
      */
     public function setPort($port)
     {

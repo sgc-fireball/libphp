@@ -23,25 +23,29 @@ class Server extends TCPServer
 
     public function onConnect(ServerClient $client)
     {
-        $this->output->writeln(sprintf(
-            '<info>Client[%s:%d]</info> :: <comment>%s</comment>',
-            $client->getHost(),
-            $client->getPort(),
-            __METHOD__
-        ));
+        $this->output->writeln(
+            sprintf(
+                '<info>Client[%s:%d]</info> :: <comment>%s</comment>',
+                $client->getHost(),
+                $client->getPort(),
+                __METHOD__
+            )
+        );
     }
 
     public function onIncoming(ServerClient $client, $buffer)
     {
         $buffer = trim($buffer);
 
-        $this->output->writeln(sprintf(
-            '<info>Client[%s:%d]</info> :: <comment>%s</comment> :: %s',
-            $client->getHost(),
-            $client->getPort(),
-            __METHOD__,
-            $buffer
-        ));
+        $this->output->writeln(
+            sprintf(
+                '<info>Client[%s:%d]</info> :: <comment>%s</comment> :: %s',
+                $client->getHost(),
+                $client->getPort(),
+                __METHOD__,
+                $buffer
+            )
+        );
 
         if (in_array(strtolower($buffer), array ('exit', 'quit', 'bye', 'bye bye', 'byebye'))) {
             $this->disconnect($client, true);
@@ -53,24 +57,28 @@ class Server extends TCPServer
     public function onOutgoing(ServerClient $client, $buffer)
     {
         $buffer = trim($buffer);
-        $this->output->writeln(sprintf(
-            '<info>Client[%s:%d]</info> :: <comment>%s</comment> :: %s',
-            $client->getHost(),
-            $client->getPort(),
-            __METHOD__,
-            $buffer
-        ));
+        $this->output->writeln(
+            sprintf(
+                '<info>Client[%s:%d]</info> :: <comment>%s</comment> :: %s',
+                $client->getHost(),
+                $client->getPort(),
+                __METHOD__,
+                $buffer
+            )
+        );
     }
 
     public function onDisconnect(ServerClient $client, $closeByPeer = false)
     {
-        $this->output->writeln(sprintf(
-            '<info>Client[%s:%d]</info> :: <comment>%s</comment> :: connection closed by %s',
-            $client->getHost(),
-            $client->getPort(),
-            __METHOD__,
-            ($closeByPeer ? 'peer' : 'server')
-        ));
+        $this->output->writeln(
+            sprintf(
+                '<info>Client[%s:%d]</info> :: <comment>%s</comment> :: connection closed by %s',
+                $client->getHost(),
+                $client->getPort(),
+                __METHOD__,
+                ($closeByPeer ? 'peer' : 'server')
+            )
+        );
     }
 
     public function onTick(ServerClient $client)
@@ -81,12 +89,14 @@ class Server extends TCPServer
             return;
         }
         $time = time();
-        $this->output->writeln(sprintf(
-            '<info>Client[%s:%d]</info> :: <comment>%s</comment>',
-            $client->getHost(),
-            $client->getPort(),
-            __METHOD__
-        ));
+        $this->output->writeln(
+            sprintf(
+                '<info>Client[%s:%d]</info> :: <comment>%s</comment>',
+                $client->getHost(),
+                $client->getPort(),
+                __METHOD__
+            )
+        );
     }
 
 }
@@ -114,13 +124,25 @@ class EchoServer extends Command
         $this->setDescription('A TCPServer EchoServer');
         $this->setHelp('');
         $this->addOption(
-            'listen', 'L', InputOption::VALUE_OPTIONAL, 'IPv4 address to listen the server.', self::DEFAULT_HOST
+            'listen',
+            'L',
+            InputOption::VALUE_OPTIONAL,
+            'IPv4 address to listen the server.',
+            self::DEFAULT_HOST
         );
         $this->addOption(
-            'port', 'P', InputOption::VALUE_OPTIONAL, 'Port to bind the server. [1-65535]', self::DEFAULT_PORT
+            'port',
+            'P',
+            InputOption::VALUE_OPTIONAL,
+            'Port to bind the server. [1-65535]',
+            self::DEFAULT_PORT
         );
         $this->addOption(
-            'runtime', 'R', InputOption::VALUE_OPTIONAL, 'Time in seconds before exit. [0-300]', self::DEFAULT_RUNTIME
+            'runtime',
+            'R',
+            InputOption::VALUE_OPTIONAL,
+            'Time in seconds before exit. [0-300]',
+            self::DEFAULT_RUNTIME
         );
     }
 
@@ -135,22 +157,20 @@ class EchoServer extends Command
             /** @var \Symfony\Component\Console\Helper\DialogHelper $dialog */
             $dialog = $this->getHelper('dialog');
 
-            $currentHost = $this->host;
             $this->host = $dialog->askAndValidate(
                 $output,
                 sprintf('<info>Host <comment>[%s]<comment>:</info>', $this->host),
-                function ($host) use ($currentHost) {
+                function ($host) {
                     return $host;
                 },
                 false,
                 $this->host
             );
 
-            $currentPort = $this->port;
             $this->port = $dialog->askAndValidate(
                 $output,
                 sprintf('<info>Port <comment>[%s]<comment>:</info>', $this->port),
-                function ($port) use ($currentPort) {
+                function ($port) {
                     return $port;
                 },
                 false,
@@ -163,7 +183,7 @@ class EchoServer extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (!filter_var($this->host,FILTER_VALIDATE_IP,FILTER_FLAG_IPV4)) {
+        if (!filter_var($this->host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
             $host = gethostbyname($this->host);
             if ($host == $this->host) {
                 throw new \InvalidArgumentException('Invalid listen address.');
@@ -175,11 +195,11 @@ class EchoServer extends Command
             throw new \InvalidArgumentException('Invalid port number.');
         }
 
-        if ($this->runtime<0 || $this->runtime > 300) {
+        if ($this->runtime < 0 || $this->runtime > 300) {
             throw new \InvalidArgumentException('Invalid runtime value.');
         }
 
-        $output->writeln(sprintf('Bind EchoServer to <info>%s:%d</info>',$this->host,$this->port));
+        $output->writeln(sprintf('Bind EchoServer to <info>%s:%d</info>', $this->host, $this->port));
 
         $server = new Server();
         $server->setOutputHandler($output);

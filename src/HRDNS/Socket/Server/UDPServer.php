@@ -6,7 +6,7 @@ abstract class UDPServer extends Server
 {
 
     /**
-     * @return static
+     * @return self
      * @throws \Exception
      */
     public function bind()
@@ -45,7 +45,7 @@ abstract class UDPServer extends Server
 
     /**
      * @param integer $limit
-     * @return static
+     * @return self
      */
     public function listen($limit = -1)
     {
@@ -60,7 +60,7 @@ abstract class UDPServer extends Server
     /**
      * @param ServerClient $client
      * @param bool $closeByPeer
-     * @return static
+     * @return self
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
     public function disconnect(ServerClient $client, $closeByPeer = false)
@@ -87,7 +87,7 @@ abstract class UDPServer extends Server
     }
 
     /**
-     * @return static
+     * @return self
      */
     protected function workOnMasterSocket()
     {
@@ -118,7 +118,7 @@ abstract class UDPServer extends Server
     }
 
     /**
-     * @return static
+     * @return self
      */
     protected function workOnClientSockets()
     {

@@ -43,7 +43,7 @@ try {
     }
     $client->disconnect();
 
-    echo (preg_match('/google/', $data) ? "DONE" : "FAIL") . "\n";
+    echo (preg_match('/google/', $data) ? 'DONE' : 'FAIL') . "\n";
 
 } catch (\Exception $e) {
     printf("ERROR[%d] %s\n%s\n", $e->getCode(), $e->getMessage(), $e->getTraceAsString());

@@ -7,7 +7,7 @@ use \HRDNS\Types\XML;
 
 $child = new XML();
 $child->setName('child');
-$child->setAttribute('attr','1');
+$child->setAttribute('attr', '1');
 $child->setCData(true);
 $child->setValue('2');
 

@@ -13,8 +13,8 @@ class EventHandler
 
     public static function get()
     {
-        if (!(self::$instance instanceof static)) {
-            self::$instance = new static();
+        if (!(self::$instance instanceof self)) {
+            self::$instance = new self();
         }
         return self::$instance;
     }

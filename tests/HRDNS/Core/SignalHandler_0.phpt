@@ -3,10 +3,8 @@ Testing \HRDNS\Core\SignalHandler - catch
 --FILE--
 <?php
 
-declare(ticks = 1);
-
-$basePath = preg_replace('/\/tests\/.*/','',realpath(__DIR__));
-require_once($basePath.'/vendor/autoload.php');
+$basePath = preg_replace('/\/tests\/.*/', '', realpath(__DIR__));
+require_once($basePath . '/tests/bootstrap.php');
 
 use HRDNS\Core\SignalHandler;
 
@@ -23,7 +21,7 @@ function handler($signal)
 SignalHandler::init();
 SignalHandler::addListener('handler');
 usleep(100);
-posix_kill(posix_getpid(),SignalHandler::SIGINT);
+posix_kill(posix_getpid(), SignalHandler::SIGINT);
 usleep(100);
 pcntl_signal_dispatch();
 usleep(100);

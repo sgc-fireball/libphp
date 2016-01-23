@@ -2,7 +2,7 @@
 
 namespace HRDNS\System\Process;
 
-declare(ticks = 10);
+declare(ticks = 100);
 
 class Timer
 {
@@ -36,7 +36,7 @@ class Timer
     /**
      * @var array
      */
-    protected $timeouts = array();
+    protected $timeouts = array ();
 
     /**
      * @var int
@@ -46,10 +46,10 @@ class Timer
     /**
      * @var array
      */
-    protected $intervals = array();
+    protected $intervals = array ();
 
     /**
-     * @return static
+     * @return self
      */
     public static function getInstance()
     {
@@ -57,7 +57,7 @@ class Timer
             return self::$instance;
         }
         self::$instance = new self();
-        \register_tick_function(array(self::$instance, 'tick'));
+        \register_tick_function(array (self::$instance, 'tick'));
 
         return self::$instance;
     }
@@ -160,7 +160,7 @@ class Timer
             return false;
         }
         $timeout = new Timer\Timeout(
-            array(
+            array (
                 'func' => $fnc,
                 'run' => $this->currentTime + (int)($timeoutTime * 1000)
             )
@@ -171,7 +171,7 @@ class Timer
 
     /**
      * @param string $timerId
-     * @return static
+     * @return self
      */
     public function clearTimeout($timerId)
     {
@@ -193,7 +193,7 @@ class Timer
             return false;
         }
         $interval = new Timer\Interval(
-            array(
+            array (
                 'func' => $fnc,
                 'lastRun' => $this->currentTime,
                 'interval' => (int)($intervalTime * 1000)
@@ -205,7 +205,7 @@ class Timer
 
     /**
      * @param string $intervalId
-     * @return static
+     * @return self
      */
     public function clearInterval($intervalId)
     {

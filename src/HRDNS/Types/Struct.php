@@ -29,7 +29,7 @@ class Struct
     /**
      * @param mixed $key
      * @param mixed $value
-     * @return static
+     * @return self
      * @throws \Exception
      */
     public function __set($key, $value)
@@ -73,7 +73,7 @@ class Struct
 
     /**
      * @param array $data
-     * @return static
+     * @return self
      */
     public function setArray(array $data)
     {
@@ -91,7 +91,7 @@ class Struct
 
     /**
      * @param string $json
-     * @return static
+     * @return self
      * @throws \Exception
      */
     public function loadFromJSON($json)
@@ -115,7 +115,7 @@ class Struct
 
     /**
      * @param string $serialize
-     * @return static
+     * @return self
      * @throws \Exception
      */
     public function loadFromSerialize($serialize)

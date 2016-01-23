@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 2016-01-23
+- remove old exmaple
+- implement symfony/console
+- implement symfony command example
+- update code style in tests, examples, bin
+- implement single symfony command sslverify
+- fixing doc types
+
 ## 2016-01-21
 - fixing method names cymk2* and *2cymk
 - implement phpmd
