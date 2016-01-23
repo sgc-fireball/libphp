@@ -57,7 +57,7 @@ class Timer
             return self::$instance;
         }
         self::$instance = new self();
-        register_tick_function(array(self::$instance, 'tick'));
+        \register_tick_function(array(self::$instance, 'tick'));
 
         return self::$instance;
     }

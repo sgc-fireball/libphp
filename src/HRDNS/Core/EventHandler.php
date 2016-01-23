@@ -24,7 +24,7 @@ class EventHandler
         $self = $this;
         $this->prepareEvent('tick');
         $this->prepareEvent('shutdown');
-        register_tick_function(
+        \register_tick_function(
             function () use ($self) {
                 $self->fireEvent('tick');
             }
