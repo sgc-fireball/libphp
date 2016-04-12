@@ -42,7 +42,7 @@
       "composer test"
     ],
     "test": [
-      "phpunit",
+      "phpunit"
     ]
   }
 }
