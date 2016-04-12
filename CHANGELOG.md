@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2016-04-12
+- update to PHP7
+
 ## 2016-01-23
 - remove old exmaple
 - implement symfony/console

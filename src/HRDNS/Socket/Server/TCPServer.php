@@ -9,10 +9,10 @@ abstract class TCPServer extends Server
     protected $maxClients = 20;
 
     /**
-     * @param int $maxClients
+     * @param integer $maxClients
      * @return self
      */
-    public function setMaxClients($maxClients)
+    public function setMaxClients(int $maxClients)
     {
         $this->maxClients = max(1, (int)$maxClients);
         return $this;
@@ -77,13 +77,13 @@ abstract class TCPServer extends Server
      * @param integer $limit
      * @return self
      */
-    public function listen($limit = -1)
+    public function listen(int $limit = -1)
     {
         while (!$this->isTerminated && ($limit > 0 || $limit == -1)) {
             $this->workOnMasterSocket();
 
             $limit = $limit == -1 ? -1 : $limit - 1;
-            $read = $write = $except = array ();
+            $read = $write = $except = array();
             foreach ($this->clients as $client) {
                 $read[] = $client->getSocket();
             }
@@ -104,11 +104,11 @@ abstract class TCPServer extends Server
 
     /**
      * @param ServerClient $client
-     * @param bool $closeByPeer
+     * @param boolean $closeByPeer
      * @return self
-     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+     * @SuppressWarnings(PHPMD.boolArgumentFlag)
      */
-    public function disconnect(ServerClient $client, $closeByPeer = false)
+    public function disconnect(ServerClient $client, bool $closeByPeer = false)
     {
         if ($client->getSocket() === null) {
             return $this;
@@ -126,7 +126,7 @@ abstract class TCPServer extends Server
      * @param integer|null $length
      * @return boolean|integer
      */
-    public function send(ServerClient $client, $buffer, $length = null)
+    public function send(ServerClient $client, string $buffer, int $length = null)
     {
         if ($client->getSocket() === null || empty($buffer)) {
             return false;
@@ -161,7 +161,7 @@ abstract class TCPServer extends Server
      * @param resource[] $read
      * @return self
      */
-    protected function workOnClientSockets(array $read = array ())
+    protected function workOnClientSockets(array $read = array())
     {
         /** @var resource $socket */
         foreach ($read as $socket) {

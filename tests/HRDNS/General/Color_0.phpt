@@ -4,6 +4,7 @@ Testing \HRDNS\General\Color - converter
 <?php
 $basePath = preg_replace('/\/tests\/.*/', '', realpath(__DIR__));
 require_once($basePath . '/tests/bootstrap.php');
+
 use \HRDNS\General\Color;
 
 $color = new Color();

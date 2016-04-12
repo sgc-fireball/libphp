@@ -35,7 +35,7 @@ class UDPClient extends Client
      * @param integer|null $length
      * @return string|boolean
      */
-    public function read($length = null)
+    public function read(int $length = null)
     {
         $length = $length === null ? $this->bufferLength : $length;
         if (!$length) {
@@ -55,7 +55,7 @@ class UDPClient extends Client
      * @param integer|null $length
      * @return boolean|integer
      */
-    public function write($buffer, $length = null)
+    public function write(string $buffer, int $length = null)
     {
         $length = $length === null ? strlen($buffer) : $length;
         return @socket_sendto($this->socket, $buffer, $length, 0, $this->host, $this->port);

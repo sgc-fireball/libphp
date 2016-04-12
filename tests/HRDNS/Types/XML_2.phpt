@@ -2,7 +2,9 @@
 Testing \HRDNS\Types\XML - create xml
 --FILE--
 <?php
-require_once(__DIR__ . '/../../../vendor/autoload.php');
+$basePath = preg_replace('/\/tests\/.*/', '', realpath(__DIR__));
+require_once($basePath . '/tests/bootstrap.php');
+
 use \HRDNS\Types\XML;
 
 $child = new XML();

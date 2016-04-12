@@ -22,9 +22,9 @@ class File
     /**
      * @param string $file
      */
-    public function __construct($file = null)
+    public function __construct(string $file = null)
     {
-        $this->file = $file ? (string)$file : sprintf(
+        $this->file = $file ? $file : sprintf(
             '%s%sshm_%s.tmp',
             rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR),
             DIRECTORY_SEPARATOR,
@@ -69,9 +69,8 @@ class File
      * @param string $data
      * @return boolean
      */
-    public function write($data)
+    public function write(string $data)
     {
-        $data = (string)$data;
         if (!$this->selfLock('w')) {
             return false;
         }
@@ -98,13 +97,13 @@ class File
      * @param string $mode
      * @return boolean
      */
-    protected function selfLock($mode)
+    protected function selfLock(string $mode)
     {
         $this->filePointer = @fopen($this->file, $mode);
         $errors = 0;
         while (!@flock($this->filePointer, LOCK_EX | LOCK_SH)) {
             usleep(5000);
-            $errors ++;
+            $errors++;
             if ($errors > 10) {
                 @fclose($this->filePointer);
                 $this->filePointer = false;

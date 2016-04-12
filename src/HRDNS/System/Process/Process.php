@@ -24,10 +24,10 @@ class Process
     /** @var string */
     protected $id = '';
 
-    /** @var integer  */
+    /** @var integer */
     protected $pid = 0;
 
-    /** @var integer  */
+    /** @var integer */
     protected $exitCode = self::EXITCODE_NOT_STARTED;
 
     /** @var callable|null */
@@ -63,7 +63,7 @@ class Process
      * @param mixed $value
      * @return self
      */
-    public function addOption($key, $value)
+    public function addOption(string $key, $value)
     {
         $this->options[(string)$key] = $value;
 
@@ -82,7 +82,7 @@ class Process
      * @param string $key
      * @return null
      */
-    public function getOption($key)
+    public function getOption(string $key)
     {
         return isset($this->options[$key]) ? $this->options[$key] : null;
     }
@@ -186,11 +186,11 @@ class Process
     }
 
     /**
-     * @param integer  $signal
-     * @param integer  $sec
+     * @param integer $signal
+     * @param integer $sec
      * @return boolean
      */
-    public function stop($signal = null, $sec = 3)
+    public function stop(int $signal = null, int $sec = 3)
     {
         $signal = $signal === null ? SIGTERM : $signal;
         if (!$this->isRunning()) {

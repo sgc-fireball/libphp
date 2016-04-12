@@ -2,8 +2,8 @@
 Testing \HRDNS\Socket\Client\UDPClient - check client
 --FILE--
 <?php
-$basePath = preg_replace('/\/tests\/.*/', '', __DIR__);
-require_once($basePath . '/vendor/autoload.php');
+$basePath = preg_replace('/\/tests\/.*/', '', realpath(__DIR__));
+require_once($basePath . '/tests/bootstrap.php');
 
 use \HRDNS\Socket\Client\UDPClient;
 

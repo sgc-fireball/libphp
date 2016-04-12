@@ -94,7 +94,7 @@ class Struct
      * @return self
      * @throws \Exception
      */
-    public function loadFromJSON($json)
+    public function loadFromJSON(string $json)
     {
         $data = json_decode($json);
         $data = $data instanceof \stdClass ? (array)$data : false;
@@ -118,7 +118,7 @@ class Struct
      * @return self
      * @throws \Exception
      */
-    public function loadFromSerialize($serialize)
+    public function loadFromSerialize(string $serialize)
     {
         $data = unserialize($serialize);
         if (!is_array($data)) {
@@ -160,7 +160,7 @@ class Struct
             $type = gettype($value);
             $child->setAttribute('type', $type);
             switch ($type) {
-                case 'boolean':
+                case 'bool':
                     $child->setValue((int)$value);
                     break;
                 case 'integer':

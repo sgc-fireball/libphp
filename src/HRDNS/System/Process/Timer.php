@@ -36,7 +36,7 @@ class Timer
     /**
      * @var array
      */
-    protected $timeouts = array ();
+    protected $timeouts = array();
 
     /**
      * @var int
@@ -46,7 +46,7 @@ class Timer
     /**
      * @var array
      */
-    protected $intervals = array ();
+    protected $intervals = array();
 
     /**
      * @return self
@@ -57,7 +57,7 @@ class Timer
             return self::$instance;
         }
         self::$instance = new self();
-        \register_tick_function(array (self::$instance, 'tick'));
+        \register_tick_function(array(self::$instance, 'tick'));
 
         return self::$instance;
     }
@@ -153,14 +153,14 @@ class Timer
      * @param integer $timeoutTime
      * @return string|boolean
      */
-    public function addTimeout($fnc, $timeoutTime = 1)
+    public function addTimeout($fnc, int $timeoutTime = 1)
     {
         if (!is_callable($fnc)) {
             trigger_error(sprintf('%s :: parameter 1 must be callable or a function name!!', __METHOD__), E_USER_ERROR);
             return false;
         }
         $timeout = new Timer\Timeout(
-            array (
+            array(
                 'func' => $fnc,
                 'run' => $this->currentTime + (int)($timeoutTime * 1000)
             )
@@ -173,7 +173,7 @@ class Timer
      * @param string $timerId
      * @return self
      */
-    public function clearTimeout($timerId)
+    public function clearTimeout(string $timerId)
     {
         if (isset($this->timeouts[$timerId])) {
             unset($this->timeouts[$timerId]);
@@ -186,14 +186,14 @@ class Timer
      * @param integer $intervalTime
      * @return string|boolean
      */
-    public function addInterval(callable $fnc, $intervalTime = 1)
+    public function addInterval(callable $fnc, int $intervalTime = 1)
     {
         if (!is_callable($fnc)) {
             trigger_error(sprintf('%s :: parameter 1 must be callable or a function name!!', __METHOD__), E_USER_ERROR);
             return false;
         }
         $interval = new Timer\Interval(
-            array (
+            array(
                 'func' => $fnc,
                 'lastRun' => $this->currentTime,
                 'interval' => (int)($intervalTime * 1000)
@@ -207,7 +207,7 @@ class Timer
      * @param string $intervalId
      * @return self
      */
-    public function clearInterval($intervalId)
+    public function clearInterval(string $intervalId)
     {
         if (isset($this->intervals[$intervalId])) {
             unset($this->intervals[$intervalId]);

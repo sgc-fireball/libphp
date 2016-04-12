@@ -19,12 +19,12 @@ abstract class Stack implements \Iterator
     /**
      * @var array
      */
-    protected $elements = array ();
+    protected $elements = array();
 
     /**
      * @param array $elements
      */
-    public function __construct(array $elements = array ())
+    public function __construct(array $elements = array())
     {
         $this->position = 0;
         foreach ($elements as $element) {
@@ -107,11 +107,11 @@ abstract class Stack implements \Iterator
     }
 
     /**
-     * @param bool $array
+     * @param boolean $array
      * @return integer
-     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+     * @SuppressWarnings(PHPMD.boolArgumentFlag)
      */
-    public function count($array = false)
+    public function count(bool $array = false)
     {
         $count = count($this->elements);
         return $array ? $count - 1 : $count;
@@ -122,7 +122,7 @@ abstract class Stack implements \Iterator
      */
     public function __sleep()
     {
-        return array ('elements', 'position');
+        return array('elements', 'position');
     }
 
 }

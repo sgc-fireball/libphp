@@ -11,7 +11,7 @@ class Validator
     /**
      * @var array
      */
-    protected $protocols = array (
+    protected $protocols = array(
         'ssl2',
         'ssl3',
         'tls1',
@@ -66,17 +66,17 @@ class Validator
 
     /**
      * @param string $host
-     * @param int $port
+     * @param integer $port
      * @return array
      * @throws \InvalidArgumentException
      */
-    public function verify($host, $port)
+    public function verify(string $host, int $port)
     {
-        $result = array (
+        $result = array(
             'host' => $host,
             'port' => $port,
-            'protocol' => array (),
-            'results' => array ()
+            'protocol' => array(),
+            'results' => array()
         );
 
         foreach ($this->getCiphers() as $cipher) {
@@ -115,7 +115,7 @@ class Validator
      * @return boolean
      * @throws \InvalidArgumentException
      */
-    public function verifySingle($host, $port, $protocol, $cipher)
+    public function verifySingle(string $host, int $port, string $protocol, string $cipher)
     {
         if ($port < 1 || 65535 < $port || !$host) {
             throw new \InvalidArgumentException('Invalid port number.');

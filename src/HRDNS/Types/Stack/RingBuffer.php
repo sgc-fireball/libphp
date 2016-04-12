@@ -17,7 +17,7 @@ class RingBuffer extends Stack
      * @param integer $size
      * @param array $elements
      */
-    public function __construct($size = 1024, array $elements = array ())
+    public function __construct(int $size = 1024, array $elements = array ())
     {
         $this->size = (int)$size;
         $this->size = $this->size < 1 ? 1 : $this->size;

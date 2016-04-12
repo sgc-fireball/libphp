@@ -1,6 +1,6 @@
 {
   "name": "sgc-fireball/libphp",
-  "description": "General useful PHP Library",
+  "description": "General useful PHP7 Library",
   "keywords": ["php", "library"],
   "homepage": "https://www.hrdns.de",
   "authors": [
@@ -16,7 +16,7 @@
   },
   "type": "library",
   "require": {
-    "php": ">=5.5.9",
+    "php": ">=7.0",
     "psr/log": "~1.0",
     "symfony/console": "~3.0"
   },
@@ -38,6 +38,9 @@
     }
   },
   "scripts": {
+    "post-update-cmd": [
+      "composer test"
+    ],
     "test": [
       "phpcs",
       "phpunit",

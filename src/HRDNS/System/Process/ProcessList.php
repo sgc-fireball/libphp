@@ -71,10 +71,10 @@ class ProcessList implements \Iterator
     }
 
     /**
-     * @param int $worker
+     * @param integer $worker
      * @return self
      */
-    public function setWorker($worker)
+    public function setWorker(int $worker)
     {
         $worker = (int)$worker;
         $this->worker = $worker ?: 1;
@@ -166,11 +166,11 @@ class ProcessList implements \Iterator
     }
 
     /**
-     * @param integer  $signal
-     * @param integer  $sec
+     * @param integer $signal
+     * @param integer $sec
      * @return self
      */
-    public function stop($signal = null, $sec = 3)
+    public function stop(int $signal = null, int $sec = 3)
     {
         $signal = $signal === null ? SIGTERM : $signal;
         /** @var Process $process */

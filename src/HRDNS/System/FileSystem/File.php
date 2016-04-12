@@ -13,7 +13,7 @@ class File extends \SplFileObject
      * @param string $openMode
      * @param boolean $useIncludePath
      * @param resource $context
-     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+     * @SuppressWarnings(PHPMD.boolArgumentFlag)
      */
     public function __construct($fileName, $openMode = 'a+', $useIncludePath = false, $context = null)
     {
@@ -24,7 +24,7 @@ class File extends \SplFileObject
      * @param integer $length
      * @return mixed
      */
-    public function read($length)
+    public function read(int $length)
     {
         if (version_compare(phpversion(), '5.5.11', '<')) {
             trigger_error(
@@ -49,7 +49,7 @@ class File extends \SplFileObject
      * @param integer|null $length
      * @return integer
      */
-    public function write($string, $length = null)
+    public function write($string, int $length = null)
     {
         return parent::fwrite($string, $length ?: mb_strlen($string));
     }
@@ -115,7 +115,7 @@ class File extends \SplFileObject
      * @param boolean $useIncludePath
      * @param resource $context
      * @return File
-     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+     * @SuppressWarnings(PHPMD.boolArgumentFlag)
      */
     public function openFile($openMode = 'a+', $useIncludePath = false, $context = null)
     {

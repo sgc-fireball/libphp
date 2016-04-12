@@ -5,7 +5,11 @@ namespace HRDNS\System\FileSystem;
 class TSFile extends File
 {
 
-    public function read($length)
+    /**
+     * @param integer $length
+     * @return boolean|mixed
+     */
+    public function read(int $length)
     {
         if ($this->flock(LOCK_EX) === false) {
             return false;
@@ -18,7 +22,12 @@ class TSFile extends File
         return $content;
     }
 
-    public function write($string, $length = null)
+    /**
+     * @param string $string
+     * @param integer $length
+     * @return bool|integer
+     */
+    public function write($string, int $length = null)
     {
         if ($this->flock(LOCK_EX) === false) {
             return false;

@@ -47,7 +47,7 @@ abstract class UDPServer extends Server
      * @param integer $limit
      * @return self
      */
-    public function listen($limit = -1)
+    public function listen(int $limit = -1)
     {
         while (!$this->isTerminated && ($limit > 0 || $limit == -1)) {
             $limit = $limit == -1 ? -1 : $limit - 1;
@@ -59,11 +59,11 @@ abstract class UDPServer extends Server
 
     /**
      * @param ServerClient $client
-     * @param bool $closeByPeer
+     * @param boolean $closeByPeer
      * @return self
-     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+     * @SuppressWarnings(PHPMD.boolArgumentFlag)
      */
-    public function disconnect(ServerClient $client, $closeByPeer = false)
+    public function disconnect(ServerClient $client, bool $closeByPeer = false)
     {
         $this->onDisconnect($client, $closeByPeer);
         unset($this->clients[$client->getId()]);
@@ -76,7 +76,7 @@ abstract class UDPServer extends Server
      * @param integer|null $length
      * @return boolean|integer
      */
-    public function send(ServerClient $client, $buffer, $length = null)
+    public function send(ServerClient $client, string $buffer, int $length = null)
     {
         $this->onOutgoing($client, $buffer);
         $length = $length === null ? strlen($buffer) : $length;
@@ -142,10 +142,10 @@ abstract class UDPServer extends Server
 
     /**
      * @param string $src
-     * @param int $spt
+     * @param integer $spt
      * @return ServerClient|null
      */
-    protected function getClientByIpAndPort($src, $spt)
+    protected function getClientByIpAndPort(string $src, int $spt)
     {
         foreach ($this->clients as $client) {
             if ($client->getHost() != $src) {

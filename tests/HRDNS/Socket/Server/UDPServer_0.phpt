@@ -2,8 +2,8 @@
 Testing \HRDNS\Socket\Server\TCPServer - check bind
 --FILE--
 <?php
-$basePath = preg_replace('/\/tests\/.*/', '', __DIR__);
-require_once($basePath . '/vendor/autoload.php');
+$basePath = preg_replace('/\/tests\/.*/', '', realpath(__DIR__));
+require_once($basePath . '/tests/bootstrap.php');
 
 use \HRDNS\Socket\Server\UDPServer;
 use \HRDNS\Socket\Server\ServerClient;
@@ -25,7 +25,7 @@ class Server extends UDPServer
      * @param string $buffer
      * @return void
      */
-    public function onIncoming(ServerClient $client, $buffer)
+    public function onIncoming(ServerClient $client, string $buffer)
     {
         echo __METHOD__ . "\n";
     }
@@ -35,7 +35,7 @@ class Server extends UDPServer
      * @param string $buffer
      * @return void
      */
-    public function onOutgoing(ServerClient $client, $buffer)
+    public function onOutgoing(ServerClient $client, string $buffer)
     {
         echo __METHOD__ . "\n";
     }
@@ -45,7 +45,7 @@ class Server extends UDPServer
      * @param bool $closeByPeer
      * @return void
      */
-    public function onDisconnect(ServerClient $client, $closeByPeer = false)
+    public function onDisconnect(ServerClient $client, bool $closeByPeer = false)
     {
         echo __METHOD__ . "\n";
     }

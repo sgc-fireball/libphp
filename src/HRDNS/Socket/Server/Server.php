@@ -21,7 +21,7 @@ abstract class Server
     protected $isTerminated = false;
 
     /** @var ServerClient[] */
-    protected $clients = array ();
+    protected $clients = array();
 
     /** @var integer */
     protected $timeoutSeconds = 1;
@@ -34,7 +34,7 @@ abstract class Server
      * @return self
      * @throws \InvalidArgumentException
      */
-    public function setListen($listen)
+    public function setListen(string $listen)
     {
         $block = '(\d{1,2}|1\d{1,2}|2(0|1|2|3|4)(\d{1})|25(0|1|2|3|4|5))';
         if (!preg_match('/^((' . $block . '\.){3}' . $block . ')$/', $listen)) {
@@ -49,9 +49,8 @@ abstract class Server
      * @return self
      * @throws \InvalidArgumentException
      */
-    public function setPort($port)
+    public function setPort(int $port)
     {
-        $port = (int)$port;
         if ($port < 1 || $port > 65535) {
             throw new \InvalidArgumentException('The port ' . $port . ' is not allowed.');
         }
@@ -64,7 +63,7 @@ abstract class Server
      * @return self
      * @throws \InvalidArgumentException
      */
-    public function setBufferLength($bufferLength)
+    public function setBufferLength(int $bufferLength)
     {
         $bufferLength = (int)$bufferLength;
         if (($bufferLength % 8) !== 0) {
@@ -79,10 +78,10 @@ abstract class Server
      * @param integer $timeoutUSeconds
      * @return self
      */
-    public function setTimeout($timeoutSeconds, $timeoutUSeconds)
+    public function setTimeout(int $timeoutSeconds, int $timeoutUSeconds)
     {
-        $this->timeoutSeconds = (int)$timeoutSeconds;
-        $this->timeoutUSeconds = (int)$timeoutUSeconds;
+        $this->timeoutSeconds = $timeoutSeconds;
+        $this->timeoutUSeconds = $timeoutUSeconds;
         return $this;
     }
 
@@ -124,22 +123,22 @@ abstract class Server
      * @param string $buffer
      * @return void
      */
-    abstract public function onIncoming(ServerClient $client, $buffer);
+    abstract public function onIncoming(ServerClient $client, string $buffer);
 
     /**
      * @param ServerClient $client
      * @param string $buffer
      * @return void
      */
-    abstract public function onOutgoing(ServerClient $client, $buffer);
+    abstract public function onOutgoing(ServerClient $client, string $buffer);
 
     /**
      * @param ServerClient $client
-     * @param bool $closeByPeer
+     * @param boolean $closeByPeer
      * @return void
-     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+     * @SuppressWarnings(PHPMD.boolArgumentFlag)
      */
-    abstract public function onDisconnect(ServerClient $client, $closeByPeer = false);
+    abstract public function onDisconnect(ServerClient $client, bool $closeByPeer = false);
 
     /**
      * @param ServerClient $client
@@ -149,10 +148,10 @@ abstract class Server
 
     /**
      * @param ServerClient $client
-     * @param bool $closeByPeer
+     * @param boolean $closeByPeer
      * @return self
-     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+     * @SuppressWarnings(PHPMD.boolArgumentFlag)
      */
-    abstract public function disconnect(ServerClient $client, $closeByPeer = false);
+    abstract public function disconnect(ServerClient $client, bool $closeByPeer = false);
 
 }

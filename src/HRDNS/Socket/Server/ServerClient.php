@@ -24,7 +24,7 @@ class ServerClient
     private $port = null;
 
     /** @var array */
-    private $attributes = array ();
+    private $attributes = array();
 
     public function __construct()
     {
@@ -57,7 +57,7 @@ class ServerClient
      * @param mixed $value
      * @return self
      */
-    public function setAttribute($key, $value)
+    public function setAttribute(string $key, $value)
     {
         $this->attributes[$key] = $value;
         return $this;
@@ -67,7 +67,7 @@ class ServerClient
      * @param string $key
      * @return mixed
      */
-    public function getAttribute($key)
+    public function getAttribute(string $key)
     {
         if (!isset($this->attributes[$key])) {
             return null;
@@ -87,7 +87,7 @@ class ServerClient
      * @param string $host
      * @return self
      */
-    public function setHost($host)
+    public function setHost(string $host)
     {
         $this->host = $host;
         return $this;
@@ -105,9 +105,9 @@ class ServerClient
      * @param integer $port
      * @return self
      */
-    public function setPort($port)
+    public function setPort(int $port)
     {
-        $this->port = (int)$port;
+        $this->port = $port;
         return $this;
     }
 

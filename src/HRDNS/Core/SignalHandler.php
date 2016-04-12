@@ -39,7 +39,7 @@ class SignalHandler
     const SIGUNUSED = 31;
 
     /**
-     * @var boolean
+     * @var bool
      */
     static protected $terminated = false;
 
@@ -111,7 +111,7 @@ class SignalHandler
      * @param integer $signal
      * @return void
      */
-    public static function fireSignalHandler($signal)
+    public static function fireSignalHandler(int $signal)
     {
         $terminated = !in_array($signal, array (self::SIGCHLD, self::SIGWINCH));
         foreach (self::$signalHandler as $fnc) {
@@ -139,7 +139,7 @@ class SignalHandler
      * @param integer $listenerId
      * @return boolean
      */
-    public static function removeListener($listenerId)
+    public static function removeListener(int $listenerId)
     {
         if (isset(self::$signalHandler[$listenerId])) {
             unset(self::$signalHandler[$listenerId]);
