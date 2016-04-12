@@ -42,9 +42,7 @@
       "composer test"
     ],
     "test": [
-      "phpcs",
       "phpunit",
-      "phpmd src/ text cleancode,codesize,controversial,design,naming,unusedcode --suffixes php"
     ]
   }
 }

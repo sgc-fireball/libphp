@@ -25,7 +25,7 @@ class TSFile extends File
     /**
      * @param string $string
      * @param integer $length
-     * @return bool|integer
+     * @return boolean|integer
      */
     public function write($string, int $length = null)
     {
