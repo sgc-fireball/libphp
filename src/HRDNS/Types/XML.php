@@ -255,7 +255,6 @@ class XML
 
         $deep = $currentXml;
         while ($deep < count($option)) {
-
             $currentXmlArray = $option[$deep];
 
             if ($currentXmlArray['type'] == 'close') {
