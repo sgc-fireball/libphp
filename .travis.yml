@@ -13,6 +13,7 @@ sudo: false
 branches:
     only:
         - master
+        - php7
         - /^\d+\.\d+\.\d+$/
 
 matrix:
