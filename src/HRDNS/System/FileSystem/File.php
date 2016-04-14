@@ -26,21 +26,6 @@ class File extends \SplFileObject
      */
     public function read(int $length)
     {
-        if (version_compare(phpversion(), '5.5.11', '<')) {
-            trigger_error(
-                sprintf(
-                    '%s is not supported on PHP %s < 5.5.11.',
-                    __METHOD__,
-                    phpversion()
-                ),
-                E_USER_WARNING
-            );
-            $buffer = '';
-            while (strlen($buffer) < $length && !$this->eof()) {
-                $buffer .= $this->fgets();
-            }
-            return $buffer;
-        }
         return parent::fread($length);
     }
 
