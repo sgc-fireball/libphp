@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2016-04-16
+- update php7 return values
+
 ## 2016-04-14
 - remove test/HRDNS/SSL/Validator_0.phpt 
 
