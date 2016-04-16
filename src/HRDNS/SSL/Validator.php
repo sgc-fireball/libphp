@@ -6,7 +6,7 @@ class Validator
 {
 
     /** @var string */
-    protected $executeAble = null;
+    protected $executeAble = '';
 
     /**
      * @var array
@@ -33,7 +33,7 @@ class Validator
     /**
      * @return array
      */
-    public function getProtocols()
+    public function getProtocols(): array
     {
         return $this->protocols;
     }
@@ -41,7 +41,7 @@ class Validator
     /**
      * @return array
      */
-    public function getCiphers()
+    public function getCiphers(): array
     {
         static $ciphers;
         if (!isset($ciphers)) {
@@ -66,17 +66,17 @@ class Validator
 
     /**
      * @param string $host
-     * @param integer $port
+     * @param int $port
      * @return array
      * @throws \InvalidArgumentException
      */
-    public function verify(string $host, int $port)
+    public function verify(string $host, int $port): array
     {
         $result = array(
             'host' => $host,
             'port' => $port,
-            'protocol' => array(),
-            'results' => array()
+            'protocol' => [],
+            'results' => []
         );
 
         foreach ($this->getCiphers() as $cipher) {
@@ -109,13 +109,13 @@ class Validator
 
     /**
      * @param string $host
-     * @param integer $port
+     * @param int $port
      * @param string $protocol
      * @param string $cipher
-     * @return boolean
+     * @return bool
      * @throws \InvalidArgumentException
      */
-    public function verifySingle(string $host, int $port, string $protocol, string $cipher)
+    public function verifySingle(string $host, int $port, string $protocol, string $cipher): bool
     {
         if ($port < 1 || 65535 < $port || !$host) {
             throw new \InvalidArgumentException('Invalid port number.');

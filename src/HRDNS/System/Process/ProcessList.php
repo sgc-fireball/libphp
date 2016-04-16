@@ -13,7 +13,7 @@ class ProcessList implements \Iterator
     /**
      * @var Process[]
      */
-    protected $processes = array();
+    protected $processes = [];
 
     /**
      * @var int
@@ -53,9 +53,9 @@ class ProcessList implements \Iterator
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
-    public function valid()
+    public function valid(): bool
     {
         return $this->current() !== false;
     }
@@ -64,27 +64,30 @@ class ProcessList implements \Iterator
      * @param Process $process
      * @return self
      */
-    public function addProcess(Process $process)
+    public function addProcess(Process $process): self
     {
         $this->processes[$process->getId()] = $process;
         return $this;
     }
 
     /**
-     * @param integer $worker
-     * @return self
+     * @param int $worker
+     * @return ProcessList
+     * @throws \InvalidArgumentException
      */
-    public function setWorker(int $worker)
+    public function setWorker(int $worker): self
     {
-        $worker = (int)$worker;
-        $this->worker = $worker ?: 1;
+        if ($worker < 1) {
+            throw new \InvalidArgumentException('Invalid value '.$worker.' count. Minimum 1 worker must be exist.');
+        }
+        $this->worker = $worker;
         return $this;
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
-    public function isRunning()
+    public function isRunning(): bool
     {
         /** @var Process $process */
         foreach ($this->processes as $process) {
@@ -92,14 +95,13 @@ class ProcessList implements \Iterator
                 return true;
             }
         }
-
         return false;
     }
 
     /**
      * @return self
      */
-    public function start()
+    public function start(): self
     {
         $active = 0;
         /** @var Process $process */
@@ -114,11 +116,11 @@ class ProcessList implements \Iterator
                 $active++;
             }
         }
-
         return $this;
     }
 
     /**
+     * @todo fix mixed return types!
      * @return Process|null
      */
     public function getFreeProcess()
@@ -129,7 +131,6 @@ class ProcessList implements \Iterator
                 return $process;
             }
         }
-
         return null;
     }
 
@@ -137,14 +138,14 @@ class ProcessList implements \Iterator
      * @return array
      * @SuppressWarnings(PHPMD.ElseExpression)
      */
-    public function getStats()
+    public function getStats(): array
     {
         $stats = array(
             'worker' => $this->worker,
             'count' => count($this->processes),
             'running' => 0,
             'stopped' => 0,
-            'processes' => array(),
+            'processes' => [],
         );
         /**
          * @var string $id
@@ -161,13 +162,12 @@ class ProcessList implements \Iterator
                 $stats['stopped']++;
             }
         }
-
         return $stats;
     }
 
     /**
-     * @param integer $signal
-     * @param integer $sec
+     * @param int $signal
+     * @param int $sec
      * @return self
      */
     public function stop(int $signal = null, int $sec = 3)
@@ -177,7 +177,6 @@ class ProcessList implements \Iterator
         foreach ($this->processes as $process) {
             $process->stop($signal, $sec);
         }
-
         return $this;
     }
 

@@ -5,14 +5,14 @@ namespace HRDNS\System\FileSystem;
 class File extends \SplFileObject
 {
 
-    /** @var integer */
+    /** @var int */
     protected $tailSeek = -1;
 
     /**
      * @param mixed $fileName
      * @param string $openMode
-     * @param boolean $useIncludePath
-     * @param resource $context
+     * @param bool $useIncludePath
+     * @param resource|null $context
      * @SuppressWarnings(PHPMD.boolArgumentFlag)
      */
     public function __construct($fileName, $openMode = 'a+', $useIncludePath = false, $context = null)
@@ -21,8 +21,9 @@ class File extends \SplFileObject
     }
 
     /**
-     * @param integer $length
-     * @return mixed
+     * @todo fix mixed return types!
+     * @param int $length
+     * @return string|bool
      */
     public function read(int $length)
     {
@@ -30,9 +31,10 @@ class File extends \SplFileObject
     }
 
     /**
+     * @todo fix mixed return types!
      * @param mixed $string
-     * @param integer|null $length
-     * @return integer
+     * @param int|null $length
+     * @return int|bool
      */
     public function write($string, int $length = null)
     {
@@ -40,7 +42,8 @@ class File extends \SplFileObject
     }
 
     /**
-     * @return boolean|string
+     * @todo fix mixed return types!
+     * @return bool|string
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     public function tail()
@@ -88,21 +91,21 @@ class File extends \SplFileObject
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
-    public function unlink()
+    public function unlink(): bool
     {
         return unlink($this->getPathname());
     }
 
     /**
      * @param string $openMode
-     * @param boolean $useIncludePath
+     * @param bool $useIncludePath
      * @param resource $context
      * @return File
      * @SuppressWarnings(PHPMD.boolArgumentFlag)
      */
-    public function openFile($openMode = 'a+', $useIncludePath = false, $context = null)
+    public function openFile($openMode = 'a+', $useIncludePath = false, $context = null): self
     {
         $className = get_class($this);
         return new $className($this->getPathname($openMode, $useIncludePath, $context));

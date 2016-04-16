@@ -9,7 +9,7 @@ class TCPClient extends Client
      * @return self
      * @throws \Exception
      */
-    public function connect()
+    public function connect(): self
     {
         if (is_resource($this->socket)) {
             return $this;
@@ -67,8 +67,9 @@ class TCPClient extends Client
     }
 
     /**
-     * @param integer|null $length
-     * @return string|boolean
+     * @todo fix mixed return types!
+     * @param int|null $length
+     * @return string|bool
      */
     public function read(int $length = null)
     {
@@ -80,9 +81,10 @@ class TCPClient extends Client
     }
 
     /**
+     * @todo fix mixed return types!
      * @param string $buffer
-     * @param integer|null $length
-     * @return boolean|integer
+     * @param int|null $length
+     * @return int|bool
      */
     public function write(string $buffer, int $length = null)
     {

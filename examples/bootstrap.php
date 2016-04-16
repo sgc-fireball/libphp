@@ -7,6 +7,9 @@ ini_set('memory_limit', -1);
 if (!defined('DS')) {
     define('DS', DIRECTORY_SEPARATOR);
 }
+if (!defined('NL')) {
+    define('NL', PHP_EOL);
+}
 
 $path = __DIR__;
 $loaded = false;
@@ -22,9 +25,9 @@ while ($path != DS && !empty($path)) {
     $path = dirname($path);
 }
 if (!$loaded) {
-    $msg = 'You need to set up the project dependencies using the following commands:' . PHP_EOL;
-    $msg .= 'wget http://getcomposer.org/composer.phar' . PHP_EOL;
-    $msg .= 'php composer.phar install' . PHP_EOL;
+    $msg = 'You need to set up the project dependencies using the following commands:' . NL;
+    $msg .= 'wget http://getcomposer.org/composer.phar' . NL;
+    $msg .= 'php composer.phar install' . NL;
     fwrite(STDERR, $msg);
     exit(1);
 }

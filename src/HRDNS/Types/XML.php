@@ -26,40 +26,43 @@ class XML
     protected $cData = false;
 
     /** @var array */
-    protected $attributes = array();
+    protected $attributes = [];
 
     /** @var array */
-    protected $children = array();
+    protected $children = [];
 
     /** @var array */
-    protected $currentChild = array();
+    protected $currentChild = [];
 
     /** @var bool */
     protected $root = false;
 
     /**
      * @param string|null $xml
+     * @return void
      */
     public function __construct(string $xml = null)
     {
-        $xml ? $this->parse($xml) : null;
+        if ($xml) {
+            $this->parse($xml);
+        }
     }
 
     /**
-     * @param boolean $root
+     * @param bool $root
      * @return self
      * @SuppressWarnings(PHPMD.boolArgumentFlag)
      */
-    public function setRoot(bool $root = false)
+    public function setRoot(bool $root = false): self
     {
         $this->root = $root;
         return $this;
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
-    public function isRoot()
+    public function isRoot(): bool
     {
         return $this->root;
     }
@@ -67,7 +70,7 @@ class XML
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -76,7 +79,7 @@ class XML
      * @param string $name
      * @return self
      */
-    public function setName(string $name)
+    public function setName(string $name): self
     {
         $this->name = $name;
         return $this;
@@ -85,7 +88,7 @@ class XML
     /**
      * @return string
      */
-    public function getValue()
+    public function getValue(): string
     {
         return $this->value;
     }
@@ -94,7 +97,7 @@ class XML
      * @param string $value
      * @return self
      */
-    public function setValue(string $value)
+    public function setValue(string $value): self
     {
         if (strlen($value) > 256) {
             $this->setCData(true);
@@ -107,18 +110,18 @@ class XML
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
-    public function isCData()
+    public function isCData(): bool
     {
         return $this->cData;
     }
 
     /**
-     * @param boolean $cData
+     * @param bool $cData
      * @return self
      */
-    public function setCData(bool $cData)
+    public function setCData(bool $cData): self
     {
         $this->cData = $cData;
         return $this;
@@ -127,18 +130,18 @@ class XML
     /**
      * @return array
      */
-    public function getAttributes()
+    public function getAttributes(): array
     {
         return $this->attributes;
     }
 
     /**
+     * @todo fix mixed return types!
      * @param string $name
-     * @return mixed|boolean
+     * @return mixed|bool
      */
     public function getAttribute(string $name)
     {
-        $name = (string)$name;
         return isset($this->attributes[$name]) ? $this->attributes[$name] : false;
     }
 
@@ -146,7 +149,7 @@ class XML
      * @param array $attributes
      * @return self
      */
-    public function setAttributes(array $attributes = array())
+    public function setAttributes(array $attributes = []): self
     {
         $this->attributes = $attributes;
         return $this;
@@ -157,15 +160,16 @@ class XML
      * @param mixed $value
      * @return self
      */
-    public function setAttribute(string $name, $value = null)
+    public function setAttribute(string $name, $value = null): self
     {
         $this->attributes[$name] = $value;
         return $this;
     }
 
     /**
+     * @todo fix mixed return types!
      * @param self|array $xml
-     * @return self|boolean
+     * @return self|bool
      */
     public function appendChild($xml)
     {
@@ -183,7 +187,7 @@ class XML
     /**
      * @return string
      */
-    public function getCharset()
+    public function getCharset(): string
     {
         return $this->charset;
     }
@@ -192,19 +196,20 @@ class XML
      * @param string $charset
      * @return self
      */
-    public function setCharset(string $charset)
+    public function setCharset(string $charset): self
     {
         $this->charset = $charset;
         return $this;
     }
 
     /**
+     * @todo fix mixed return types!
      * @param string $xml
      * @param string $charset
-     * @param integer $tagStart
-     * @param integer $skipWhite
-     * @param integer $caseFolding
-     * @return self|boolean
+     * @param int $tagStart
+     * @param int $skipWhite
+     * @param int $caseFolding
+     * @return self|bool
      */
     public function parse(
         string $xml,
@@ -237,23 +242,23 @@ class XML
 
     /**
      * @param array $option
-     * @param integer $currentXml
+     * @param int $currentXml
      * @return array
      */
-    private function internalParse(array &$option, int $currentXml = 0)
+    private function internalParse(array &$option, int $currentXml = 0): array
     {
         if ($currentXml == 0) {
             if (!isset($option[0])) {
-                return array();
+                return [];
             }
             $currentXmlArray = $option[0];
             $this->setName(isset($currentXmlArray['tag']) ? $currentXmlArray['tag'] : 'noname');
             $this->setValue(isset($currentXmlArray['value']) ? $currentXmlArray['value'] : '');
-            $this->setAttributes(isset($currentXmlArray['attributes']) ? $currentXmlArray['attributes'] : array());
+            $this->setAttributes(isset($currentXmlArray['attributes']) ? $currentXmlArray['attributes'] : []);
             $this->setRoot(true);
         }
 
-        $xmlArray = array();
+        $xmlArray = [];
         $currentXml++;
 
         $deep = $currentXml;
@@ -268,7 +273,7 @@ class XML
             $xmlObject->setName(isset($currentXmlArray['tag']) ? $currentXmlArray['tag'] : 'noname');
             $xmlObject->setValue(isset($currentXmlArray['value']) ? $currentXmlArray['value'] : '');
             $xmlObject->setAttributes(
-                isset($currentXmlArray['attributes']) ? $currentXmlArray['attributes'] : array()
+                isset($currentXmlArray['attributes']) ? $currentXmlArray['attributes'] : []
             );
 
             if ($currentXmlArray['type'] == 'open') {
@@ -291,7 +296,7 @@ class XML
      * @param string|null $searchNode
      * @return array
      */
-    public function getChildren(string $searchNode = null)
+    public function getChildren(string $searchNode = null): array
     {
         if (!$searchNode) {
             return $this->children;
@@ -301,13 +306,14 @@ class XML
                 return $children;
             }
         }
-        return array();
+        return [];
     }
 
     /**
+     * @todo fix mixed return types!
      * @param string $nodeName
-     * @param integer $note
-     * @return self|boolean
+     * @param int $note
+     * @return self|bool
      */
     public function getChild(string $nodeName, int $note = 0)
     {
@@ -322,17 +328,18 @@ class XML
 
     /**
      * @param string $nodeName
-     * @param integer $note
-     * @return boolean
+     * @param int $note
+     * @return bool
      */
-    public function childExists(string $nodeName, int $note = 0)
+    public function childExists(string $nodeName, int $note = 0): bool
     {
         return ($this->getChild($nodeName, $note) instanceof XML);
     }
 
     /**
+     * @todo fix mixed return types!
      * @param string $nodeName
-     * @return self|boolean
+     * @return self|bool
      * @SuppressWarnings(PHPMD.ElseExpression)
      */
     public function getNode(string $nodeName)
@@ -354,9 +361,9 @@ class XML
     }
 
     /**
-     * @return integer
+     * @return int
      */
-    public function getLength()
+    public function getLength(): int
     {
         $count = 0;
         foreach ($this->children as $children) {
@@ -366,7 +373,8 @@ class XML
     }
 
     /**
-     * @return self|boolean
+     * @todo fix mixed return types!
+     * @return self|bool
      * @SuppressWarnings(PHPMD.ElseExpression)
      */
     public function next()
@@ -395,16 +403,16 @@ class XML
                 }
             }
         }
-        $this->currentChild = array();
+        $this->currentChild = [];
         return false;
     }
 
     /**
-     * @param integer $deep
+     * @param int $deep
      * @return string
      * @SuppressWarnings(PHPMD.ElseExpression)
      */
-    public function getXML(int $deep = -1)
+    public function getXML(int $deep = -1): string
     {
         $deep++;
         $xml = '';
@@ -449,7 +457,7 @@ class XML
      * @param string $value
      * @return string
      */
-    public function escape(string $value)
+    public function escape(string $value): string
     {
         $value = str_replace('&', '&amp;', $value);
         $value = str_replace('"', '&quot;', $value);
@@ -462,16 +470,16 @@ class XML
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getXML();
     }
 
     /**
-     * @param integer $deep
+     * @param int $deep
      * @return string
      */
-    public function padding(int $deep = 0)
+    public function padding(int $deep = 0): string
     {
         $value = '';
         for ($count = 0 ; $count < $deep ; $count++) {

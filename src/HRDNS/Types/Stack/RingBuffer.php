@@ -7,17 +7,17 @@ use HRDNS\Types\Stack;
 class RingBuffer extends Stack
 {
 
-    /** @var integer */
+    /** @var int */
     protected $size = 1024;
 
-    /** @var integer */
+    /** @var int */
     protected $index = 0;
 
     /**
-     * @param integer $size
+     * @param int $size
      * @param array $elements
      */
-    public function __construct(int $size = 1024, array $elements = array ())
+    public function __construct(int $size = 1024, array $elements = [])
     {
         $this->size = (int)$size;
         $this->size = $this->size < 1 ? 1 : $this->size;
@@ -30,18 +30,19 @@ class RingBuffer extends Stack
 
     /**
      * @param mixed $element
-     * @return void
+     * @return Stack
      */
-    public function push($element = null)
+    public function push($element): Stack
     {
         $this->elements[$this->index++] = $element;
         $this->index = $this->index >= $this->size ? 0 : $this->index;
+        return $this;
     }
 
     /**
-     * @return integer
+     * @return int
      */
-    public function key()
+    public function key(): int
     {
         return $this->position;
     }
@@ -63,9 +64,9 @@ class RingBuffer extends Stack
 
     /**
      * @param mixed $element
-     * @return void
+     * @return Stack
      */
-    public function remove($element)
+    public function remove($element): Stack
     {
         $key = array_search($element, $this->elements, true);
         if ($key === false) {
@@ -73,16 +74,16 @@ class RingBuffer extends Stack
         }
         $this->elements[$key] = null;
         $this->elements = array_values($this->elements);
+        return $this;
     }
 
     /**
      * @return array
      */
-    public function __sleep()
+    public function __sleep(): array
     {
         $array = parent::__sleep();
-        $array += array ('size', 'in');
-
+        $array += ['size', 'in'];
         return $array;
     }
 

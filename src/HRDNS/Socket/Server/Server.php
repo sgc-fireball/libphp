@@ -5,13 +5,13 @@ namespace HRDNS\Socket\Server;
 abstract class Server
 {
 
-    /** @var integer */
+    /** @var int */
     protected $port = 20;
 
     /** @var string */
     protected $listen = '0.0.0.0';
 
-    /** @var integer */
+    /** @var int */
     protected $bufferLength = 8192;
 
     /** @var resource */
@@ -21,12 +21,12 @@ abstract class Server
     protected $isTerminated = false;
 
     /** @var ServerClient[] */
-    protected $clients = array();
+    protected $clients = [];
 
-    /** @var integer */
+    /** @var int */
     protected $timeoutSeconds = 1;
 
-    /** @var integer */
+    /** @var int */
     protected $timeoutUSeconds = 0;
 
     /**
@@ -34,7 +34,7 @@ abstract class Server
      * @return self
      * @throws \InvalidArgumentException
      */
-    public function setListen(string $listen)
+    public function setListen(string $listen): self
     {
         $block = '(\d{1,2}|1\d{1,2}|2(0|1|2|3|4)(\d{1})|25(0|1|2|3|4|5))';
         if (!preg_match('/^((' . $block . '\.){3}' . $block . ')$/', $listen)) {
@@ -45,11 +45,11 @@ abstract class Server
     }
 
     /**
-     * @param integer $port
+     * @param int $port
      * @return self
      * @throws \InvalidArgumentException
      */
-    public function setPort(int $port)
+    public function setPort(int $port): self
     {
         if ($port < 1 || $port > 65535) {
             throw new \InvalidArgumentException('The port ' . $port . ' is not allowed.');
@@ -59,11 +59,11 @@ abstract class Server
     }
 
     /**
-     * @param integer $bufferLength
+     * @param int $bufferLength
      * @return self
      * @throws \InvalidArgumentException
      */
-    public function setBufferLength(int $bufferLength)
+    public function setBufferLength(int $bufferLength): self
     {
         $bufferLength = (int)$bufferLength;
         if (($bufferLength % 8) !== 0) {
@@ -74,11 +74,11 @@ abstract class Server
     }
 
     /**
-     * @param integer $timeoutSeconds
-     * @param integer $timeoutUSeconds
+     * @param int $timeoutSeconds
+     * @param int $timeoutUSeconds
      * @return self
      */
-    public function setTimeout(int $timeoutSeconds, int $timeoutUSeconds)
+    public function setTimeout(int $timeoutSeconds, int $timeoutUSeconds): self
     {
         $this->timeoutSeconds = $timeoutSeconds;
         $this->timeoutUSeconds = $timeoutUSeconds;
@@ -88,16 +88,16 @@ abstract class Server
     /**
      * @return self
      */
-    public function terminated()
+    public function terminated(): self
     {
         $this->isTerminated = true;
         return $this;
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
-    public function hasTerminated()
+    public function hasTerminated(): bool
     {
         return $this->isTerminated;
     }
@@ -134,7 +134,7 @@ abstract class Server
 
     /**
      * @param ServerClient $client
-     * @param boolean $closeByPeer
+     * @param bool $closeByPeer
      * @return void
      * @SuppressWarnings(PHPMD.boolArgumentFlag)
      */
@@ -148,7 +148,7 @@ abstract class Server
 
     /**
      * @param ServerClient $client
-     * @param boolean $closeByPeer
+     * @param bool $closeByPeer
      * @return self
      * @SuppressWarnings(PHPMD.boolArgumentFlag)
      */

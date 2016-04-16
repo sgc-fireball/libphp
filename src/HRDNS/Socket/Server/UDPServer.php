@@ -9,7 +9,7 @@ abstract class UDPServer extends Server
      * @return self
      * @throws \Exception
      */
-    public function bind()
+    public function bind(): self
     {
         $this->masterSocket = @socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
         if ($this->masterSocket === null) {
@@ -44,10 +44,10 @@ abstract class UDPServer extends Server
     }
 
     /**
-     * @param integer $limit
+     * @param int $limit
      * @return self
      */
-    public function listen(int $limit = -1)
+    public function listen(int $limit = -1): self
     {
         while (!$this->isTerminated && ($limit > 0 || $limit == -1)) {
             $limit = $limit == -1 ? -1 : $limit - 1;
@@ -59,11 +59,11 @@ abstract class UDPServer extends Server
 
     /**
      * @param ServerClient $client
-     * @param boolean $closeByPeer
+     * @param bool $closeByPeer
      * @return self
      * @SuppressWarnings(PHPMD.boolArgumentFlag)
      */
-    public function disconnect(ServerClient $client, bool $closeByPeer = false)
+    public function disconnect(ServerClient $client, bool $closeByPeer = false): self
     {
         $this->onDisconnect($client, $closeByPeer);
         unset($this->clients[$client->getId()]);
@@ -71,10 +71,11 @@ abstract class UDPServer extends Server
     }
 
     /**
+     * @todo fix mixed return types!
      * @param ServerClient $client
      * @param string $buffer
-     * @param integer|null $length
-     * @return boolean|integer
+     * @param int|null $length
+     * @return int|bool
      */
     public function send(ServerClient $client, string $buffer, int $length = null)
     {
@@ -89,7 +90,7 @@ abstract class UDPServer extends Server
     /**
      * @return self
      */
-    protected function workOnMasterSocket()
+    protected function workOnMasterSocket(): self
     {
         if (@socket_recvfrom(
             $this->masterSocket,
@@ -117,10 +118,10 @@ abstract class UDPServer extends Server
         return $this;
     }
 
-    /**
+    /**f
      * @return self
      */
-    protected function workOnClientSockets()
+    protected function workOnClientSockets(): self
     {
         foreach ($this->clients as $client) {
             if ($this->isTerminated) {
@@ -141,8 +142,9 @@ abstract class UDPServer extends Server
     }
 
     /**
+     * @todo fix mixed return types!
      * @param string $src
-     * @param integer $spt
+     * @param int $spt
      * @return ServerClient|null
      */
     protected function getClientByIpAndPort(string $src, int $spt)

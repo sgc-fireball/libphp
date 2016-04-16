@@ -5,14 +5,14 @@ namespace HRDNS\Socket\Server;
 abstract class TCPServer extends Server
 {
 
-    /** @var integer */
+    /** @var int */
     protected $maxClients = 20;
 
     /**
-     * @param integer $maxClients
+     * @param int $maxClients
      * @return self
      */
-    public function setMaxClients(int $maxClients)
+    public function setMaxClients(int $maxClients): self
     {
         $this->maxClients = max(1, (int)$maxClients);
         return $this;
@@ -22,7 +22,7 @@ abstract class TCPServer extends Server
      * @return self
      * @throws \Exception
      */
-    public function bind()
+    public function bind(): self
     {
         $this->masterSocket = @socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
         @socket_set_option($this->masterSocket, SOL_SOCKET, SO_REUSEADDR, 1);
@@ -74,16 +74,16 @@ abstract class TCPServer extends Server
     }
 
     /**
-     * @param integer $limit
+     * @param int $limit
      * @return self
      */
-    public function listen(int $limit = -1)
+    public function listen(int $limit = -1): self
     {
         while (!$this->isTerminated && ($limit > 0 || $limit == -1)) {
             $this->workOnMasterSocket();
 
             $limit = $limit == -1 ? -1 : $limit - 1;
-            $read = $write = $except = array();
+            $read = $write = $except = [];
             foreach ($this->clients as $client) {
                 $read[] = $client->getSocket();
             }
@@ -104,11 +104,11 @@ abstract class TCPServer extends Server
 
     /**
      * @param ServerClient $client
-     * @param boolean $closeByPeer
+     * @param bool $closeByPeer
      * @return self
      * @SuppressWarnings(PHPMD.boolArgumentFlag)
      */
-    public function disconnect(ServerClient $client, bool $closeByPeer = false)
+    public function disconnect(ServerClient $client, bool $closeByPeer = false): self
     {
         if ($client->getSocket() === null) {
             return $this;
@@ -121,10 +121,11 @@ abstract class TCPServer extends Server
     }
 
     /**
+     * @todo fix mixed return types!
      * @param ServerClient $client
      * @param string $buffer
-     * @param integer|null $length
-     * @return boolean|integer
+     * @param int|null $length
+     * @return int|bool
      */
     public function send(ServerClient $client, string $buffer, int $length = null)
     {
@@ -142,7 +143,7 @@ abstract class TCPServer extends Server
     /**
      * @return self
      */
-    protected function workOnMasterSocket()
+    protected function workOnMasterSocket(): self
     {
         $socket = @socket_accept($this->masterSocket);
         if (is_resource($socket)) {
@@ -161,7 +162,7 @@ abstract class TCPServer extends Server
      * @param resource[] $read
      * @return self
      */
-    protected function workOnClientSockets(array $read = array())
+    protected function workOnClientSockets(array $read = []): self
     {
         /** @var resource $socket */
         foreach ($read as $socket) {
@@ -185,7 +186,7 @@ abstract class TCPServer extends Server
      * @param ServerClient $client
      * @return self
      */
-    protected function workOnClientSocket(ServerClient $client)
+    protected function workOnClientSocket(ServerClient $client): self
     {
         $bytes = @socket_recv($client->getSocket(), $buffer, $this->bufferLength, 0);
         if ($bytes !== 0 && $bytes !== false) {
@@ -197,6 +198,7 @@ abstract class TCPServer extends Server
     }
 
     /**
+     * @todo fix mixed return types!
      * @param resource $socket
      * @return ServerClient|null
      */

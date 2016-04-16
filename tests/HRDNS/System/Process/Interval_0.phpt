@@ -20,7 +20,7 @@ $timer->addInterval(
 );
 
 while (time() - $startTime < 4) {
-    usleep(250);
+    usleep(50);
 }
 ?>
 --EXPECT--

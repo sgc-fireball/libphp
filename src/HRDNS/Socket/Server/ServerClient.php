@@ -18,13 +18,13 @@ class ServerClient
     private $socket = null;
 
     /** @var string */
-    private $host = null;
+    private $host = '';
 
-    /** @var integer */
-    private $port = null;
+    /** @var int */
+    private $port = 0;
 
     /** @var array */
-    private $attributes = array();
+    private $attributes = [];
 
     public function __construct()
     {
@@ -34,7 +34,7 @@ class ServerClient
     /**
      * @return string
      */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
@@ -43,7 +43,7 @@ class ServerClient
      * @param resource|null $socket
      * @return self
      */
-    public function setSocket($socket)
+    public function setSocket($socket): self
     {
         if (!is_resource($socket)) {
             $socket = null;
@@ -57,15 +57,16 @@ class ServerClient
      * @param mixed $value
      * @return self
      */
-    public function setAttribute(string $key, $value)
+    public function setAttribute(string $key, $value): self
     {
         $this->attributes[$key] = $value;
         return $this;
     }
 
     /**
+     * @todo fix mixed return types!
      * @param string $key
-     * @return mixed
+     * @return mixed|null
      */
     public function getAttribute(string $key)
     {
@@ -76,6 +77,7 @@ class ServerClient
     }
 
     /**
+     * @todo fix mixed return types!
      * @return resource|null
      */
     public function getSocket()
@@ -87,14 +89,14 @@ class ServerClient
      * @param string $host
      * @return self
      */
-    public function setHost(string $host)
+    public function setHost(string $host): self
     {
         $this->host = $host;
         return $this;
     }
 
     /**
-     * @return string|null
+     * @return string
      */
     public function getHost()
     {
@@ -102,19 +104,22 @@ class ServerClient
     }
 
     /**
-     * @param integer $port
+     * @param int $port
      * @return self
      */
-    public function setPort(int $port)
+    public function setPort(int $port): self
     {
+        if ($port < 0 || $port > 65535) {
+            throw new \Exception('The port ' . $port . ' is not allowed.');
+        }
         $this->port = $port;
         return $this;
     }
 
     /**
-     * @return integer|null
+     * @return int
      */
-    public function getPort()
+    public function getPort(): int
     {
         return $this->port;
     }

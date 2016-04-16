@@ -12,19 +12,20 @@ abstract class Stack implements \Iterator
 {
 
     /**
-     * @var integer
+     * @var int
      */
     protected $position = 0;
 
     /**
      * @var array
      */
-    protected $elements = array();
+    protected $elements = [];
 
     /**
      * @param array $elements
+     * @return void
      */
-    public function __construct(array $elements = array())
+    public function __construct(array $elements = [])
     {
         $this->position = 0;
         foreach ($elements as $element) {
@@ -54,9 +55,9 @@ abstract class Stack implements \Iterator
     abstract public function key();
 
     /**
-     * @return boolean
+     * @return bool
      */
-    public function valid()
+    public function valid(): bool
     {
         return isset($this->elements[$this->position]);
     }
@@ -71,11 +72,12 @@ abstract class Stack implements \Iterator
 
     /**
      * @param mixed $element
-     * @return void
+     * @return self
      */
-    public function push($element)
+    public function push($element): self
     {
         $this->elements[] = $element;
+        return $this;
     }
 
     /**
@@ -94,24 +96,25 @@ abstract class Stack implements \Iterator
 
     /**
      * @param mixed $element
-     * @return void
+     * @return self
      */
-    public function remove($element)
+    public function remove($element): self
     {
         $key = array_search($element, $this->elements, true);
         if ($key === false) {
-            return;
+            return $this;
         }
         unset($this->elements[$key]);
         $this->elements = array_values($this->elements);
+        return $this;
     }
 
     /**
-     * @param boolean $array
-     * @return integer
+     * @param bool $array
+     * @return int
      * @SuppressWarnings(PHPMD.boolArgumentFlag)
      */
-    public function count(bool $array = false)
+    public function count(bool $array = false): int
     {
         $count = count($this->elements);
         return $array ? $count - 1 : $count;
@@ -120,9 +123,9 @@ abstract class Stack implements \Iterator
     /**
      * @return array
      */
-    public function __sleep()
+    public function __sleep(): array
     {
-        return array('elements', 'position');
+        return ['elements', 'position'];
     }
 
 }

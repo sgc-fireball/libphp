@@ -5,22 +5,23 @@ namespace HRDNS\System\SharedStorage;
 class File
 {
 
-    /** @var integer */
-    protected $file = null;
+    /** @var string */
+    protected $file = '';
 
     /** @var resource */
     protected $filePointer = null;
 
     /**
-     * @return integer
+     * @return string
      */
-    public function getFile()
+    public function getFile(): string
     {
         return $this->file;
     }
 
     /**
      * @param string $file
+     * @return void
      */
     public function __construct(string $file = null)
     {
@@ -33,15 +34,16 @@ class File
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
-    public function exists()
+    public function exists(): bool
     {
         return file_exists($this->file);
     }
 
     /**
-     * @return null|string
+     * @todo fix mixed return types!
+     * @return string|null
      */
     public function read()
     {
@@ -55,19 +57,18 @@ class File
         $size = ftell($this->filePointer);
         if ($size === 0) {
             $this->selfUnlock();
-
             return null;
         }
         fseek($this->filePointer, 0, SEEK_SET);
         $data = (string)fread($this->filePointer, $size);
         $this->selfUnlock();
-
         return $data;
     }
 
     /**
+     * @todo fix mixed return types!
      * @param string $data
-     * @return boolean
+     * @return int|bool
      */
     public function write(string $data)
     {
@@ -76,28 +77,26 @@ class File
         }
         $result = fwrite($this->filePointer, $data, mb_strlen($data, 'UTF-8')) !== false;
         $this->selfUnlock();
-
         return $result;
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
-    public function delete()
+    public function delete(): bool
     {
         if (!$this->exists()) {
             return true;
         }
         $this->selfUnlock();
-
         return (bool)unlink($this->file);
     }
 
     /**
      * @param string $mode
-     * @return boolean
+     * @return bool
      */
-    protected function selfLock(string $mode)
+    protected function selfLock(string $mode): bool
     {
         $this->filePointer = @fopen($this->file, $mode);
         $errors = 0;
@@ -109,7 +108,6 @@ class File
                 $this->filePointer = false;
             }
         }
-
         return is_resource($this->filePointer);
     }
 

@@ -38,19 +38,13 @@ class SignalHandler
     const SIGPWR = 30;
     const SIGUNUSED = 31;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     static protected $terminated = false;
 
-    /**
-     * @var callable[]
-     */
-    static protected $signalHandler = array ();
+    /** @var callable[] */
+    static protected $signalHandler = [];
 
-    /**
-     * @var String[]
-     */
+    /** @var string[] */
     static protected $signalNames = array (
         1 => 'SIGHUP',
         2 => 'SIGINT',
@@ -87,16 +81,13 @@ class SignalHandler
     );
 
     /**
-     * @return boolean
+     * @return bool
      */
-    public static function hasTerminated()
+    public static function hasTerminated(): bool
     {
         return self::$terminated;
     }
 
-    /**
-     * @return void
-     */
     public static function init()
     {
         foreach (array_keys(self::$signalNames) as $signal) {
@@ -108,7 +99,7 @@ class SignalHandler
     }
 
     /**
-     * @param integer $signal
+     * @param int $signal
      * @return void
      */
     public static function fireSignalHandler(int $signal)
@@ -126,9 +117,9 @@ class SignalHandler
 
     /**
      * @param callable $fnc
-     * @return boolean|string
+     * @return string
      */
-    public static function addListener(callable $fnc)
+    public static function addListener(callable $fnc): string
     {
         $listenerId = uniqid('signal_handler');
         self::$signalHandler[$listenerId] = $fnc;
@@ -136,15 +127,13 @@ class SignalHandler
     }
 
     /**
-     * @param integer $listenerId
-     * @return boolean
+     * @param int $listenerId
      */
     public static function removeListener(int $listenerId)
     {
         if (isset(self::$signalHandler[$listenerId])) {
             unset(self::$signalHandler[$listenerId]);
         }
-        return true;
     }
 
 }

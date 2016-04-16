@@ -17,12 +17,12 @@ class Color
     /**
      * converts rgb 2 hsv color value
      *
-     * @param integer $red
-     * @param integer $green
-     * @param integer $blue
+     * @param int $red
+     * @param int $green
+     * @param int $blue
      * @return array
      */
-    public function rgb2hsv(int $red = 0, int $green = 0, int $blue = 0)
+    public function rgb2hsv(int $red = 0, int $green = 0, int $blue = 0): array
     {
         if (is_array($red)) {
             list($red, $green, $blue) = $red;
@@ -70,12 +70,12 @@ class Color
     /**
      * convert rgb 2 hsl color value
      *
-     * @param integer $red
-     * @param integer $green
-     * @param integer $blue
+     * @param int $red
+     * @param int $green
+     * @param int $blue
      * @return array
      */
-    public function rgb2hsl(int $red = 0, int $green = 0, int $blue = 0)
+    public function rgb2hsl(int $red = 0, int $green = 0, int $blue = 0): array
     {
         if (is_array($red)) {
             list($red, $green, $blue) = $red;
@@ -122,12 +122,12 @@ class Color
     /**
      * convert rgb 2 hex color value
      *
-     * @param integer $red
-     * @param integer $green
-     * @param integer $blue
+     * @param int $red
+     * @param int $green
+     * @param int $blue
      * @return string
      */
-    public function rgb2hex(int $red = 0, int $green = 0, int $blue = 0)
+    public function rgb2hex(int $red = 0, int $green = 0, int $blue = 0): string
     {
         if (is_array($red)) {
             list($red, $green, $blue) = $red;
@@ -143,12 +143,12 @@ class Color
     /**
      * convert rgb 2 cmyk color value
      *
-     * @param integer $red
-     * @param integer $green
-     * @param integer $blue
+     * @param int $red
+     * @param int $green
+     * @param int $blue
      * @return array
      */
-    public function rgb2cmyk(int $red = 0, int $green = 0, int $blue = 0)
+    public function rgb2cmyk(int $red = 0, int $green = 0, int $blue = 0): array
     {
         if (is_array($red)) {
             list($red, $green, $blue) = $red;
@@ -177,12 +177,12 @@ class Color
     /**
      * convert hsv 2 rgb color value
      *
-     * @param integer $hue
-     * @param integer $saturation
-     * @param integer $value
+     * @param int $hue
+     * @param int $saturation
+     * @param int $value
      * @return array
      */
-    public function hsv2rgb(int $hue = 0, int $saturation = 0, int $value = 0)
+    public function hsv2rgb(int $hue = 0, int $saturation = 0, int $value = 0): array
     {
         if (is_array($hue)) {
             list($hue, $saturation, $value) = $hue;
@@ -235,12 +235,12 @@ class Color
     /**
      * convert hsl 2 rgb color value
      *
-     * @param integer $hue
-     * @param integer $saturation
-     * @param integer $lightness
+     * @param int $hue
+     * @param int $saturation
+     * @param int $lightness
      * @return array
      */
-    public function hsl2rgb(int $hue = 0, int $saturation = 0, int $lightness = 0)
+    public function hsl2rgb(int $hue = 0, int $saturation = 0, int $lightness = 0): array
     {
         if (is_array($hue)) {
             list($hue, $saturation, $lightness) = $hue;
@@ -297,7 +297,7 @@ class Color
      * @param string $hex
      * @return array
      */
-    public function hex2rgb(string $hex = '000000')
+    public function hex2rgb(string $hex = '000000'): array
     {
         $hex = strtolower($hex);
         $hex = str_pad($hex, 6, '0', STR_PAD_LEFT);
@@ -314,13 +314,13 @@ class Color
     /**
      * convert cmyk 2 rgb color value
      *
-     * @param integer $cyan
-     * @param integer $magenta
-     * @param integer $yellow
-     * @param integer $key
+     * @param int $cyan
+     * @param int $magenta
+     * @param int $yellow
+     * @param int $key
      * @return array
      */
-    public function cmyk2rgb(int $cyan = 0, int $magenta = 0, int $yellow = 0, int $key = 0)
+    public function cmyk2rgb(int $cyan = 0, int $magenta = 0, int $yellow = 0, int $key = 0): array
     {
         if (is_array($cyan)) {
             list($cyan, $magenta, $yellow, $key) = $cyan;
@@ -340,12 +340,12 @@ class Color
     /**
      * convert hsl 2 hex color value
      *
-     * @param integer $hue
-     * @param integer $saturation
-     * @param integer $lightness
+     * @param int $hue
+     * @param int $saturation
+     * @param int $lightness
      * @return string
      */
-    public function hsl2hex(int $hue = 0, int $saturation = 0, int $lightness = 0)
+    public function hsl2hex(int $hue = 0, int $saturation = 0, int $lightness = 0): string
     {
         list($red, $green, $blue) = $this->hsl2rgb($hue, $saturation, $lightness);
         return $this->rgb2hex($red, $green, $blue);
@@ -354,12 +354,12 @@ class Color
     /**
      * convert hsl 2 cmyk color value
      *
-     * @param integer $hue
-     * @param integer $saturation
-     * @param integer $lightness
+     * @param int $hue
+     * @param int $saturation
+     * @param int $lightness
      * @return array
      */
-    public function hsl2cmyk(int $hue = 0, int $saturation = 0, int $lightness = 0)
+    public function hsl2cmyk(int $hue = 0, int $saturation = 0, int $lightness = 0): array
     {
         list($red, $green, $blue) = $this->hsl2rgb($hue, $saturation, $lightness);
         return $this->rgb2cmyk($red, $green, $blue);
@@ -368,12 +368,12 @@ class Color
     /**
      * convert hsl 2 hsv color value
      *
-     * @param integer $hue
-     * @param integer $saturation
-     * @param integer $lightness
+     * @param int $hue
+     * @param int $saturation
+     * @param int $lightness
      * @return array
      */
-    public function hsl2hsv(int $hue = 0, int $saturation = 0, int $lightness = 0)
+    public function hsl2hsv(int $hue = 0, int $saturation = 0, int $lightness = 0): array
     {
         list($red, $green, $blue) = $this->hsl2rgb($hue, $saturation, $lightness);
         return $this->rgb2hsv($red, $green, $blue);
@@ -385,7 +385,7 @@ class Color
      * @param string $hex
      * @return array
      */
-    public function hex2hsl(string $hex = '000000')
+    public function hex2hsl(string $hex = '000000'): array
     {
         list($red, $green, $blue) = $this->hex2rgb($hex);
         return $this->rgb2hsl($red, $green, $blue);
@@ -397,7 +397,7 @@ class Color
      * @param string $hex
      * @return array
      */
-    public function hex2cmyk(string $hex = '000000')
+    public function hex2cmyk(string $hex = '000000'): array
     {
         list($red, $green, $blue) = $this->hex2rgb($hex);
         return $this->rgb2cmyk($red, $green, $blue);
@@ -409,7 +409,7 @@ class Color
      * @param string $hex
      * @return array
      */
-    public function hex2hsv(string $hex = '000000')
+    public function hex2hsv(string $hex = '000000'): array
     {
         list($red, $green, $blue) = $this->hex2rgb($hex);
         return $this->rgb2hsv($red, $green, $blue);
@@ -418,12 +418,12 @@ class Color
     /**
      * convert hsv to hex color value
      *
-     * @param integer $hue
-     * @param integer $saturation
-     * @param integer $value
+     * @param int $hue
+     * @param int $saturation
+     * @param int $value
      * @return string
      */
-    public function hsv2hex(int $hue = 0, int $saturation = 0, int $value = 0)
+    public function hsv2hex(int $hue = 0, int $saturation = 0, int $value = 0): string
     {
         list($red, $green, $blue) = $this->hsv2rgb($hue, $saturation, $value);
         return $this->rgb2hex($red, $green, $blue);
@@ -432,12 +432,12 @@ class Color
     /**
      * convert hsv 2 hsl color value
      *
-     * @param integer $hue
-     * @param integer $saturation
-     * @param integer $value
+     * @param int $hue
+     * @param int $saturation
+     * @param int $value
      * @return array
      */
-    public function hsv2hsl(int $hue = 0, int $saturation = 0, int $value = 0)
+    public function hsv2hsl(int $hue = 0, int $saturation = 0, int $value = 0): array
     {
         list($red, $green, $blue) = $this->hsv2rgb($hue, $saturation, $value);
         return $this->rgb2hsl($red, $green, $blue);
@@ -446,12 +446,12 @@ class Color
     /**
      * convert hsv 2 cmyk color value
      *
-     * @param integer $hue
-     * @param integer $saturation
-     * @param integer $value
+     * @param int $hue
+     * @param int $saturation
+     * @param int $value
      * @return array
      */
-    public function hsv2cmyk(int $hue = 0, int $saturation = 0, int $value = 0)
+    public function hsv2cmyk(int $hue = 0, int $saturation = 0, int $value = 0): array
     {
         list($red, $green, $blue) = $this->hsv2rgb($hue, $saturation, $value);
         return $this->rgb2cmyk($red, $green, $blue);
@@ -460,13 +460,13 @@ class Color
     /**
      * convert cmyk 2 hex color value
      *
-     * @param integer $cyan
-     * @param integer $magenta
-     * @param integer $yellow
-     * @param integer $key
+     * @param int $cyan
+     * @param int $magenta
+     * @param int $yellow
+     * @param int $key
      * @return string
      */
-    public function cmyk2hex(int $cyan = 0, int $magenta = 0, int $yellow = 0, int $key = 0)
+    public function cmyk2hex(int $cyan = 0, int $magenta = 0, int $yellow = 0, int $key = 0): string
     {
         list($red, $green, $blue) = $this->cmyk2rgb($cyan, $magenta, $yellow, $key);
         return $this->rgb2hex($red, $green, $blue);
@@ -475,13 +475,13 @@ class Color
     /**
      * convert cmyk 2 hsl color value
      *
-     * @param integer $cyan
-     * @param integer $magenta
-     * @param integer $yellow
-     * @param integer $key
+     * @param int $cyan
+     * @param int $magenta
+     * @param int $yellow
+     * @param int $key
      * @return array
      */
-    public function cmyk2hsl(int $cyan = 0, int $magenta = 0, int $yellow = 0, int $key = 0)
+    public function cmyk2hsl(int $cyan = 0, int $magenta = 0, int $yellow = 0, int $key = 0): array
     {
         list($red, $green, $blue) = $this->cmyk2rgb($cyan, $magenta, $yellow, $key);
         return $this->rgb2hsl($red, $green, $blue);
@@ -490,13 +490,13 @@ class Color
     /**
      * convert cmyk 2 hsv color value
      *
-     * @param integer $cyan
-     * @param integer $magenta
-     * @param integer $yellow
-     * @param integer $key
+     * @param int $cyan
+     * @param int $magenta
+     * @param int $yellow
+     * @param int $key
      * @return array
      */
-    public function cmyk2hsv(int $cyan = 0, int $magenta = 0, int $yellow = 0, int $key = 0)
+    public function cmyk2hsv(int $cyan = 0, int $magenta = 0, int $yellow = 0, int $key = 0): array
     {
         list($red, $green, $blue) = $this->cmyk2rgb($cyan, $magenta, $yellow, $key);
         return $this->rgb2hsv($red, $green, $blue);
