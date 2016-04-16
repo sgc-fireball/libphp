@@ -14,15 +14,7 @@ namespace HRDNS\General;
 class Color
 {
 
-    /**
-     * converts rgb 2 hsv color value
-     *
-     * @param int $red
-     * @param int $green
-     * @param int $blue
-     * @return array
-     */
-    public function rgb2hsv(int $red = 0, int $green = 0, int $blue = 0): array
+    private function helpRgb2HsvHsl(int $red = 0, int $green = 0, int $blue = 0): array
     {
         if (is_array($red)) {
             list($red, $green, $blue) = $red;
@@ -53,6 +45,23 @@ class Color
         if ($hue < 0) {
             $hue += 360;
         }
+
+        return [$hue,$delta,$min,$max];
+    }
+
+
+
+    /**
+     * converts rgb 2 hsv color value
+     *
+     * @param int $red
+     * @param int $green
+     * @param int $blue
+     * @return array
+     */
+    public function rgb2hsv(int $red = 0, int $green = 0, int $blue = 0): array
+    {
+        list($hue,$delta,$min,$max) = $this->helpRgb2HsvHsl($red,$green,$blue);
 
         $value = $max;
         if ($value == 0) {
@@ -77,35 +86,8 @@ class Color
      */
     public function rgb2hsl(int $red = 0, int $green = 0, int $blue = 0): array
     {
-        if (is_array($red)) {
-            list($red, $green, $blue) = $red;
-        }
-        $red = min(max(0, (int)$red), 255) / 255;
-        $green = min(max(0, (int)$green), 255) / 255;
-        $blue = min(max(0, (int)$blue), 255) / 255;
+        list($hue,$delta,$min,$max) = $this->helpRgb2HsvHsl($red,$green,$blue);
 
-        $max = max($red, $green, $blue);
-        $min = min($red, $green, $blue);
-        $delta = $max - $min;
-
-        if ($delta == 0) {
-            $hue = 0;
-        } else {
-            if ($max == $red) {
-                $hue = (($green - $blue) / $delta) % 6;
-            } else {
-                if ($max == $green) {
-                    $hue = ($blue - $red) / $delta + 2;
-                } else {
-                    $hue = ($red - $green) / $delta + 4;
-                }
-            }
-        }
-
-        $hue *= 60;
-        if ($hue < 0) {
-            $hue += 360;
-        }
         $lightness = ($max + $min) / 2;
 
         if ($delta == 0) {

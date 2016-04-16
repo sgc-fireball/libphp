@@ -2,6 +2,7 @@
 
 ## 2016-04-16
 - update php7 return values
+- reduce duplicate code in src/HRDNS/General/Color.php
 
 ## 2016-04-14
 - remove test/HRDNS/SSL/Validator_0.phpt 
