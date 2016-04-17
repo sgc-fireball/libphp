@@ -14,7 +14,7 @@ $child->setCData(true);
 $child->setValue('2');
 
 $xml = new XML();
-$xml->setRoot(true);
+$xml->setRoot();
 $xml->setCharset('UTF-8');
 $xml->setName('data');
 $xml->appendChild($child);

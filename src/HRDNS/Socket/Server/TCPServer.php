@@ -104,16 +104,14 @@ abstract class TCPServer extends Server
 
     /**
      * @param ServerClient $client
-     * @param bool $closeByPeer
      * @return self
      * @SuppressWarnings(PHPMD.boolArgumentFlag)
      */
-    public function disconnect(ServerClient $client, bool $closeByPeer = false): self
+    public function disconnect(ServerClient $client)
     {
         if ($client->getSocket() === null) {
             return $this;
         }
-        $this->onDisconnect($client, $closeByPeer);
         @socket_close($client->getSocket());
         $client->setSocket(null);
         unset($this->clients[$client->getId()]);
@@ -193,7 +191,8 @@ abstract class TCPServer extends Server
             $this->onIncoming($client, $buffer);
             return $this;
         }
-        $this->disconnect($client, true);
+        $this->onDisconnect($client);
+        $this->disconnect($client);
         return $this;
     }
 

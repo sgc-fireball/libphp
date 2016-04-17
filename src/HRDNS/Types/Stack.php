@@ -110,14 +110,12 @@ abstract class Stack implements \Iterator
     }
 
     /**
-     * @param bool $array
      * @return int
      * @SuppressWarnings(PHPMD.boolArgumentFlag)
      */
-    public function count(bool $array = false): int
+    public function count(): int
     {
-        $count = count($this->elements);
-        return $array ? $count - 1 : $count;
+        return count($this->elements);
     }
 
     /**

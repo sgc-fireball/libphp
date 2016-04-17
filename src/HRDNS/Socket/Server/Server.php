@@ -106,7 +106,8 @@ abstract class Server
     {
         $this->terminated();
         foreach ($this->clients as $client) {
-            $this->disconnect($client, false);
+            $this->onDisconnect($client);
+            $this->disconnect($client);
         }
         @socket_close($this->masterSocket);
         $this->masterSocket = null;
@@ -134,11 +135,10 @@ abstract class Server
 
     /**
      * @param ServerClient $client
-     * @param bool $closeByPeer
      * @return void
      * @SuppressWarnings(PHPMD.boolArgumentFlag)
      */
-    abstract public function onDisconnect(ServerClient $client, bool $closeByPeer = false);
+    abstract public function onDisconnect(ServerClient $client);
 
     /**
      * @param ServerClient $client
@@ -148,10 +148,9 @@ abstract class Server
 
     /**
      * @param ServerClient $client
-     * @param bool $closeByPeer
      * @return self
      * @SuppressWarnings(PHPMD.boolArgumentFlag)
      */
-    abstract public function disconnect(ServerClient $client, bool $closeByPeer = false);
+    abstract public function disconnect(ServerClient $client);
 
 }

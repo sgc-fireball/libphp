@@ -7,9 +7,9 @@ require_once($basePath . '/tests/bootstrap.php');
 use \HRDNS\Core\Event;
 
 $event = new Event();
-echo ($event->getPropagationStatus() ? 1 : 0) . "\n";
+echo ($event->isPropagationStopped() ? 1 : 0) . "\n";
 $event->stopPropagation();
-echo ($event->getPropagationStatus() ? 1 : 0) . "\n";
+echo ($event->isPropagationStopped() ? 1 : 0) . "\n";
 ?>
 --EXPECT--
 1

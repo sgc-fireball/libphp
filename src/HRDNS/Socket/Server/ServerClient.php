@@ -106,11 +106,12 @@ class ServerClient
     /**
      * @param int $port
      * @return self
+     * @throws \InvalidArgumentException
      */
     public function setPort(int $port): self
     {
         if ($port < 0 || $port > 65535) {
-            throw new \Exception('The port ' . $port . ' is not allowed.');
+            throw new \InvalidArgumentException('The port ' . $port . ' is not allowed.');
         }
         $this->port = $port;
         return $this;

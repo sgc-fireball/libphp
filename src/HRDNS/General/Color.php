@@ -46,9 +46,8 @@ class Color
             $hue += 360;
         }
 
-        return [$hue,$delta,$min,$max];
+        return [$hue, $delta, $min, $max];
     }
-
 
 
     /**
@@ -61,7 +60,7 @@ class Color
      */
     public function rgb2hsv(int $red = 0, int $green = 0, int $blue = 0): array
     {
-        list($hue,$delta,$min,$max) = $this->helpRgb2HsvHsl($red,$green,$blue);
+        list($hue, $delta, , $max) = $this->helpRgb2HsvHsl($red, $green, $blue);
 
         $value = $max;
         if ($value == 0) {
@@ -86,7 +85,7 @@ class Color
      */
     public function rgb2hsl(int $red = 0, int $green = 0, int $blue = 0): array
     {
-        list($hue,$delta,$min,$max) = $this->helpRgb2HsvHsl($red,$green,$blue);
+        list($hue, $delta, $min, $max) = $this->helpRgb2HsvHsl($red, $green, $blue);
 
         $lightness = ($max + $min) / 2;
 

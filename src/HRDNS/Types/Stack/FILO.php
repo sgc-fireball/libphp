@@ -12,7 +12,7 @@ class FILO extends Stack
      */
     public function key(): int
     {
-        return ($this->count(true) - $this->position);
+        return ($this->count() - 1 - $this->position);
     }
 
     /**

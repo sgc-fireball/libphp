@@ -135,7 +135,7 @@ class Struct
     {
         $xml = new XML();
         $xml->setName('struct');
-        $xml->setRoot(true);
+        $xml->setRoot();
         $xml->setCharset('UTF-8');
         $xml->setAttribute('type', 'object');
         $xml->setAttribute('class', __CLASS__);
@@ -156,7 +156,6 @@ class Struct
             $child = new XML();
             $child->setName($key);
             $child->setCData(true);
-            $child->setRoot(false);
             $type = gettype($value);
             $child->setAttribute('type', $type);
             switch ($type) {

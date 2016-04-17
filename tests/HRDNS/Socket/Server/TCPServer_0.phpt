@@ -42,10 +42,9 @@ class Server extends TCPServer
 
     /**
      * @param ServerClient $client
-     * @param bool $closeByPeer
      * @return void
      */
-    public function onDisconnect(ServerClient $client, bool $closeByPeer = false)
+    public function onDisconnect(ServerClient $client)
     {
         echo __METHOD__ . "\n";
     }

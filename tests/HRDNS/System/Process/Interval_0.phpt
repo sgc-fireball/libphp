@@ -10,11 +10,17 @@ require_once($basePath . '/tests/bootstrap.php');
 
 use HRDNS\System\Process\Timer;
 
+$count = 0;
 $startTime = time();
 $timer = Timer::getInstance();
 $timer->addInterval(
-    function () use ($startTime) {
-        echo (time() - $startTime) . "\n";
+    function () {
+        global $count;
+        if ($count >= 3) {
+            return;
+        }
+        $count++;
+        echo $count."\n";
     },
     1
 );

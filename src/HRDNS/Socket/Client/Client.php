@@ -36,7 +36,8 @@ abstract class Client
     /**
      * @return string
      */
-    public function getHost(): string {
+    public function getHost(): string
+    {
         return $this->host;
     }
 
@@ -57,7 +58,8 @@ abstract class Client
     /**
      * @return int
      */
-    public function getPort(): int {
+    public function getPort(): int
+    {
         return $this->port;
     }
 

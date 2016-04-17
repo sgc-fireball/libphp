@@ -27,7 +27,7 @@ class Application extends BaseApplication
 
     protected function getCommandName(InputInterface $input)
     {
-        return 'exmaple:sslvalidator';
+        return Validator::COMMAND_NAME;
     }
 
     protected function getDefaultCommands()

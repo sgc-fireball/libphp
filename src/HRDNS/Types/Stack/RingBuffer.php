@@ -70,7 +70,7 @@ class RingBuffer extends Stack
     {
         $key = array_search($element, $this->elements, true);
         if ($key === false) {
-            return;
+            return $this;
         }
         $this->elements[$key] = null;
         $this->elements = array_values($this->elements);

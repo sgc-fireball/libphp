@@ -59,13 +59,11 @@ abstract class UDPServer extends Server
 
     /**
      * @param ServerClient $client
-     * @param bool $closeByPeer
      * @return self
      * @SuppressWarnings(PHPMD.boolArgumentFlag)
      */
-    public function disconnect(ServerClient $client, bool $closeByPeer = false): self
+    public function disconnect(ServerClient $client)
     {
-        $this->onDisconnect($client, $closeByPeer);
         unset($this->clients[$client->getId()]);
         return $this;
     }
@@ -118,7 +116,7 @@ abstract class UDPServer extends Server
         return $this;
     }
 
-    /**f
+    /**
      * @return self
      */
     protected function workOnClientSockets(): self
@@ -130,7 +128,8 @@ abstract class UDPServer extends Server
 
             /** check timeouts **/
             if ($client->getAttribute('timeout') < microtime(true)) {
-                $this->disconnect($client, false);
+                $this->onDisconnect($client);
+                $this->disconnect($client);
                 continue;
             }
 

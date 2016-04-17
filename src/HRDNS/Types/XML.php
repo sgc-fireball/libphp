@@ -49,13 +49,12 @@ class XML
     }
 
     /**
-     * @param bool $root
      * @return self
      * @SuppressWarnings(PHPMD.boolArgumentFlag)
      */
-    public function setRoot(bool $root = false): self
+    public function setRoot(): self
     {
-        $this->root = $root;
+        $this->root = true;
         return $this;
     }
 
@@ -255,7 +254,7 @@ class XML
             $this->setName(isset($currentXmlArray['tag']) ? $currentXmlArray['tag'] : 'noname');
             $this->setValue(isset($currentXmlArray['value']) ? $currentXmlArray['value'] : '');
             $this->setAttributes(isset($currentXmlArray['attributes']) ? $currentXmlArray['attributes'] : []);
-            $this->setRoot(true);
+            $this->setRoot();
         }
 
         $xmlArray = [];

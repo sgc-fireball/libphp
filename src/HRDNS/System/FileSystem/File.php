@@ -9,18 +9,6 @@ class File extends \SplFileObject
     protected $tailSeek = -1;
 
     /**
-     * @param mixed $fileName
-     * @param string $openMode
-     * @param bool $useIncludePath
-     * @param resource|null $context
-     * @SuppressWarnings(PHPMD.boolArgumentFlag)
-     */
-    public function __construct($fileName, $openMode = 'a+', $useIncludePath = false, $context = null)
-    {
-        parent::__construct($fileName, $openMode, $useIncludePath, $context);
-    }
-
-    /**
      * @todo fix mixed return types!
      * @param int $length
      * @return string|bool
@@ -96,19 +84,6 @@ class File extends \SplFileObject
     public function unlink(): bool
     {
         return unlink($this->getPathname());
-    }
-
-    /**
-     * @param string $openMode
-     * @param bool $useIncludePath
-     * @param resource $context
-     * @return File
-     * @SuppressWarnings(PHPMD.boolArgumentFlag)
-     */
-    public function openFile($openMode = 'a+', $useIncludePath = false, $context = null): self
-    {
-        $className = get_class($this);
-        return new $className($this->getPathname($openMode, $useIncludePath, $context));
     }
 
 }

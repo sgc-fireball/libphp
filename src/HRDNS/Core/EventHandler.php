@@ -88,7 +88,7 @@ class EventHandler
         foreach ($this->events[$name] as $priorities) {
             foreach ($priorities as $callable) {
                 $callable($event);
-                if (!$event->getPropagationStatus()) {
+                if (!$event->isPropagationStopped()) {
                     return $this;
                 }
             }
@@ -98,6 +98,7 @@ class EventHandler
 
     /**
      * @throws \Exception
+     * @return void
      */
     public function __sleep()
     {

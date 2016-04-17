@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2016-04-17
+- fix some phpmd issues (incompatible to old libphp version!)
+
 ## 2016-04-16
 - update php7 return values
 - reduce duplicate code in src/HRDNS/General/Color.php

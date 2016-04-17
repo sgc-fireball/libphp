@@ -13,6 +13,6 @@ interface EventInterface
     /**
      * @return bool
      */
-    public function getPropagationStatus(): bool;
+    public function isPropagationStopped(): bool;
 
 }

@@ -5,6 +5,7 @@ namespace HRDNS\Examples\Socket;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Command\Command;
 use HRDNS\Socket\Server\TCPServer;
 use HRDNS\Socket\Server\ServerClient;
@@ -33,7 +34,7 @@ class Server extends TCPServer
         );
     }
 
-    public function onIncoming(ServerClient $client, $buffer)
+    public function onIncoming(ServerClient $client, string $buffer)
     {
         $buffer = trim($buffer);
 
@@ -47,14 +48,15 @@ class Server extends TCPServer
             )
         );
 
-        if (in_array(strtolower($buffer), array ('exit', 'quit', 'bye', 'bye bye', 'byebye'))) {
-            $this->disconnect($client, true);
+        if (in_array(strtolower($buffer), array('exit', 'quit', 'bye', 'bye bye', 'byebye'))) {
+            $this->onDisconnect($client);
+            $this->disconnect($client);
             return;
         }
         $this->send($client, $buffer . "\n");
     }
 
-    public function onOutgoing(ServerClient $client, $buffer)
+    public function onOutgoing(ServerClient $client, string $buffer)
     {
         $buffer = trim($buffer);
         $this->output->writeln(
@@ -68,15 +70,14 @@ class Server extends TCPServer
         );
     }
 
-    public function onDisconnect(ServerClient $client, $closeByPeer = false)
+    public function onDisconnect(ServerClient $client)
     {
         $this->output->writeln(
             sprintf(
-                '<info>Client[%s:%d]</info> :: <comment>%s</comment> :: connection closed by %s',
+                '<info>Client[%s:%d]</info> :: <comment>%s</comment> :: connection closed',
                 $client->getHost(),
                 $client->getPort(),
-                __METHOD__,
-                ($closeByPeer ? 'peer' : 'server')
+                __METHOD__
             )
         );
     }
@@ -154,28 +155,23 @@ class EchoServer extends Command
 
         if ($this->host == self::DEFAULT_HOST && $this->port == self::DEFAULT_PORT) {
 
-            /** @var \Symfony\Component\Console\Helper\DialogHelper $dialog */
-            $dialog = $this->getHelper('dialog');
+            /** @var \Symfony\Component\Console\Helper\QuestionHelper $questionHelper */
+            $questionHelper = $this->getHelper('question');
 
-            $this->host = $dialog->askAndValidate(
-                $output,
+            $questionHost = new Question(
                 sprintf('<info>Host <comment>[%s]<comment>:</info>', $this->host),
-                function ($host) {
-                    return $host;
-                },
-                false,
-                $this->host
+                $this->host,
+                '/^[a-z0-9\.-]$/'
             );
 
-            $this->port = $dialog->askAndValidate(
-                $output,
+            $questionPort = new Question(
                 sprintf('<info>Port <comment>[%s]<comment>:</info>', $this->port),
-                function ($port) {
-                    return $port;
-                },
-                false,
-                $this->port
+                $this->port,
+                '/^[0-9]{1,5}$/'
             );
+
+            $this->host = $questionHelper->ask($input,$output,$questionHost);
+            $this->port = $questionHelper->ask($input,$output,$questionPort);
 
             $output->writeln('');
         }

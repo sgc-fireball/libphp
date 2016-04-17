@@ -20,7 +20,7 @@ class Event implements EventInterface
     /**
      * @return bool
      */
-    public function getPropagationStatus(): bool
+    public function isPropagationStopped(): bool
     {
         return $this->propagation;
     }
