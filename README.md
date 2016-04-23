@@ -1,5 +1,7 @@
 # HRDNS libphp [![Build Status](https://travis-ci.org/sgc-fireball/libphp.svg)](https://travis-ci.org/sgc-fireball/libphp)
 
+This branch/lib is only for PHP7.
+
 ## Installation
 
 Install the latest version with

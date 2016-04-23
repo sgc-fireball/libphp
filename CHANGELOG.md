@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 2016-04-23
+- adding IPv6 supports (HRDNS\Types\IPv6)
+
+## 2016-04-22
+- adding FTP supports (HRDNS\Protocol\FTP)
+- adding IPv4 supports (HRDNS\Types\IPv4)
+- change composer test definition
+
 ## 2016-04-17
 - fix some phpmd issues (incompatible to old libphp version!)
 
@@ -42,7 +50,7 @@
 - implement TCPClient with tests
 - implement UDPClient & Server with tests
 
-## 2016-01-03
+## 2016-01-03 _v0.0.1_
 - adding TCP Server with tests
 - adding example echo-server.php
 
