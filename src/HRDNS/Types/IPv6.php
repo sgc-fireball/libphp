@@ -166,7 +166,8 @@ class IPv6
             throw new \InvalidArgumentException();
         }
         $netmask = $this->ip2bin($this->getNetmask());
-        $regex = sprintf('/^%s/',
+        $regex = sprintf(
+            '/^%s/',
             substr($netmask, 0, $this->cidr)
         );
         $ipAddr = $this->ip2bin($ipAddr);
