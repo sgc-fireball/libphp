@@ -198,11 +198,10 @@ class IPv6
         array_walk(
             $ipAddr,
             function (&$value) {
-                if ($value == '') {
-                    return;
+                if ($value != '') {
+                    $value = ltrim($value, 0);
+                    $value = empty($value) ? 0 : $value;
                 }
-                $value = ltrim($value, 0);
-                $value = empty($value) ? 0 : $value;
             }
         );
         return implode(':', $ipAddr);
