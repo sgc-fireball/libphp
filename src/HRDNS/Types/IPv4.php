@@ -70,7 +70,7 @@ class IPv4
      */
     public function getInArpa(): string
     {
-        return sprintf('%s.in-addr.arpa',implode('.',array_reverse(explode('.',$this->ipAddr))));
+        return sprintf('%s.in-addr.arpa', implode('.', array_reverse(explode('.', $this->ipAddr))));
     }
 
     /**
