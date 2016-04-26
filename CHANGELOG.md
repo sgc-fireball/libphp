@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2016-04-26
+- adding CSV support
+
 ## 2016-04-23
 - adding IPv6 supports (HRDNS\Types\IPv6)
 
