@@ -435,6 +435,56 @@ class FTP
     }
 
     /**
+     * @param string $from
+     * @param string $to
+     * @return self
+     * @throws IOException
+     */
+    public function get(string $from, string $to): self
+    {
+        if (!@ftp_get($this->socket, $to, $from, FTP_BINARY, 0)) {
+            throw new IOException(
+                sprintf(
+                    'Could not download %s from ftp%s://%s%s:%d',
+                    $from,
+                    $this->ssl ? 's' : '',
+                    $this->user ? $this->user . '@' : '',
+                    $this->host,
+                    $this->port
+                )
+            );
+        }
+        return $this;
+    }
+
+    /**
+     * @param string $from
+     * @param string $to
+     * @return self
+     * @throws IOException
+     * @throws \RuntimeException
+     */
+    public function put(string $from, string $to): self
+    {
+        if (!file_exists($from)) {
+            throw new \RuntimeException('Files does not exists: ' . $from);
+        }
+        if (!@ftp_put($this->socket, $from, $to, FTP_BINARY)) {
+            throw new IOException(
+                sprintf(
+                    'Could not upload %s to ftp%s://%s%s:%d',
+                    $from,
+                    $this->ssl ? 's' : '',
+                    $this->user ? $this->user . '@' : '',
+                    $this->host,
+                    $this->port
+                )
+            );
+        }
+        return $this;
+    }
+
+    /**
      * @access public
      * @param string $command
      * @return mixed

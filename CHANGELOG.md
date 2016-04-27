@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2016-04-27
+- adding URL support
+- adding RIPE Database converter (todo)
+
 ## 2016-04-26
 - adding CSV support
 
