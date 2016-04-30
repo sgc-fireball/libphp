@@ -4,22 +4,43 @@ namespace HRDNS\System\Network\RIPE;
 
 use HRDNS\Protocol\FTP;
 use HRDNS\Types\CSV;
+use HRDNS\Types\IPv4;
+use HRDNS\Types\IPv6;
 use HRDNS\Types\URL;
 use HRDNS\Exception\IOException;
 
 class Database
 {
 
-    protected $url = 'ftp://anonymous:anonymous@ftp.ripe.net/ripe/stats/%Y/delegated-ripencc-extended-%Y%m%d.bz2';
+    /**
+     * @see ftp://ftp.ripe.net/ripe/stats/RIR-Statistics-Exchange-Format.txt
+     * @var string
+     */
+    private $url = 'ftp://anonymous:anonymous@ftp.ripe.net/ripe/stats/%Y/delegated-ripencc-extended-%Y%m%d.bz2';
+
+    /** @var callable */
+    private $callbackIpv4 = null;
+
+    /** @var callable */
+    private $callbackIpv6 = null;
+
+    /** @var callable */
+    private $callbackAsn = null;
 
     /**
+     * @param callable $callbackIpv4
+     * @param callable $callbackIpv6
+     * @param callable $callbackAsn
      * @throws \RuntimeException
      */
-    public function __construct()
+    public function __construct(callable $callbackIpv4, callable $callbackIpv6, callable $callbackAsn)
     {
         if (!function_exists('bzdecompress')) {
             throw new \RuntimeException('Missing php module bzip.');
         }
+        $this->callbackIpv4 = $callbackIpv4;
+        $this->callbackIpv6 = $callbackIpv6;
+        $this->callbackAsn = $callbackAsn;
     }
 
     /**
@@ -122,18 +143,12 @@ class Database
          * [6] => allocated
          * [7] => a1e33a7d-5964-4bd7-ae72-980c57b0cf72
          */
-        $countryCode = isset($line[1]) ? $line[1] : '*';
-        $network = isset($line[3]) ? $line[3] : '255.255.255.255';
-        $cidr = (int)(32 - log($line[4]) / log(2));
-        $since = isset($line[5]) ? $line[5] : date('Ymd');
-        $status = isset($line[6]) ? $line[6] : 'unknown';
-        $uuid = isset($line[7]) ? $line[7] : '';
-
-        if (in_array($status, ['reserved', 'available'])) {
+        if (!$this->callbackIpv4) {
             return $this;
         }
-
-        printf("IPv4 :: %s/%d :: %s :: %s\n", $network, $cidr, $status, $countryCode);
+        $ip = new IPv4($line[3], (int)(32 - log($line[4]) / log(2)));
+        $callbackIpv4 = $this->callbackIpv4;
+        $callbackIpv4($ip, $line[1], $line[5], $line);
         return $this;
     }
 
@@ -149,18 +164,12 @@ class Database
          * [6] => assigned
          * [7] => 39530da4-b33b-4077-a077-06bf85f3f17e
          */
-        $countryCode = isset($line[1]) ? $line[1] : '*';
-        $network = isset($line[3]) ? $line[3] : 'ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff';
-        $since = isset($line[5]) ? $line[5] : date('Ymd');
-        $status = isset($line[6]) ? $line[6] : 'unknown';
-        $uuid = isset($line[7]) ? $line[7] : '';
-        $cidr = isset($line[4]) ? $line[4] : '128';
-
-        if (in_array($status, ['reserved', 'available'])) {
+        if (!$this->callbackIpv6) {
             return $this;
         }
-
-        printf("IPv6 :: %s/%d :: %s :: %s\n", $network, $cidr, $status, $countryCode);
+        $ip = new IPv6($line[3], $line[4]);
+        $callbackIpv6 = $this->callbackIpv6;
+        $callbackIpv6($ip, $line[1], $line[5], $line);
         return $this;
     }
 
@@ -176,17 +185,11 @@ class Database
          * [6] => allocated
          * [7] => 2053ae4a-520c-44ab-bbdb-c4e751e3c4f6
          */
-        $countryCode = isset($line[1]) ? $line[1] : '*';
-        $asnNumber = isset($line[3]) ? $line[3] : '0';
-        $since = isset($line[5]) ? $line[5] : date('Ymd');
-        $status = isset($line[6]) ? $line[6] : 'unknown';
-        $uuid = isset($line[7]) ? $line[7] : '';
-
-        if (in_array($status, ['reserved', 'available'])) {
+        if (!$this->callbackAsn) {
             return $this;
         }
-
-        printf("ASN%d :: %s :: \n", $asnNumber, $status, $countryCode);
+        $callbackAsn = $this->callbackAsn;
+        $callbackAsn('AS' . $line[3], $line[1], $line[5], $line);
         return $this;
     }
 

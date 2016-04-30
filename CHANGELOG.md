@@ -2,7 +2,7 @@
 
 ## 2016-04-27
 - adding URL support
-- adding RIPE Database converter (todo)
+- adding RIPE Database converter
 
 ## 2016-04-26
 - adding CSV support
