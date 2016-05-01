@@ -109,11 +109,10 @@ abstract class TCPServer extends Server
      */
     public function disconnect(ServerClient $client)
     {
-        if ($client->getSocket() === null) {
-            return $this;
+        if ($client->getSocket() !== null) {
+            @socket_close($client->getSocket());
+            $client->setSocket(null);
         }
-        @socket_close($client->getSocket());
-        $client->setSocket(null);
         unset($this->clients[$client->getId()]);
         return $this;
     }

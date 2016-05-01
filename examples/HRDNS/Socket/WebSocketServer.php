@@ -7,94 +7,102 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Command\Command;
-use HRDNS\Socket\Server\TCPServer;
 use HRDNS\Socket\Server\ServerClient;
+use HRDNS\Socket\Server\WebSocket as WebSocketBase;
 
-class Server extends TCPServer
+class WebSocket extends WebSocketBase
 {
 
     /** @var OutputInterface */
-    protected $output = null;
+    private $output = null;
 
     public function setOutputHandler(OutputInterface $output)
     {
         $this->output = $output;
-        return $this;
     }
 
-    public function onConnect(ServerClient $client)
+    /**
+     * @param ServerClient $client
+     * @return void
+     */
+    public function onWebSocketConnect(ServerClient $client)
     {
         $this->output->writeln(
             sprintf(
-                '<info>Client[%s:%d]</info> :: <comment>%s</comment>',
-                $client->getHost(),
-                $client->getPort(),
+                '<info>%s</info> :: <comment>%s</comment>',
+                $client->getId(),
                 __METHOD__
             )
         );
     }
 
-    public function onIncoming(ServerClient $client, string $buffer)
+    /**
+     * @param ServerClient $client
+     * @param string $buffer
+     * @return void
+     */
+    public function onWebSocketIncoming(ServerClient $client, string $buffer)
     {
-        $buffer = trim($buffer);
-
         $this->output->writeln(
             sprintf(
-                '<info>Client[%s:%d]</info> :: <comment>%s</comment> :: %s',
-                $client->getHost(),
-                $client->getPort(),
+                '<info>%s</info> :: <comment>%s</comment> :: %s',
+                $client->getId(),
                 __METHOD__,
                 $buffer
             )
         );
-
-        if (in_array(strtolower($buffer), array('exit', 'quit', 'bye', 'bye bye', 'byebye'))) {
-            $this->onDisconnect($client);
-            $this->disconnect($client);
-            return;
-        }
-        $this->send($client, $buffer . "\n");
-    }
-
-    public function onOutgoing(ServerClient $client, string $buffer)
-    {
-        $buffer = trim($buffer);
-        $this->output->writeln(
+        /*$this->sendWebSocket(
+            $client,
             sprintf(
-                '<info>Client[%s:%d]</info> :: <comment>%s</comment> :: %s',
-                $client->getHost(),
-                $client->getPort(),
-                __METHOD__,
+                'PONG: %s',
                 $buffer
             )
-        );
+        );*/
     }
 
-    public function onDisconnect(ServerClient $client)
+    /**
+     * @param ServerClient $client
+     * @return void
+     */
+    public function onWebSocketTick(ServerClient $client)
     {
         $this->output->writeln(
             sprintf(
-                '<info>Client[%s:%d]</info> :: <comment>%s</comment> :: connection closed',
-                $client->getHost(),
-                $client->getPort(),
+                '<info>%s</info> :: <comment>%s</comment>',
+                $client->getId(),
                 __METHOD__
             )
         );
+        $this->sendWebSocket($client,microtime(true));
     }
 
-    public function onTick(ServerClient $client)
+    /**
+     * @param ServerClient $client
+     * @param string $buffer
+     * @return void
+     */
+    public function onWebSocketOutgoing(ServerClient $client, string $buffer)
     {
-        $time = (int)$client->getAttribute('tick');
-        if ($time == time()) {
-            return;
-        }
-        $client->setAttribute('tick',time());
-
         $this->output->writeln(
             sprintf(
-                '<info>Client[%s:%d]</info> :: <comment>%s</comment>',
-                $client->getHost(),
-                $client->getPort(),
+                '<info>%s</info> :: <comment>%s</comment> :: %s',
+                $client->getId(),
+                __METHOD__,
+                $buffer
+            )
+        );
+    }
+
+    /**
+     * @param ServerClient $client
+     * @return void
+     */
+    public function onWebSocketDisconnect(ServerClient $client)
+    {
+        $this->output->writeln(
+            sprintf(
+                '<info>%s</info> :: <comment>%s</comment>',
+                $client->getId(),
                 __METHOD__
             )
         );
@@ -102,11 +110,11 @@ class Server extends TCPServer
 
 }
 
-class EchoServer extends Command
+class WebSocketServer extends Command
 {
 
     const DEFAULT_HOST = '127.0.0.1';
-    const DEFAULT_PORT = 54321;
+    const DEFAULT_PORT = 8080;
     const DEFAULT_RUNTIME = 300;
 
     /** @var string */
@@ -122,7 +130,7 @@ class EchoServer extends Command
     {
         $this->setName('exmaple:' . strtolower(str_replace('.php', '', basename(__FILE__))));
         $this->setProcessTitle($this->getName());
-        $this->setDescription('A TCPServer EchoServer');
+        $this->setDescription('A WebSocket Echo Server');
         $this->setHelp('');
         $this->addOption(
             'listen',
@@ -170,8 +178,8 @@ class EchoServer extends Command
                 '/^[0-9]{1,5}$/'
             );
 
-            $this->host = $questionHelper->ask($input,$output,$questionHost);
-            $this->port = $questionHelper->ask($input,$output,$questionPort);
+            $this->host = $questionHelper->ask($input, $output, $questionHost);
+            $this->port = $questionHelper->ask($input, $output, $questionPort);
 
             $output->writeln('');
         }
@@ -195,9 +203,9 @@ class EchoServer extends Command
             throw new \InvalidArgumentException('Invalid runtime value.');
         }
 
-        $output->writeln(sprintf('Bind EchoServer to <info>%s:%d</info>', $this->host, $this->port));
+        $output->writeln(sprintf("Bind WebSocketServer to <info>%s:%d</info>\n", $this->host, $this->port));
 
-        $server = new Server();
+        $server = new WebSocket();
         $server->setOutputHandler($output);
         $server->setListen($this->host);
         $server->setPort($this->port);

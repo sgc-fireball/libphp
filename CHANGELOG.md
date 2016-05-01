@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2016-05-01
+- adding WebSocketServer (unstable/testing)
+
 ## 2016-04-27
 - adding URL support
 - adding RIPE Database converter
