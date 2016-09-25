@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Test;
+
 if (!defined('DS')) {
     define('DS', DIRECTORY_SEPARATOR);
 }
