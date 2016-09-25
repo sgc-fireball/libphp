@@ -612,7 +612,7 @@ class Color
      *
      * @param float $hue
      * @param float $saturation
-     * @param float $value
+     * @param float $lightness
      * @return int
      */
     public function hsl2xterm(float $hue = 0, float $saturation = 0, float $lightness = 0): int
