@@ -104,7 +104,7 @@ class ServerClient
     }
 
     /**
-     * @param int $port
+     * @param integer $port
      * @return self
      * @throws \InvalidArgumentException
      */
@@ -118,7 +118,7 @@ class ServerClient
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function getPort(): int
     {

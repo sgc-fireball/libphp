@@ -59,7 +59,7 @@ class XML
     }
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function isRoot(): bool
     {
@@ -109,7 +109,7 @@ class XML
     }
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function isCData(): bool
     {
@@ -117,7 +117,7 @@ class XML
     }
 
     /**
-     * @param bool $cData
+     * @param boolean $cData
      * @return self
      */
     public function setCData(bool $cData): self
@@ -137,7 +137,7 @@ class XML
     /**
      * @todo fix mixed return types!
      * @param string $name
-     * @return mixed|bool
+     * @return mixed|boolean
      */
     public function getAttribute(string $name)
     {
@@ -168,7 +168,7 @@ class XML
     /**
      * @todo fix mixed return types!
      * @param self|array $xml
-     * @return self|bool
+     * @return self|boolean
      */
     public function appendChild($xml)
     {
@@ -205,10 +205,10 @@ class XML
      * @todo fix mixed return types!
      * @param string $xml
      * @param string $charset
-     * @param int $tagStart
-     * @param int $skipWhite
-     * @param int $caseFolding
-     * @return self|bool
+     * @param integer $tagStart
+     * @param integer $skipWhite
+     * @param integer $caseFolding
+     * @return self|boolean
      */
     public function parse(
         string $xml,
@@ -241,7 +241,7 @@ class XML
 
     /**
      * @param array $option
-     * @param int $currentXml
+     * @param integer $currentXml
      * @return array
      */
     private function internalParse(array &$option, int $currentXml = 0): array
@@ -311,8 +311,8 @@ class XML
     /**
      * @todo fix mixed return types!
      * @param string $nodeName
-     * @param int $note
-     * @return self|bool
+     * @param integer $note
+     * @return self|boolean
      */
     public function getChild(string $nodeName, int $note = 0)
     {
@@ -327,8 +327,8 @@ class XML
 
     /**
      * @param string $nodeName
-     * @param int $note
-     * @return bool
+     * @param integer $note
+     * @return boolean
      */
     public function childExists(string $nodeName, int $note = 0): bool
     {
@@ -338,7 +338,7 @@ class XML
     /**
      * @todo fix mixed return types!
      * @param string $nodeName
-     * @return self|bool
+     * @return self|boolean
      * @SuppressWarnings(PHPMD.ElseExpression)
      */
     public function getNode(string $nodeName)
@@ -360,7 +360,7 @@ class XML
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function getLength(): int
     {
@@ -373,7 +373,7 @@ class XML
 
     /**
      * @todo fix mixed return types!
-     * @return self|bool
+     * @return self|boolean
      * @SuppressWarnings(PHPMD.ElseExpression)
      */
     public function next()
@@ -407,7 +407,7 @@ class XML
     }
 
     /**
-     * @param int $deep
+     * @param integer $deep
      * @return string
      * @SuppressWarnings(PHPMD.ElseExpression)
      */
@@ -475,7 +475,7 @@ class XML
     }
 
     /**
-     * @param int $deep
+     * @param integer $deep
      * @return string
      */
     public function padding(int $deep = 0): string

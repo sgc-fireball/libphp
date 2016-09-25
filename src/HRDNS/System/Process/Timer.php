@@ -150,7 +150,7 @@ class Timer
 
     /**
      * @param callable $fnc
-     * @param int $timeoutTime
+     * @param integer $timeoutTime
      * @return string
      * @throws \InvalidArgumentException
      */
@@ -183,7 +183,7 @@ class Timer
 
     /**
      * @param callable $fnc
-     * @param int $intervalTime
+     * @param integer $intervalTime
      * @return string
      * @throws \InvalidArgumentException
      */

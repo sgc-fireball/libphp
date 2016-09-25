@@ -13,7 +13,7 @@ class IPv6
 
     /**
      * @param string|null $ipAddr
-     * @param int|null $cidr
+     * @param integer|null $cidr
      */
     public function __construct(string $ipAddr = null, int $cidr = null)
     {
@@ -56,7 +56,7 @@ class IPv6
     }
 
     /**
-     * @param string $long An int128.
+     * @param mixed $long An int128.
      * @return self
      * @throws \RuntimeException
      */
@@ -85,7 +85,7 @@ class IPv6
     }
 
     /**
-     * @param int $cidr
+     * @param integer $cidr
      * @return self
      * @throws \InvalidArgumentException
      */
@@ -99,7 +99,7 @@ class IPv6
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function getCIDR(): int
     {
@@ -156,7 +156,7 @@ class IPv6
 
     /**
      * @param string|self $ipAddr
-     * @return bool
+     * @return boolean
      * @throws \InvalidArgumentException
      */
     public function isIpInSubnet($ipAddr): bool

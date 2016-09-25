@@ -148,7 +148,7 @@ class Frame
     }
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function isIncomplete(): bool
     {
@@ -164,7 +164,7 @@ class Frame
     }
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function isMasked(): bool
     {
@@ -172,7 +172,7 @@ class Frame
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function getOpCode(): int
     {
@@ -180,7 +180,7 @@ class Frame
     }
 
     /**
-     * @return string|string
+     * @return string
      */
     public function __toString()
     {

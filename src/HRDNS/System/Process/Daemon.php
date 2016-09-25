@@ -108,7 +108,7 @@ class Daemon implements LoggerInterface
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function getUserId(): int
     {
@@ -116,7 +116,7 @@ class Daemon implements LoggerInterface
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function getGroupId(): int
     {
@@ -124,7 +124,7 @@ class Daemon implements LoggerInterface
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function getPid(): int
     {
@@ -132,7 +132,7 @@ class Daemon implements LoggerInterface
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function getParentPid(): int
     {
@@ -227,7 +227,7 @@ class Daemon implements LoggerInterface
     }
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function isDaemonAlreadyRunning(): bool
     {
@@ -249,7 +249,7 @@ class Daemon implements LoggerInterface
     }
 
     /**
-     * @param int $userId
+     * @param integer $userId
      * @return self
      * @throws \Exception
      */
@@ -270,7 +270,7 @@ class Daemon implements LoggerInterface
     }
 
     /**
-     * @param int $groupId
+     * @param integer $groupId
      * @return self
      * @throws \Exception
      */
@@ -291,8 +291,8 @@ class Daemon implements LoggerInterface
     }
 
     /**
-     * @param int $pid
-     * @return bool
+     * @param integer $pid
+     * @return boolean
      */
     public function isPidAlive(int $pid): bool
     {
@@ -358,7 +358,7 @@ class Daemon implements LoggerInterface
     }
 
     /**
-     * @param string $message
+     * @param mixed $message
      * @param array $context
      * @return self
      */
@@ -372,7 +372,7 @@ class Daemon implements LoggerInterface
     }
 
     /**
-     * @param string $message
+     * @param mixed $message
      * @param array $context
      * @return self
      */
@@ -386,7 +386,7 @@ class Daemon implements LoggerInterface
     }
 
     /**
-     * @param string $message
+     * @param mixed $message
      * @param array $context
      * @return self
      */
@@ -400,7 +400,7 @@ class Daemon implements LoggerInterface
     }
 
     /**
-     * @param string $message
+     * @param mixed $message
      * @param array $context
      * @return self
      */
@@ -414,7 +414,7 @@ class Daemon implements LoggerInterface
     }
 
     /**
-     * @param string $message
+     * @param mixed $message
      * @param array $context
      * @return self
      */
@@ -428,7 +428,7 @@ class Daemon implements LoggerInterface
     }
 
     /**
-     * @param string $message
+     * @param mixed $message
      * @param array $context
      * @return self
      */
@@ -442,7 +442,7 @@ class Daemon implements LoggerInterface
     }
 
     /**
-     * @param string $message
+     * @param mixed $message
      * @param array $context
      * @return self
      */
@@ -456,7 +456,7 @@ class Daemon implements LoggerInterface
     }
 
     /**
-     * @param string $message
+     * @param mixed $message
      * @param array $context
      * @return self
      */
@@ -471,7 +471,7 @@ class Daemon implements LoggerInterface
 
     /**
      * @param mixed $level
-     * @param string $message
+     * @param mixed $message
      * @param array $context
      * @return self
      */

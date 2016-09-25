@@ -56,7 +56,7 @@ class Struct
 
     /**
      * @param mixed $key
-     * @return bool
+     * @return boolean
      */
     public function __isset($key): bool
     {

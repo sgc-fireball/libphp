@@ -7,8 +7,8 @@ class TSFile extends File
 
     /**
      * @todo fix mixed return types!
-     * @param int $length
-     * @return bool|mixed
+     * @param integer $length
+     * @return boolean|mixed
      */
     public function read(int $length)
     {
@@ -25,9 +25,9 @@ class TSFile extends File
 
     /**
      * @todo fix mixed return types!
-     * @param string $string
-     * @param int $length
-     * @return bool|int
+     * @param mixed $string
+     * @param integer $length
+     * @return boolean|integer
      */
     public function write($string, int $length = null)
     {

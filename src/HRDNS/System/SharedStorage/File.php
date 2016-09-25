@@ -34,7 +34,7 @@ class File
     }
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function exists(): bool
     {
@@ -68,7 +68,7 @@ class File
     /**
      * @todo fix mixed return types!
      * @param string $data
-     * @return int|bool
+     * @return integer|boolean
      */
     public function write(string $data)
     {
@@ -81,7 +81,7 @@ class File
     }
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function delete(): bool
     {
@@ -94,7 +94,7 @@ class File
 
     /**
      * @param string $mode
-     * @return bool
+     * @return boolean
      */
     protected function selfLock(string $mode): bool
     {

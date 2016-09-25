@@ -42,7 +42,7 @@ abstract class Client
     }
 
     /**
-     * @param int $port
+     * @param integer $port
      * @return self
      * @throws \Exception
      */
@@ -56,7 +56,7 @@ abstract class Client
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function getPort(): int
     {
@@ -64,8 +64,8 @@ abstract class Client
     }
 
     /**
-     * @param int $timeoutSeconds
-     * @param int $timeoutUSeconds
+     * @param integer $timeoutSeconds
+     * @param integer $timeoutUSeconds
      * @return self
      */
     public function setTimeout(int $timeoutSeconds, int $timeoutUSeconds): self
@@ -76,7 +76,7 @@ abstract class Client
     }
 
     /**
-     * @param int $bufferLength
+     * @param integer $bufferLength
      * @return self
      * @throws \Exception
      */

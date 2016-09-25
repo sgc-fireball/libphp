@@ -55,7 +55,7 @@ abstract class Stack implements \Iterator
     abstract public function key();
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function valid(): bool
     {
@@ -110,7 +110,7 @@ abstract class Stack implements \Iterator
     }
 
     /**
-     * @return int
+     * @return integer
      * @SuppressWarnings(PHPMD.boolArgumentFlag)
      */
     public function count(): int

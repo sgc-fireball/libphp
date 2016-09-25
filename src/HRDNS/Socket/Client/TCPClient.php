@@ -68,8 +68,8 @@ class TCPClient extends Client
 
     /**
      * @todo fix mixed return types!
-     * @param int|null $length
-     * @return string|bool
+     * @param integer|null $length
+     * @return string|boolean
      */
     public function read(int $length = null)
     {
@@ -83,8 +83,8 @@ class TCPClient extends Client
     /**
      * @todo fix mixed return types!
      * @param string $buffer
-     * @param int|null $length
-     * @return int|bool
+     * @param integer|null $length
+     * @return integer|boolean
      */
     public function write(string $buffer, int $length = null)
     {

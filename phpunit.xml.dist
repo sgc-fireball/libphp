@@ -3,7 +3,19 @@
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
          convertErrorsToExceptions="true"
-        >
+         backupGlobals="false"
+         backupStaticAttributes="false"
+         processIsolation="false"
+         stopOnFailure="false"
+         syntaxCheck="false">
+
+    <php>
+        <ini name="error_reporting" value="-1" />
+        <ini name="intl.default_locale" value="en" />
+        <ini name="intl.error_level" value="0" />
+        <ini name="memory_limit" value="-1" />
+        <const name="PHPUNIT" value="1"/>
+    </php>
 
     <testsuites>
         <testsuite name="PHPUnit">
@@ -13,9 +25,5 @@
             <directory suffix=".phpt">tests/HRDNS</directory>
         </testsuite>
     </testsuites>
-
-    <php>
-        <const name="PHPUNIT" value="1"/>
-    </php>
 
 </phpunit>

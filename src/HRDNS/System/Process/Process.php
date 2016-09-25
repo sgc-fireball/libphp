@@ -89,7 +89,7 @@ class Process
     /**
      * @todo fix mixed return types!
      * @param callable|string $command
-     * @return self|bool
+     * @return self|boolean
      * @SuppressWarnings(PHPMD.UnusedLocalVariable)
      */
     public function setCommand($command)
@@ -108,7 +108,7 @@ class Process
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function getPid(): int
     {
@@ -116,7 +116,7 @@ class Process
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function getExitCode(): int
     {
@@ -124,7 +124,7 @@ class Process
     }
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function isRunning(): bool
     {
@@ -181,9 +181,9 @@ class Process
     }
 
     /**
-     * @param int $signal
-     * @param int $sec
-     * @return bool
+     * @param integer $signal
+     * @param integer $sec
+     * @return boolean
      */
     public function stop(int $signal = null, int $sec = 3): bool
     {

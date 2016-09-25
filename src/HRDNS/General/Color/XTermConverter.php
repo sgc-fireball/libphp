@@ -278,7 +278,7 @@ class XTermConverter implements XTermConverterInterface
     }
 
     /**
-     * @param int $xterm
+     * @param integer $xterm
      * @return string
      */
     public function xterm2hex(int $xterm): string
@@ -306,7 +306,7 @@ class XTermConverter implements XTermConverterInterface
 
     /**
      * @param string $hexIn
-     * @return int
+     * @return integer
      */
     public function hex2xterm(string $hexIn): int
     {

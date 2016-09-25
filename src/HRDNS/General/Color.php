@@ -26,9 +26,9 @@ class Color
     }
 
     /**
-     * @param int $red
-     * @param int $green
-     * @param int $blue
+     * @param integer $red
+     * @param integer $green
+     * @param integer $blue
      * @return array
      */
     private function helpRgb2HsvHsl(int $red = 0, int $green = 0, int $blue = 0): array
@@ -66,9 +66,9 @@ class Color
     /**
      * converts rgb 2 hsv color value
      *
-     * @param int $red
-     * @param int $green
-     * @param int $blue
+     * @param integer $red
+     * @param integer $green
+     * @param integer $blue
      * @return array
      */
     public function rgb2hsv(int $red = 0, int $green = 0, int $blue = 0): array
@@ -95,9 +95,9 @@ class Color
     /**
      * convert rgb 2 hsl color value
      *
-     * @param int $red
-     * @param int $green
-     * @param int $blue
+     * @param integer $red
+     * @param integer $green
+     * @param integer $blue
      * @return array
      */
     public function rgb2hsl(int $red = 0, int $green = 0, int $blue = 0): array
@@ -124,9 +124,9 @@ class Color
     /**
      * convert rgb 2 hex color value
      *
-     * @param int $red
-     * @param int $green
-     * @param int $blue
+     * @param integer $red
+     * @param integer $green
+     * @param integer $blue
      * @return string
      */
     public function rgb2hex(int $red = 0, int $green = 0, int $blue = 0): string
@@ -142,9 +142,9 @@ class Color
     /**
      * convert rgb 2 cmyk color value
      *
-     * @param int $red
-     * @param int $green
-     * @param int $blue
+     * @param integer $red
+     * @param integer $green
+     * @param integer $blue
      * @return array
      */
     public function rgb2cmyk(int $red = 0, int $green = 0, int $blue = 0): array
@@ -252,7 +252,7 @@ class Color
      *
      * @param float $hue
      * @param float $saturation
-     * @param int $lightness
+     * @param float $lightness
      * @return array
      */
     public function hsl2rgb(float $hue = 0, float $saturation = 0, float $lightness = 0): array
@@ -362,7 +362,7 @@ class Color
      *
      * @param float $hue
      * @param float $saturation
-     * @param int $lightness
+     * @param float $lightness
      * @return string
      */
     public function hsl2hex(float $hue = 0, float $saturation = 0, float $lightness = 0): string
@@ -376,7 +376,7 @@ class Color
      *
      * @param float $hue
      * @param float $saturation
-     * @param int $lightness
+     * @param float $lightness
      * @return array
      */
     public function hsl2cmyk(float $hue = 0, float $saturation = 0, float $lightness = 0): array
@@ -390,7 +390,7 @@ class Color
      *
      * @param float $hue
      * @param float $saturation
-     * @param int $lightness
+     * @param float $lightness
      * @return array
      */
     public function hsl2hsv(float $hue = 0, float $saturation = 0, float $lightness = 0): array
@@ -525,7 +525,7 @@ class Color
     /**
      * convert xterm 2 cymk color value
      *
-     * @param int $xterm
+     * @param integer $xterm
      * @return array
      */
     public function xterm2cmyk(int $xterm = 0): array
@@ -537,7 +537,7 @@ class Color
     /**
      * convert xterm 2 hex color value
      *
-     * @param int $xterm
+     * @param integer $xterm
      * @return string
      */
     public function xterm2hex(int $xterm = 0): string
@@ -548,7 +548,7 @@ class Color
     /**
      * convert xterm 2 hsl color value
      *
-     * @param int $xterm
+     * @param integer $xterm
      * @return array
      */
     public function xterm2hsl(int $xterm = 0): array
@@ -560,7 +560,7 @@ class Color
     /**
      * convert xterm 2 hsv color value
      *
-     * @param int $xterm
+     * @param integer $xterm
      * @return array
      */
     public function xterm2hsv(int $xterm = 0): array
@@ -572,7 +572,7 @@ class Color
     /**
      * convert xterm 2 rgb color value
      *
-     * @param int $xterm
+     * @param integer $xterm
      * @return array
      */
     public function xterm2rgb(int $xterm): array
@@ -588,7 +588,7 @@ class Color
      * @param float $magenta
      * @param float $yellow
      * @param float $key
-     * @return int
+     * @return integer
      */
     public function cmyk2xterm(float $cyan = 0, float $magenta = 0, float $yellow = 0, float $key = 0): int
     {
@@ -600,7 +600,7 @@ class Color
      * convert hex 2 xterm color value
      *
      * @param string $hex
-     * @return int
+     * @return integer
      */
     public function hex2xterm(string $hex = '000000'): int
     {
@@ -613,7 +613,7 @@ class Color
      * @param float $hue
      * @param float $saturation
      * @param float $lightness
-     * @return int
+     * @return integer
      */
     public function hsl2xterm(float $hue = 0, float $saturation = 0, float $lightness = 0): int
     {
@@ -627,7 +627,7 @@ class Color
      * @param float $hue
      * @param float $saturation
      * @param float $value
-     * @return int
+     * @return integer
      */
     public function hsv2xterm(float $hue = 0, float $saturation = 0, float $value = 0): int
     {
@@ -638,10 +638,10 @@ class Color
     /**
      * convert rgb 2 xterm color value
      *
-     * @param int $red
-     * @param int $green
-     * @param int $blue
-     * @return int
+     * @param integer $red
+     * @param integer $green
+     * @param integer $blue
+     * @return integer
      */
     public function rgb2xterm(int $red = 0, int $green = 0, int $blue = 0): int
     {

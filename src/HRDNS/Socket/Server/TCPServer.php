@@ -9,7 +9,7 @@ abstract class TCPServer extends Server
     protected $maxClients = 20;
 
     /**
-     * @param int $maxClients
+     * @param integer $maxClients
      * @return self
      */
     public function setMaxClients(int $maxClients): self
@@ -74,7 +74,7 @@ abstract class TCPServer extends Server
     }
 
     /**
-     * @param int $limit
+     * @param integer $limit
      * @return self
      */
     public function listen(int $limit = -1): self
@@ -121,8 +121,8 @@ abstract class TCPServer extends Server
      * @todo fix mixed return types!
      * @param ServerClient $client
      * @param string $buffer
-     * @param int|null $length
-     * @return int|bool
+     * @param integer|null $length
+     * @return integer|boolean
      */
     public function send(ServerClient $client, string $buffer, int $length = null)
     {

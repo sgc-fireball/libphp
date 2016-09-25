@@ -81,7 +81,7 @@ class SignalHandler
     );
 
     /**
-     * @return bool
+     * @return boolean
      */
     public static function hasTerminated(): bool
     {
@@ -99,7 +99,7 @@ class SignalHandler
     }
 
     /**
-     * @param int $signal
+     * @param integer $signal
      * @return void
      */
     public static function fireSignalHandler(int $signal)
@@ -127,7 +127,7 @@ class SignalHandler
     }
 
     /**
-     * @param int $listenerId
+     * @param integer $listenerId
      * @return void
      */
     public static function removeListener(int $listenerId)

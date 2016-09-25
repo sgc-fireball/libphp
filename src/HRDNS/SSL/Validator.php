@@ -66,7 +66,7 @@ class Validator
 
     /**
      * @param string $host
-     * @param int $port
+     * @param integer $port
      * @return array
      * @throws \InvalidArgumentException
      */
@@ -109,10 +109,10 @@ class Validator
 
     /**
      * @param string $host
-     * @param int $port
+     * @param integer $port
      * @param string $protocol
      * @param string $cipher
-     * @return bool
+     * @return boolean
      * @throws \InvalidArgumentException
      */
     public function verifySingle(string $host, int $port, string $protocol, string $cipher): bool

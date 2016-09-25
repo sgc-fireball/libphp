@@ -41,7 +41,7 @@ class EventHandler
 
     /**
      * @param string $name
-     * @param int $priority
+     * @param integer $priority
      * @return self
      */
     private function prepareEvent(string $name, int $priority = 0): self
@@ -60,8 +60,8 @@ class EventHandler
     /**
      * @param string $name
      * @param callable $callable
-     * @param int $priority
-     * @return bool
+     * @param integer $priority
+     * @return boolean
      */
     public function addEvent(string $name, callable $callable, int $priority = 0): bool
     {

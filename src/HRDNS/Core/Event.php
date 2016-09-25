@@ -18,7 +18,7 @@ class Event implements EventInterface
     }
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function isPropagationStopped(): bool
     {

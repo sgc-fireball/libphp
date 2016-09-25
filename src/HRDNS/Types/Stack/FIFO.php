@@ -8,7 +8,7 @@ class FIFO extends Stack
 {
 
     /**
-     * @return int
+     * @return integer
      */
     public function key(): mixed
     {

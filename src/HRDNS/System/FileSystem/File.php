@@ -10,8 +10,8 @@ class File extends \SplFileObject
 
     /**
      * @todo fix mixed return types!
-     * @param int $length
-     * @return string|bool
+     * @param integer $length
+     * @return string|boolean
      */
     public function read(int $length)
     {
@@ -21,8 +21,8 @@ class File extends \SplFileObject
     /**
      * @todo fix mixed return types!
      * @param mixed $string
-     * @param int|null $length
-     * @return int|bool
+     * @param integer|null $length
+     * @return integer|boolean
      */
     public function write($string, int $length = null)
     {
@@ -31,7 +31,7 @@ class File extends \SplFileObject
 
     /**
      * @todo fix mixed return types!
-     * @return bool|string
+     * @return boolean|string
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     public function tail()
@@ -79,7 +79,7 @@ class File extends \SplFileObject
     }
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function unlink(): bool
     {

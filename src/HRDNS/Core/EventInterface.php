@@ -11,7 +11,7 @@ interface EventInterface
     public function stopPropagation(): EventInterface;
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function isPropagationStopped(): bool;
 

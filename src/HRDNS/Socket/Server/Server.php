@@ -45,7 +45,7 @@ abstract class Server
     }
 
     /**
-     * @param int $port
+     * @param integer $port
      * @return self
      * @throws \InvalidArgumentException
      */
@@ -59,7 +59,7 @@ abstract class Server
     }
 
     /**
-     * @param int $bufferLength
+     * @param integer $bufferLength
      * @return self
      * @throws \InvalidArgumentException
      */
@@ -74,8 +74,8 @@ abstract class Server
     }
 
     /**
-     * @param int $timeoutSeconds
-     * @param int $timeoutUSeconds
+     * @param integer $timeoutSeconds
+     * @param integer $timeoutUSeconds
      * @return self
      */
     public function setTimeout(int $timeoutSeconds, int $timeoutUSeconds): self
@@ -95,7 +95,7 @@ abstract class Server
     }
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function hasTerminated(): bool
     {

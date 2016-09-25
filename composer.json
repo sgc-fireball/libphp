@@ -52,7 +52,13 @@
     ],
     "check": [
       "phpmd src/ text cleancode,codesize,controversial,design,naming,unusedcode --suffixes php",
-      "composer test"
+      "@test"
     ]
+  },
+  "config": {
+    "bin-dir": "bin",
+    "platform": {
+      "php": "7.0.0"
+    }
   }
 }

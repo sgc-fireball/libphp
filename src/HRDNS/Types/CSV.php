@@ -80,7 +80,7 @@ class CSV implements \Iterator, \ArrayAccess
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function key(): int
     {
@@ -98,7 +98,7 @@ class CSV implements \Iterator, \ArrayAccess
     }
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function valid(): bool
     {
@@ -139,7 +139,7 @@ class CSV implements \Iterator, \ArrayAccess
 
     /**
      * @param mixed $offset
-     * @return bool
+     * @return boolean
      * @throws IOException
      */
     public function offsetExists($offset): bool

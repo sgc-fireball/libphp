@@ -9,7 +9,7 @@ class SHM
     protected $shmKey = 0;
 
     /**
-     * @return int
+     * @return integer
      */
     public function getKey(): int
     {
@@ -17,7 +17,7 @@ class SHM
     }
 
     /**
-     * @param int $shmKey
+     * @param integer $shmKey
      * @return void
      */
     public function __construct(int $shmKey = 0)
@@ -26,7 +26,7 @@ class SHM
     }
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function exists(): bool
     {
@@ -62,7 +62,7 @@ class SHM
 
     /**
      * @param string $data
-     * @return bool
+     * @return boolean
      */
     public function write(string $data): bool
     {
@@ -83,7 +83,7 @@ class SHM
     }
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function delete(): bool
     {

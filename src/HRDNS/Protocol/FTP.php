@@ -51,7 +51,7 @@ class FTP
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function getPort(): int
     {
@@ -59,7 +59,7 @@ class FTP
     }
 
     /**
-     * @param int $port
+     * @param integer $port
      * @return self
      * @throws \InvalidArgumentException
      */
@@ -109,7 +109,7 @@ class FTP
     }
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function isSsl(): bool
     {
@@ -117,7 +117,7 @@ class FTP
     }
 
     /**
-     * @param bool $ssl
+     * @param boolean $ssl
      * @return self
      */
     public function setSsl(bool $ssl): self
@@ -127,7 +127,7 @@ class FTP
     }
 
     /**
-     * @param int $timeout
+     * @param integer $timeout
      * @return self
      * @throws \InvalidArgumentException
      */
@@ -141,7 +141,7 @@ class FTP
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function getTimeout(): int
     {
@@ -302,7 +302,7 @@ class FTP
     }
 
     /**
-     * @param int $chmod
+     * @param integer $chmod
      * @param string $path
      * @return self
      * @throws IOException
@@ -392,7 +392,7 @@ class FTP
 
     /**
      * @param string $path
-     * @return int
+     * @return integer
      * @throws IOException
      */
     public function size(string $path): int
@@ -414,7 +414,7 @@ class FTP
 
     /**
      * @param string $path
-     * @return int
+     * @return integer
      * @throws IOException
      */
     public function modifiedTime(string $path): int

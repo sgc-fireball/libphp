@@ -41,7 +41,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataProvider
-     * @param int $xterm
+     * @param integer $xterm
      * @param array $cmyk
      * @param array $hsl
      * @param array $hsv
@@ -55,7 +55,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataProvider
-     * @param int $xterm
+     * @param integer $xterm
      * @param array $cmyk
      * @param array $hsl
      * @param array $hsv
@@ -69,7 +69,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataProvider
-     * @param int $xterm
+     * @param integer $xterm
      * @param array $cmyk
      * @param array $hsl
      * @param array $hsv
@@ -83,7 +83,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataProvider
-     * @param int $xterm
+     * @param integer $xterm
      * @param array $cmyk
      * @param array $hsl
      * @param array $hsv
@@ -97,7 +97,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataProvider
-     * @param int $xterm
+     * @param integer $xterm
      * @param array $cmyk
      * @param array $hsl
      * @param array $hsv
@@ -111,7 +111,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataProvider
-     * @param int $xterm
+     * @param integer $xterm
      * @param array $cmyk
      * @param array $hsl
      * @param array $hsv
@@ -125,7 +125,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataProvider
-     * @param int $xterm
+     * @param integer $xterm
      * @param array $cmyk
      * @param array $hsl
      * @param array $hsv
@@ -139,7 +139,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataProvider
-     * @param int $xterm
+     * @param integer $xterm
      * @param array $cmyk
      * @param array $hsl
      * @param array $hsv
@@ -153,7 +153,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataProvider
-     * @param int $xterm
+     * @param integer $xterm
      * @param array $cmyk
      * @param array $hsl
      * @param array $hsv
@@ -167,7 +167,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataProvider
-     * @param int $xterm
+     * @param integer $xterm
      * @param array $cmyk
      * @param array $hsl
      * @param array $hsv
@@ -181,7 +181,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataProvider
-     * @param int $xterm
+     * @param integer $xterm
      * @param array $cmyk
      * @param array $hsl
      * @param array $hsv
@@ -195,7 +195,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataProvider
-     * @param int $xterm
+     * @param integer $xterm
      * @param array $cmyk
      * @param array $hsl
      * @param array $hsv
@@ -209,7 +209,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataProvider
-     * @param int $xterm
+     * @param integer $xterm
      * @param array $cmyk
      * @param array $hsl
      * @param array $hsv
@@ -223,7 +223,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataProvider
-     * @param int $xterm
+     * @param integer $xterm
      * @param array $cmyk
      * @param array $hsl
      * @param array $hsv
@@ -237,7 +237,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataProvider
-     * @param int $xterm
+     * @param integer $xterm
      * @param array $cmyk
      * @param array $hsl
      * @param array $hsv
@@ -251,7 +251,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataProvider
-     * @param int $xterm
+     * @param integer $xterm
      * @param array $cmyk
      * @param array $hsl
      * @param array $hsv
@@ -265,7 +265,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataProvider
-     * @param int $xterm
+     * @param integer $xterm
      * @param array $cmyk
      * @param array $hsl
      * @param array $hsv
@@ -279,7 +279,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataProvider
-     * @param int $xterm
+     * @param integer $xterm
      * @param array $cmyk
      * @param array $hsl
      * @param array $hsv
@@ -293,7 +293,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataProvider
-     * @param int $xterm
+     * @param integer $xterm
      * @param array $cmyk
      * @param array $hsl
      * @param array $hsv
@@ -307,7 +307,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataProvider
-     * @param int $xterm
+     * @param integer $xterm
      * @param array $cmyk
      * @param array $hsl
      * @param array $hsv
@@ -321,7 +321,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataProvider
-     * @param int $xterm
+     * @param integer $xterm
      * @param array $cmyk
      * @param array $hsl
      * @param array $hsv
@@ -335,7 +335,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataProvider
-     * @param int $xterm
+     * @param integer $xterm
      * @param array $cmyk
      * @param array $hsl
      * @param array $hsv
@@ -349,7 +349,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataProvider
-     * @param int $xterm
+     * @param integer $xterm
      * @param array $cmyk
      * @param array $hsl
      * @param array $hsv
@@ -363,7 +363,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataProvider
-     * @param int $xterm
+     * @param integer $xterm
      * @param array $cmyk
      * @param array $hsl
      * @param array $hsv
@@ -377,7 +377,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataProvider
-     * @param int $xterm
+     * @param integer $xterm
      * @param array $cmyk
      * @param array $hsl
      * @param array $hsv
@@ -391,7 +391,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataProvider
-     * @param int $xterm
+     * @param integer $xterm
      * @param array $cmyk
      * @param array $hsl
      * @param array $hsv
@@ -405,7 +405,7 @@ class ColorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataProvider
-     * @param int $xterm
+     * @param integer $xterm
      * @param array $cmyk
      * @param array $hsl
      * @param array $hsv

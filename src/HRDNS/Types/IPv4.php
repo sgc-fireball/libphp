@@ -13,7 +13,7 @@ class IPv4
 
     /**
      * @param string|null $ipAddr
-     * @param int|null $cidr
+     * @param integer|null $cidr
      */
     public function __construct(string $ipAddr = null, int $cidr = null)
     {
@@ -44,7 +44,7 @@ class IPv4
     }
 
     /**
-     * @param int $long
+     * @param integer $long
      * @return IPv4
      * @throws \InvalidArgumentException
      */
@@ -58,7 +58,7 @@ class IPv4
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function getLong(): int
     {
@@ -85,7 +85,7 @@ class IPv4
     }
 
     /**
-     * @param int $cidr
+     * @param integer $cidr
      * @return self
      * @throws \InvalidArgumentException
      */
@@ -99,7 +99,7 @@ class IPv4
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function getCIDR(): int
     {
@@ -169,7 +169,7 @@ class IPv4
 
     /**
      * @param string|self $ipAddr
-     * @return bool
+     * @return boolean
      * @throws \InvalidArgumentException
      */
     public function isIpInSubnet($ipAddr): bool

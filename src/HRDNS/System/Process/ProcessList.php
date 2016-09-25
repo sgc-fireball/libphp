@@ -53,7 +53,7 @@ class ProcessList implements \Iterator
     }
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function valid(): bool
     {
@@ -71,7 +71,7 @@ class ProcessList implements \Iterator
     }
 
     /**
-     * @param int $worker
+     * @param integer $worker
      * @return ProcessList
      * @throws \InvalidArgumentException
      */
@@ -85,7 +85,7 @@ class ProcessList implements \Iterator
     }
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function isRunning(): bool
     {
@@ -166,8 +166,8 @@ class ProcessList implements \Iterator
     }
 
     /**
-     * @param int $signal
-     * @param int $sec
+     * @param integer $signal
+     * @param integer $sec
      * @return self
      */
     public function stop(int $signal = null, int $sec = 3)

@@ -8,7 +8,7 @@ class FILO extends Stack
 {
 
     /**
-     * @return int
+     * @return integer
      */
     public function key(): int
     {

@@ -14,7 +14,7 @@ class RingBuffer extends Stack
     protected $index = 0;
 
     /**
-     * @param int $size
+     * @param integer $size
      * @param array $elements
      */
     public function __construct(int $size = 1024, array $elements = [])
@@ -40,7 +40,7 @@ class RingBuffer extends Stack
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function key(): int
     {

@@ -165,7 +165,7 @@ class URL
     }
 
     /**
-     * @param int $port
+     * @param integer $port
      * @return self
      */
     public function setPort(int $port): self
@@ -175,7 +175,7 @@ class URL
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function getPort(): int
     {
