@@ -285,6 +285,20 @@ class XTermConverter implements XTermConverterInterface
     {
         $xterm = min(max(0, $xterm), 255);
         $data = array_flip(self::$map);
+        if (isset($data[$xterm])) {
+            return $data[$xterm];
+        }
+        $data = array_flip([
+            '000000' => 16,
+            '0000ff' => 21,
+            '00ff00' => 46,
+            '00ffff' => 51,
+            'ff0000' => 196,
+            'ff00ff' => 201,
+            'ffff00' => 226,
+            'ffffff' => 231,
+            '808080' => 244
+        ]);
         return $data[$xterm];
     }
 
