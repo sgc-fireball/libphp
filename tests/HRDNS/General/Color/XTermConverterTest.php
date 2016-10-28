@@ -44,7 +44,7 @@ class XTermConverterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($this->converter->hex2xterm($hex), $xterm);
     }
 
-    public function test00ffff()
+    public function test88ffff()
     {
         $this->assertEquals($this->converter->hex2xterm('88ffff'),123);
     }
