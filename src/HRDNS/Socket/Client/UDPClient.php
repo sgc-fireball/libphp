@@ -5,6 +5,8 @@ namespace HRDNS\Socket\Client;
 class UDPClient extends Client
 {
 
+    protected $allowBroadcast = false;
+
     /**
      * @return self
      * @throws \Exception
@@ -45,7 +47,7 @@ class UDPClient extends Client
         if (!@socket_recvfrom($this->socket, $buffer, $length, MSG_DONTWAIT, $src, $spt)) {
             return false;
         }
-        if ($this->host !== $src || $this->port !== $spt) {
+        if (!$this->allowBroadcast && ($this->host !== $src || $this->port !== $spt)) {
             return false;
         }
         return $buffer;
@@ -61,6 +63,24 @@ class UDPClient extends Client
     {
         $length = $length === null ? strlen($buffer) : $length;
         return @socket_sendto($this->socket, $buffer, $length, 0, $this->host, $this->port);
+    }
+
+    /**
+     * @param boolean $allowBroadcast
+     * @return $this
+     */
+    public function setAllowBrowscast(bool $allowBroadcast)
+    {
+        $this->allowBroadcast = (bool)$allowBroadcast;
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getAllowBrowscast(): bool
+    {
+        return $this->allowBroadcast;
     }
 
 }

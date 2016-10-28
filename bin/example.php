@@ -16,6 +16,7 @@ use Symfony\Component\Console\Input\ArrayInput;
 
 use HRDNS\Examples\Socket\EchoServer;
 use HRDNS\Examples\Socket\WebSocketServer;
+use HRDNS\Examples\Socket\SimpleServiceDiscoveryProtocolClientCommand;
 
 class Application extends BaseApplication
 {
@@ -35,6 +36,7 @@ class Application extends BaseApplication
         $commands = parent::getDefaultCommands();
         $commands[] = new EchoServer();
         $commands[] = new WebSocketServer();
+        $commands[] = new SimpleServiceDiscoveryProtocolClientCommand();
         return $commands;
     }
 
