@@ -4,12 +4,13 @@ language: php
 
 php:
   - 7.0
+  - 7.1
 
 sudo: false
 
 branches:
     only:
-        - php7
+        - master
 
 before_script:
   - composer install --dev
