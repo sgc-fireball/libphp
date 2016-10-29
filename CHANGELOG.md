@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 2016-10-29
+- adding simple service discover protocol (ssdp) to find universal plug and play (upnp) services
+- adding ssdp client example
+- fixing code styles
+- refactor php-test to phpunit tests
+
+## 2016-09-25
+- adding xterm color conversion
+
 ## 2016-05-01
 - adding WebSocketServer (unstable/testing)
 
