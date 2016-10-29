@@ -50,7 +50,12 @@ class IPv6
     public function getLong(): string
     {
         if (!function_exists('gmp_init') || !function_exists('gmp_strval')) {
-            throw new \RuntimeException('');
+            throw new \RuntimeException(
+                sprintf(
+                    'please install php%d-gmp',
+                    (int)phpversion()
+                )
+            );
         }
         return gmp_strval(gmp_init(str_replace(':', '', self::uncompress($this->ipAddr)), 16), 10);
     }
@@ -63,7 +68,12 @@ class IPv6
     public function setLong($long): self
     {
         if (!function_exists('gmp_init') || !function_exists('gmp_strval')) {
-            throw new \RuntimeException('');
+            throw new \RuntimeException(
+                sprintf(
+                    'please install php%d-gmp',
+                    (int)phpversion()
+                )
+            );
         }
         $ipAddr = str_pad(gmp_strval(gmp_init($long, 10), 16), '0', 32, STR_PAD_LEFT);
         $ipAddr = self::compress(substr(preg_replace('/([A-f0-9]{4})/', '$1:', $ipAddr), 0, -1));
@@ -117,7 +127,7 @@ class IPv6
             throw new \InvalidArgumentException();
         }
         $bin = $this->ip2bin($ipAddr);
-        if (!preg_match('/^(1{0,128})(0{0,128})$/', $bin)) {
+        if (!preg_match('/^(1{0,128})(0{0,128})$/', $bin) || strlen($bin) !== 128) {
             throw new \InvalidArgumentException();
         }
         $this->setCIDR(strlen(trim($bin, '0')));
