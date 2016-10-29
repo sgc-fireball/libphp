@@ -1,5 +1,7 @@
 # HRDNS libphp [![Build Status](https://travis-ci.org/sgc-fireball/libphp.svg)](https://travis-ci.org/sgc-fireball/libphp)
 
+This branch/lib is only for PHP7.
+
 ## Installation
 
 Install the latest version with
@@ -42,14 +44,28 @@ composer test
 
 ```bash
 cd ./libphp
-phpcs
+vendor/bin/phpcs
 ```
    
 ### Test it with PHPUnit
 
 ```bash
 cd ./libphp
-phpunit
+vendor/bin/phpunit
+```
+
+### Test it with PHP Copy/Paste Detector
+
+```bash
+cd ./libphp
+vendor/bin/phpcpd src/
+```
+
+### Test it with PHP Mess Detector
+
+```bash
+cd ./libphp
+vendor/bin/phpmd src/ text cleancode,codesize,controversial,design,naming,unusedcode --suffixes php
 ```
 
 ## About

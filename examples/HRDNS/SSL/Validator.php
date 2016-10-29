@@ -5,6 +5,7 @@ namespace HRDNS\Examples\SSL;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use HRDNS\SSL\Validator as SSLValidator;
@@ -14,6 +15,7 @@ class Validator extends Command
 
     const DEFAULT_HOST = '127.0.0.1';
     const DEFAULT_PORT = 443;
+    const COMMAND_NAME = 'exmaple:sslvalidator';
 
     /** @var string */
     private $host = null;
@@ -23,7 +25,7 @@ class Validator extends Command
 
     protected function configure()
     {
-        $this->setName('exmaple:sslvalidator');
+        $this->setName(self::COMMAND_NAME);
         $this->setProcessTitle($this->getName());
         $this->setDescription('A TCPServer EchoServer');
         $this->setHelp('');
@@ -50,28 +52,23 @@ class Validator extends Command
 
         if ($this->host == self::DEFAULT_HOST && $this->port == self::DEFAULT_PORT) {
 
-            /** @var \Symfony\Component\Console\Helper\DialogHelper $dialog */
-            $dialog = $this->getHelper('dialog');
+            /** @var \Symfony\Component\Console\Helper\QuestionHelper $questionHelper */
+            $questionHelper = $this->getHelper('question');
 
-            $this->host = $dialog->askAndValidate(
-                $output,
+            $questionHost = new Question(
                 sprintf('<info>Host <comment>[%s]<comment>:</info>', $this->host),
-                function ($host) {
-                    return $host;
-                },
-                false,
-                $this->host
+                $this->host,
+                '/^[a-z0-9\.-]$/'
             );
 
-            $this->port = $dialog->askAndValidate(
-                $output,
+            $questionPort = new Question(
                 sprintf('<info>Port <comment>[%s]<comment>:</info>', $this->port),
-                function ($port) {
-                    return $port;
-                },
-                false,
-                $this->port
+                $this->port,
+                '/^[0-9]{1,5}$/'
             );
+
+            $this->host = $questionHelper->ask($input,$output,$questionHost);
+            $this->port = $questionHelper->ask($input,$output,$questionPort);
 
             $output->writeln('');
         }

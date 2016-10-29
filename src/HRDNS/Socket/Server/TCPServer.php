@@ -5,14 +5,14 @@ namespace HRDNS\Socket\Server;
 abstract class TCPServer extends Server
 {
 
-    /** @var integer */
+    /** @var int */
     protected $maxClients = 20;
 
     /**
-     * @param int $maxClients
+     * @param integer $maxClients
      * @return self
      */
-    public function setMaxClients($maxClients)
+    public function setMaxClients(int $maxClients): self
     {
         $this->maxClients = max(1, (int)$maxClients);
         return $this;
@@ -22,7 +22,7 @@ abstract class TCPServer extends Server
      * @return self
      * @throws \Exception
      */
-    public function bind()
+    public function bind(): self
     {
         $this->masterSocket = @socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
         @socket_set_option($this->masterSocket, SOL_SOCKET, SO_REUSEADDR, 1);
@@ -77,13 +77,13 @@ abstract class TCPServer extends Server
      * @param integer $limit
      * @return self
      */
-    public function listen($limit = -1)
+    public function listen(int $limit = -1): self
     {
         while (!$this->isTerminated && ($limit > 0 || $limit == -1)) {
             $this->workOnMasterSocket();
 
             $limit = $limit == -1 ? -1 : $limit - 1;
-            $read = $write = $except = array ();
+            $read = $write = $except = [];
             foreach ($this->clients as $client) {
                 $read[] = $client->getSocket();
             }
@@ -104,29 +104,27 @@ abstract class TCPServer extends Server
 
     /**
      * @param ServerClient $client
-     * @param bool $closeByPeer
      * @return self
-     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+     * @SuppressWarnings(PHPMD.boolArgumentFlag)
      */
-    public function disconnect(ServerClient $client, $closeByPeer = false)
+    public function disconnect(ServerClient $client)
     {
-        if ($client->getSocket() === null) {
-            return $this;
+        if ($client->getSocket() !== null) {
+            @socket_close($client->getSocket());
+            $client->setSocket(null);
         }
-        $this->onDisconnect($client, $closeByPeer);
-        @socket_close($client->getSocket());
-        $client->setSocket(null);
         unset($this->clients[$client->getId()]);
         return $this;
     }
 
     /**
+     * @todo fix mixed return types!
      * @param ServerClient $client
      * @param string $buffer
      * @param integer|null $length
-     * @return boolean|integer
+     * @return integer|boolean
      */
-    public function send(ServerClient $client, $buffer, $length = null)
+    public function send(ServerClient $client, string $buffer, int $length = null)
     {
         if ($client->getSocket() === null || empty($buffer)) {
             return false;
@@ -142,7 +140,7 @@ abstract class TCPServer extends Server
     /**
      * @return self
      */
-    protected function workOnMasterSocket()
+    protected function workOnMasterSocket(): self
     {
         $socket = @socket_accept($this->masterSocket);
         if (is_resource($socket)) {
@@ -161,7 +159,7 @@ abstract class TCPServer extends Server
      * @param resource[] $read
      * @return self
      */
-    protected function workOnClientSockets(array $read = array ())
+    protected function workOnClientSockets(array $read = []): self
     {
         /** @var resource $socket */
         foreach ($read as $socket) {
@@ -185,18 +183,20 @@ abstract class TCPServer extends Server
      * @param ServerClient $client
      * @return self
      */
-    protected function workOnClientSocket(ServerClient $client)
+    protected function workOnClientSocket(ServerClient $client): self
     {
         $bytes = @socket_recv($client->getSocket(), $buffer, $this->bufferLength, 0);
         if ($bytes !== 0 && $bytes !== false) {
             $this->onIncoming($client, $buffer);
             return $this;
         }
-        $this->disconnect($client, true);
+        $this->onDisconnect($client);
+        $this->disconnect($client);
         return $this;
     }
 
     /**
+     * @todo fix mixed return types!
      * @param resource $socket
      * @return ServerClient|null
      */

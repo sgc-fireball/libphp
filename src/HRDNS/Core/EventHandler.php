@@ -9,9 +9,12 @@ class EventHandler
     private static $instance = null;
 
     /** @var array[] */
-    private $events = array ();
+    private $events = [];
 
-    public static function get()
+    /**
+     * @return self
+     */
+    public static function get(): self
     {
         if (!(self::$instance instanceof self)) {
             self::$instance = new self();
@@ -36,19 +39,31 @@ class EventHandler
         );
     }
 
-    private function prepareEvent($name, $priority = 0)
+    /**
+     * @param string $name
+     * @param integer $priority
+     * @return self
+     */
+    private function prepareEvent(string $name, int $priority = 0): self
     {
         $priority = (int)$priority;
         if (!isset($this->events[$name])) {
-            $this->events[$name] = array ();
+            $this->events[$name] = [];
         }
         if (!isset($this->events[$name][$priority])) {
-            $this->events[$name][$priority] = array ();
+            $this->events[$name][$priority] = [];
         }
         ksort($this->events[$name], SORT_NUMERIC);
+        return $this;
     }
 
-    public function addEvent($name, $callable, $priority = 0)
+    /**
+     * @param string $name
+     * @param callable $callable
+     * @param integer $priority
+     * @return boolean
+     */
+    public function addEvent(string $name, callable $callable, int $priority = 0): bool
     {
         $priority = (int)$priority;
         if (!is_callable($callable)) {
@@ -59,22 +74,32 @@ class EventHandler
         return true;
     }
 
-    public function fireEvent($name, EventInterface $event = null)
+    /**
+     * @param string $name
+     * @param EventInterface|null $event
+     * @return self
+     */
+    public function fireEvent(string $name, EventInterface $event = null): self
     {
         if (!isset($this->events[$name])) {
-            return;
+            return $this;
         }
         $event = $event instanceof EventInterface ? $event : new Event();
         foreach ($this->events[$name] as $priorities) {
             foreach ($priorities as $callable) {
                 $callable($event);
-                if (!$event->getPropagationStatus()) {
-                    return;
+                if (!$event->isPropagationStopped()) {
+                    return $this;
                 }
             }
         }
+        return $this;
     }
 
+    /**
+     * @throws \Exception
+     * @return void
+     */
     public function __sleep()
     {
         throw new \Exception('It is not allow to call ' . __METHOD__);

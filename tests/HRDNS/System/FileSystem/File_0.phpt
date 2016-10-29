@@ -8,7 +8,7 @@ require_once($basePath . '/tests/bootstrap.php');
 use HRDNS\System\FileSystem\File;
 
 $pathname = tempnam(sys_get_temp_dir(), 'phpunit');
-$file = new File($pathname);
+$file = new File($pathname,'w');
 $file->write('test1234');
 echo file_get_contents($file->getPathname());
 $file->unlink();

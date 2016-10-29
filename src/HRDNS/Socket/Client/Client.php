@@ -6,31 +6,39 @@ abstract class Client
 {
 
     /** @var string */
-    protected $host = null;
+    protected $host = '';
 
-    /** @var integer */
-    protected $port = 20;
+    /** @var int */
+    protected $port = 0;
 
     /** @var resource|null */
     protected $socket = null;
 
-    /** @var integer */
+    /** @var int */
     protected $bufferLength = 8192;
 
-    /** @var integer */
+    /** @var int */
     protected $timeoutSeconds = 1;
 
-    /** @var integer */
+    /** @var int */
     protected $timeoutUSeconds = 0;
 
     /**
      * @param string $host
      * @return self
      */
-    public function setHost($host)
+    public function setHost(string $host): self
     {
         $this->host = $host;
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHost(): string
+    {
+        return $this->host;
     }
 
     /**
@@ -38,10 +46,9 @@ abstract class Client
      * @return self
      * @throws \Exception
      */
-    public function setPort($port)
+    public function setPort(int $port): self
     {
-        $port = (int)$port;
-        if ($port < 1 || $port > 65535) {
+        if ($port < 0 || $port > 65535) {
             throw new \Exception('The port ' . $port . ' is not allowed.');
         }
         $this->port = $port;
@@ -49,14 +56,22 @@ abstract class Client
     }
 
     /**
+     * @return integer
+     */
+    public function getPort(): int
+    {
+        return $this->port;
+    }
+
+    /**
      * @param integer $timeoutSeconds
      * @param integer $timeoutUSeconds
      * @return self
      */
-    public function setTimeout($timeoutSeconds, $timeoutUSeconds)
+    public function setTimeout(int $timeoutSeconds, int $timeoutUSeconds): self
     {
-        $this->timeoutSeconds = (int)$timeoutSeconds;
-        $this->timeoutUSeconds = (int)$timeoutUSeconds;
+        $this->timeoutSeconds = $timeoutSeconds;
+        $this->timeoutUSeconds = $timeoutUSeconds;
         return $this;
     }
 
@@ -65,7 +80,7 @@ abstract class Client
      * @return self
      * @throws \Exception
      */
-    public function setBufferLength($bufferLength)
+    public function setBufferLength(int $bufferLength): self
     {
         $bufferLength = (int)$bufferLength;
         if (($bufferLength % 8) !== 0) {
@@ -78,7 +93,7 @@ abstract class Client
     /**
      * @return self
      */
-    public function disconnect()
+    public function disconnect(): self
     {
         @socket_close($this->socket);
         $this->socket = null;

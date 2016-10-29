@@ -13,12 +13,12 @@ class Struct
     /**
      * @var array
      */
-    protected $data = array ();
+    protected $data = [];
 
     /**
      * @param array $data
      */
-    public function __construct(array $data = array ())
+    public function __construct(array $data = [])
     {
         if (empty($data)) {
             return;
@@ -32,7 +32,7 @@ class Struct
      * @return self
      * @throws \Exception
      */
-    public function __set($key, $value)
+    public function __set($key, $value): self
     {
         if (!isset($this->data[$key])) {
             throw new \Exception(sprintf('%s does not exists on %s', $key, __CLASS__));
@@ -58,7 +58,7 @@ class Struct
      * @param mixed $key
      * @return boolean
      */
-    public function __isset($key)
+    public function __isset($key): bool
     {
         return isset($this->data[$key]);
     }
@@ -66,7 +66,7 @@ class Struct
     /**
      * @return array
      */
-    public function getArray()
+    public function getArray(): array
     {
         return $this->data;
     }
@@ -75,7 +75,7 @@ class Struct
      * @param array $data
      * @return self
      */
-    public function setArray(array $data)
+    public function setArray(array $data): self
     {
         $this->data = $data;
         return $this;
@@ -84,7 +84,7 @@ class Struct
     /**
      * @return string
      */
-    public function getJSON()
+    public function getJSON(): string
     {
         return json_encode($this->data);
     }
@@ -94,7 +94,7 @@ class Struct
      * @return self
      * @throws \Exception
      */
-    public function loadFromJSON($json)
+    public function loadFromJSON(string $json): self
     {
         $data = json_decode($json);
         $data = $data instanceof \stdClass ? (array)$data : false;
@@ -108,7 +108,7 @@ class Struct
     /**
      * @return string
      */
-    public function getSerialize()
+    public function getSerialize(): string
     {
         return serialize($this->data);
     }
@@ -118,7 +118,7 @@ class Struct
      * @return self
      * @throws \Exception
      */
-    public function loadFromSerialize($serialize)
+    public function loadFromSerialize(string $serialize): self
     {
         $data = unserialize($serialize);
         if (!is_array($data)) {
@@ -129,13 +129,13 @@ class Struct
     }
 
     /**
-     * @return XML
+     * @return string
      */
-    public function getXML()
+    public function getXML(): string
     {
         $xml = new XML();
         $xml->setName('struct');
-        $xml->setRoot(true);
+        $xml->setRoot();
         $xml->setCharset('UTF-8');
         $xml->setAttribute('type', 'object');
         $xml->setAttribute('class', __CLASS__);
@@ -156,14 +156,13 @@ class Struct
             $child = new XML();
             $child->setName($key);
             $child->setCData(true);
-            $child->setRoot(false);
             $type = gettype($value);
             $child->setAttribute('type', $type);
             switch ($type) {
-                case 'boolean':
+                case 'bool':
                     $child->setValue((int)$value);
                     break;
-                case 'integer':
+                case 'int':
                     $child->setValue((int)$value);
                     break;
                 case 'double':
@@ -200,9 +199,9 @@ class Struct
     /**
      * @return array
      */
-    public function __sleep()
+    public function __sleep(): array
     {
-        return array ('data');
+        return ['data'];
     }
 
 }

@@ -5,56 +5,32 @@ namespace HRDNS\System\FileSystem;
 class File extends \SplFileObject
 {
 
-    /** @var integer */
+    /** @var int */
     protected $tailSeek = -1;
 
     /**
-     * @param mixed $fileName
-     * @param string $openMode
-     * @param boolean $useIncludePath
-     * @param resource $context
-     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
-     */
-    public function __construct($fileName, $openMode = 'a+', $useIncludePath = false, $context = null)
-    {
-        parent::__construct($fileName, $openMode, $useIncludePath, $context);
-    }
-
-    /**
+     * @todo fix mixed return types!
      * @param integer $length
-     * @return mixed
+     * @return string|boolean
      */
-    public function read($length)
+    public function read(int $length)
     {
-        if (version_compare(phpversion(), '5.5.11', '<')) {
-            trigger_error(
-                sprintf(
-                    '%s is not supported on PHP %s < 5.5.11.',
-                    __METHOD__,
-                    phpversion()
-                ),
-                E_USER_WARNING
-            );
-            $buffer = '';
-            while (strlen($buffer) < $length && !$this->eof()) {
-                $buffer .= $this->fgets();
-            }
-            return $buffer;
-        }
         return parent::fread($length);
     }
 
     /**
+     * @todo fix mixed return types!
      * @param mixed $string
      * @param integer|null $length
-     * @return integer
+     * @return integer|boolean
      */
-    public function write($string, $length = null)
+    public function write($string, int $length = null)
     {
         return parent::fwrite($string, $length ?: mb_strlen($string));
     }
 
     /**
+     * @todo fix mixed return types!
      * @return boolean|string
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
@@ -105,22 +81,9 @@ class File extends \SplFileObject
     /**
      * @return boolean
      */
-    public function unlink()
+    public function unlink(): bool
     {
         return unlink($this->getPathname());
-    }
-
-    /**
-     * @param string $openMode
-     * @param boolean $useIncludePath
-     * @param resource $context
-     * @return File
-     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
-     */
-    public function openFile($openMode = 'a+', $useIncludePath = false, $context = null)
-    {
-        $className = get_class($this);
-        return new $className($this->getPathname($openMode, $useIncludePath, $context));
     }
 
 }

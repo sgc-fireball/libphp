@@ -13,10 +13,11 @@ require_once($basePath . '/tests/bootstrap.php');
 use HRDNS\System\FileSystem\File;
 
 $pathname = tempnam(sys_get_temp_dir(), 'phpunit');
-$file = new File($pathname);
+$file = new File($pathname, 'w+');
 $file->write("test1234\n");
 $file->write("test5678\n");
-echo $file->read(4096) . "\n";
+$file->seek(0);
+echo $file->read(8) . "\n";
 $file->unlink();
 ?>
 --EXPECT--

@@ -19,18 +19,18 @@ class Process
     const EXITCODE_KILLED = 1026;
 
     /** @var array */
-    protected $options = array();
+    protected $options = [];
 
     /** @var string */
     protected $id = '';
 
-    /** @var integer  */
+    /** @var int */
     protected $pid = 0;
 
-    /** @var integer  */
+    /** @var int */
     protected $exitCode = self::EXITCODE_NOT_STARTED;
 
-    /** @var callable|null */
+    /** @var callable */
     protected $command = null;
 
     /** @var float */
@@ -53,7 +53,7 @@ class Process
     /**
      * @return string
      */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
@@ -63,31 +63,31 @@ class Process
      * @param mixed $value
      * @return self
      */
-    public function addOption($key, $value)
+    public function addOption(string $key, $value): self
     {
         $this->options[(string)$key] = $value;
-
         return $this;
     }
 
     /**
      * @return array
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return $this->options;
     }
 
     /**
      * @param string $key
-     * @return null
+     * @return mixed:null
      */
-    public function getOption($key)
+    public function getOption(string $key)
     {
         return isset($this->options[$key]) ? $this->options[$key] : null;
     }
 
     /**
+     * @todo fix mixed return types!
      * @param callable|string $command
      * @return self|boolean
      * @SuppressWarnings(PHPMD.UnusedLocalVariable)
@@ -96,24 +96,21 @@ class Process
     {
         if (is_callable($command)) {
             $this->command = $command;
-
             return $this;
         }
         if (is_string($command) && file_exists($command) && is_readable($command)) {
             $this->command = function (Process $process) use ($command) {
                 return require_once($command);
             };
-
             return $this;
         }
-
         return false;
     }
 
     /**
      * @return integer
      */
-    public function getPid()
+    public function getPid(): int
     {
         return $this->pid;
     }
@@ -121,7 +118,7 @@ class Process
     /**
      * @return integer
      */
-    public function getExitCode()
+    public function getExitCode(): int
     {
         return $this->exitCode;
     }
@@ -129,7 +126,7 @@ class Process
     /**
      * @return boolean
      */
-    public function isRunning()
+    public function isRunning(): bool
     {
         if ($this->pid == 0) {
             return false;
@@ -139,10 +136,8 @@ class Process
             $this->endTime = microtime(true);
             $this->exitCode = pcntl_wexitstatus($status);
             $this->pid = 0;
-
             return false;
         }
-
         return true;
     }
 
@@ -152,7 +147,7 @@ class Process
      * @SuppressWarnings(PHPMD.NPathComplexity)
      * @SuppressWarnings(PHPMD.ExitExpression)
      */
-    public function start(array $whiteList = array())
+    public function start(array $whiteList = []): self
     {
         $this->startTime = microtime(true);
         $this->pid = pcntl_fork();
@@ -186,11 +181,11 @@ class Process
     }
 
     /**
-     * @param integer  $signal
-     * @param integer  $sec
+     * @param integer $signal
+     * @param integer $sec
      * @return boolean
      */
-    public function stop($signal = null, $sec = 3)
+    public function stop(int $signal = null, int $sec = 3): bool
     {
         $signal = $signal === null ? SIGTERM : $signal;
         if (!$this->isRunning()) {

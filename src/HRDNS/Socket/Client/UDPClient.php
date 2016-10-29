@@ -5,11 +5,13 @@ namespace HRDNS\Socket\Client;
 class UDPClient extends Client
 {
 
+    protected $allowBroadcast = false;
+
     /**
      * @return self
      * @throws \Exception
      */
-    public function connect()
+    public function connect(): self
     {
         if (is_resource($this->socket)) {
             return $this;
@@ -32,10 +34,11 @@ class UDPClient extends Client
     }
 
     /**
+     * @todo fix mixed return types!
      * @param integer|null $length
      * @return string|boolean
      */
-    public function read($length = null)
+    public function read(int $length = null)
     {
         $length = $length === null ? $this->bufferLength : $length;
         if (!$length) {
@@ -44,21 +47,40 @@ class UDPClient extends Client
         if (!@socket_recvfrom($this->socket, $buffer, $length, MSG_DONTWAIT, $src, $spt)) {
             return false;
         }
-        if ($this->host !== $src || $this->port !== $spt) {
+        if (!$this->allowBroadcast && ($this->host !== $src || $this->port !== $spt)) {
             return false;
         }
         return $buffer;
     }
 
     /**
+     * @todo fix mixed return types!
      * @param string $buffer
      * @param integer|null $length
-     * @return boolean|integer
+     * @return integer|boolean
      */
-    public function write($buffer, $length = null)
+    public function write(string $buffer, int $length = null)
     {
         $length = $length === null ? strlen($buffer) : $length;
         return @socket_sendto($this->socket, $buffer, $length, 0, $this->host, $this->port);
+    }
+
+    /**
+     * @param boolean $allowBroadcast
+     * @return $this
+     */
+    public function setAllowBrowscast(bool $allowBroadcast)
+    {
+        $this->allowBroadcast = (bool)$allowBroadcast;
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getAllowBrowscast(): bool
+    {
+        return $this->allowBroadcast;
     }
 
 }

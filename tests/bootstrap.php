@@ -1,5 +1,10 @@
 <?php
 
+declare(strict_types=1);
+declare(ticks = 100);
+
+namespace Test;
+
 if (!defined('DS')) {
     define('DS', DIRECTORY_SEPARATOR);
 }

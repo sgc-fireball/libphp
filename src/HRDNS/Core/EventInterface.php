@@ -5,8 +5,14 @@ namespace HRDNS\Core;
 interface EventInterface
 {
 
-    public function stopPropagation();
+    /**
+     * @return EventInterface
+     */
+    public function stopPropagation(): EventInterface;
 
-    public function getPropagationStatus();
+    /**
+     * @return boolean
+     */
+    public function isPropagationStopped(): bool;
 
 }

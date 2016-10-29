@@ -2,7 +2,9 @@
 Testing \HRDNS\Types\XML - parse xmll
 --FILE--
 <?php
-require_once(__DIR__ . '/../../../vendor/autoload.php');
+$basePath = preg_replace('/\/tests\/.*/', '', realpath(__DIR__));
+require_once($basePath . '/tests/bootstrap.php');
+
 use \HRDNS\Types\XML;
 
 $xml = new XML('<root><child attr="2">1</child></root>');

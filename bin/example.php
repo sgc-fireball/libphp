@@ -5,7 +5,7 @@ if (!defined('DS')) {
     define('DS', DIRECTORY_SEPARATOR);
 }
 
-declare(ticks = 100);
+declare(ticks = 1000);
 
 require_once(__DIR__ . DS . '..' . DS . 'examples' . DS . 'bootstrap.php');
 
@@ -15,6 +15,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\ArrayInput;
 
 use HRDNS\Examples\Socket\EchoServer;
+use HRDNS\Examples\Socket\WebSocketServer;
+use HRDNS\Examples\Socket\SimpleServiceDiscoveryProtocolClientCommand;
 
 class Application extends BaseApplication
 {
@@ -33,6 +35,8 @@ class Application extends BaseApplication
     {
         $commands = parent::getDefaultCommands();
         $commands[] = new EchoServer();
+        $commands[] = new WebSocketServer();
+        $commands[] = new SimpleServiceDiscoveryProtocolClientCommand();
         return $commands;
     }
 
@@ -53,7 +57,7 @@ class Application extends BaseApplication
         }
         if (!$input->getFirstArgument()) {
             $input = new ArrayInput(
-                array ('list')
+                ['list']
             );
         }
         return parent::doRun($input, $output);

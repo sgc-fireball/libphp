@@ -5,14 +5,22 @@ namespace HRDNS\Core;
 class Event implements EventInterface
 {
 
+    /** @var bool */
     protected $propagation = true;
 
-    public function stopPropagation()
+    /**
+     * @return EventInterface
+     */
+    public function stopPropagation(): EventInterface
     {
         $this->propagation = false;
+        return $this;
     }
 
-    public function getPropagationStatus()
+    /**
+     * @return boolean
+     */
+    public function isPropagationStopped(): bool
     {
         return $this->propagation;
     }

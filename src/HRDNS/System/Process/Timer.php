@@ -36,7 +36,7 @@ class Timer
     /**
      * @var array
      */
-    protected $timeouts = array ();
+    protected $timeouts = [];
 
     /**
      * @var int
@@ -46,19 +46,18 @@ class Timer
     /**
      * @var array
      */
-    protected $intervals = array ();
+    protected $intervals = [];
 
     /**
      * @return self
      */
-    public static function getInstance()
+    public static function getInstance(): self
     {
         if (self::$instance !== null) {
             return self::$instance;
         }
         self::$instance = new self();
-        \register_tick_function(array (self::$instance, 'tick'));
-
+        \register_tick_function(array(self::$instance, 'tick'));
         return self::$instance;
     }
 
@@ -82,23 +81,22 @@ class Timer
     {
         $this->currentTime = (int)(microtime(true) * 1000);
         $this->durotationTime = $this->currentTime - $this->startTime;
-        $this->checkTimeouts();
-        $this->checkIntervals();
+        $this->checkTimeouts()->checkIntervals();
     }
 
     /**
      * checkTimeouts
      *
-     * @return void
+     * @return self
      * @SuppressWarnings(PHPMD.ElseExpression)
      */
-    protected function checkTimeouts()
+    protected function checkTimeouts(): self
     {
         if (!count($this->timeouts)) {
-            return;
+            return $this;
         }
         if ($this->lastTimeoutCheck === $this->currentTime) {
-            return;
+            return $this;
         }
         $timeouts = array_keys($this->timeouts);
         foreach ($timeouts as $id) {
@@ -116,21 +114,22 @@ class Timer
             unset($this->timeouts[$id]);
         }
         $this->lastTimeoutCheck = $this->currentTime;
+        return $this;
     }
 
     /**
      * checkIntervals
      *
-     * @return void
+     * @return self
      * @SuppressWarnings(PHPMD.ElseExpression)
      */
-    protected function checkIntervals()
+    protected function checkIntervals(): self
     {
         if (!count($this->intervals)) {
-            return;
+            return $this;
         }
         if ($this->lastIntervalCheck === $this->currentTime) {
-            return;
+            return $this;
         }
         /** @var Timer\Interval $interval */
         foreach ($this->intervals as $interval) {
@@ -146,21 +145,22 @@ class Timer
             $interval->lastRun = $this->currentTime;
         }
         $this->lastIntervalCheck = $this->currentTime;
+        return $this;
     }
 
     /**
-     * @param callable|string $fnc
+     * @param callable $fnc
      * @param integer $timeoutTime
-     * @return string|boolean
+     * @return string
+     * @throws \InvalidArgumentException
      */
-    public function addTimeout($fnc, $timeoutTime = 1)
+    public function addTimeout(callable $fnc, int $timeoutTime = 1): string
     {
         if (!is_callable($fnc)) {
-            trigger_error(sprintf('%s :: parameter 1 must be callable or a function name!!', __METHOD__), E_USER_ERROR);
-            return false;
+            throw new \InvalidArgumentException('Argument one must be callable!');
         }
         $timeout = new Timer\Timeout(
-            array (
+            array(
                 'func' => $fnc,
                 'run' => $this->currentTime + (int)($timeoutTime * 1000)
             )
@@ -173,7 +173,7 @@ class Timer
      * @param string $timerId
      * @return self
      */
-    public function clearTimeout($timerId)
+    public function clearTimeout(string $timerId): self
     {
         if (isset($this->timeouts[$timerId])) {
             unset($this->timeouts[$timerId]);
@@ -184,16 +184,16 @@ class Timer
     /**
      * @param callable $fnc
      * @param integer $intervalTime
-     * @return string|boolean
+     * @return string
+     * @throws \InvalidArgumentException
      */
-    public function addInterval(callable $fnc, $intervalTime = 1)
+    public function addInterval(callable $fnc, int $intervalTime = 1): string
     {
         if (!is_callable($fnc)) {
-            trigger_error(sprintf('%s :: parameter 1 must be callable or a function name!!', __METHOD__), E_USER_ERROR);
-            return false;
+            throw new \InvalidArgumentException('Argument one must be callable!');
         }
         $interval = new Timer\Interval(
-            array (
+            array(
                 'func' => $fnc,
                 'lastRun' => $this->currentTime,
                 'interval' => (int)($intervalTime * 1000)
@@ -207,12 +207,11 @@ class Timer
      * @param string $intervalId
      * @return self
      */
-    public function clearInterval($intervalId)
+    public function clearInterval(string $intervalId): self
     {
         if (isset($this->intervals[$intervalId])) {
             unset($this->intervals[$intervalId]);
         }
-
         return $this;
     }
 

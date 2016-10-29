@@ -68,6 +68,14 @@
         <exclude name="Squiz.ControlStructures.ForLoopDeclaration.SpacingBeforeSecond"/>
     </rule>
 
+    <rule ref="Squiz.Commenting.FunctionComment.InvalidReturn">
+        <type>warning</type>
+    </rule>
+
+    <rule ref="Squiz.Commenting.FunctionComment.ScalarTypeHintMissing">
+        <type>warning</type>
+    </rule>
+
     <arg value="s"/>
     <arg name="colors"/>
     <arg name="encoding" value="UTF-8"/>

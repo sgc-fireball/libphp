@@ -17,61 +17,41 @@ class Daemon implements LoggerInterface
 
     /**
      * @static
-     * @var self
+     * @var self|null
      */
     protected static $instance = null;
 
-    /**
-     * @var int
-     */
-    protected $userId = null;
+    /** @var int */
+    protected $userId = -1;
 
-    /**
-     * @var int
-     */
-    protected $groupId = null;
+    /** @var int */
+    protected $groupId = -1;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $fqdn = 'localhost.local';
 
-    /**
-     * @var string
-     */
+    /** @var mixed|string */
     protected $hostname = 'localhost';
 
-    /**
-     * @var string
-     */
+    /** @var mixed|string */
     protected $processName = 'Daemon';
 
-    /**
-     * @var int
-     */
+    /** @var int */
     protected $pid = -1;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     protected $parentPid = -1;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $pidPath = '/var/run';
 
     /** @var File */
     protected $pidFile = null;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $instanceName = 'daemon';
 
-    /**
-     * @var LoggerInterface
-     */
+    /** @var LoggerInterface */
     protected $logger = null;
 
     /**
@@ -89,9 +69,7 @@ class Daemon implements LoggerInterface
     }
 
     /**
-     * construct
-     *
-     * @return void
+     * @private
      */
     private function __construct()
     {
@@ -105,7 +83,7 @@ class Daemon implements LoggerInterface
 
         $this->fqdn = $system['nodename'];
         $this->hostname = preg_replace('/\..*/', '', $this->fqdn);
-        $this->processName = str_replace(array ('.phpt', '.php'), '', $startFile);
+        $this->processName = str_replace(array('.phpt', '.php'), '', $startFile);
         $this->userId = posix_getuid();
         $this->groupId = posix_getgid();
         $this->pid = posix_getpid();
@@ -116,7 +94,7 @@ class Daemon implements LoggerInterface
     /**
      * @return string
      */
-    public function getFqdn()
+    public function getFqdn(): string
     {
         return $this->fqdn;
     }
@@ -124,7 +102,7 @@ class Daemon implements LoggerInterface
     /**
      * @return string
      */
-    public function getHostname()
+    public function getHostname(): string
     {
         return $this->hostname;
     }
@@ -132,7 +110,7 @@ class Daemon implements LoggerInterface
     /**
      * @return integer
      */
-    public function getUserId()
+    public function getUserId(): int
     {
         return $this->userId;
     }
@@ -140,7 +118,7 @@ class Daemon implements LoggerInterface
     /**
      * @return integer
      */
-    public function getGroupId()
+    public function getGroupId(): int
     {
         return $this->groupId;
     }
@@ -148,7 +126,7 @@ class Daemon implements LoggerInterface
     /**
      * @return integer
      */
-    public function getPid()
+    public function getPid(): int
     {
         return $this->pid;
     }
@@ -156,7 +134,7 @@ class Daemon implements LoggerInterface
     /**
      * @return integer
      */
-    public function getParentPid()
+    public function getParentPid(): int
     {
         return $this->parentPid;
     }
@@ -165,7 +143,7 @@ class Daemon implements LoggerInterface
      * @param string $instance
      * @return void
      */
-    public function forked($instance = 'child')
+    public function forked(string $instance = 'child')
     {
         $this->pid = posix_getpid();
         $this->parentPid = posix_getppid();
@@ -176,7 +154,7 @@ class Daemon implements LoggerInterface
      * @param string $instance
      * @return self
      */
-    public function setInstanceName($instance)
+    public function setInstanceName(string $instance): self
     {
         $this->instanceName = $instance;
         return $this;
@@ -186,7 +164,7 @@ class Daemon implements LoggerInterface
      * @param string $processName
      * @return self
      */
-    public function setProcessName($processName)
+    public function setProcessName(string $processName): self
     {
         $this->processName = $processName;
         return $this;
@@ -195,7 +173,7 @@ class Daemon implements LoggerInterface
     /**
      * @return string
      */
-    public function getProcessName()
+    public function getProcessName(): string
     {
         return $this->processName;
     }
@@ -203,7 +181,7 @@ class Daemon implements LoggerInterface
     /**
      * @return string
      */
-    public function getPidPath()
+    public function getPidPath(): string
     {
         return $this->pidPath;
     }
@@ -213,7 +191,7 @@ class Daemon implements LoggerInterface
      * @return self
      * @throws \InvalidArgumentException
      */
-    public function setPidPath($pidPath)
+    public function setPidPath(string $pidPath): self
     {
         if (!is_dir($pidPath)) {
             throw new \InvalidArgumentException('The folder ' . $pidPath . ' does not exists.');
@@ -228,7 +206,7 @@ class Daemon implements LoggerInterface
     /**
      * @return string
      */
-    public function getPidPathname()
+    public function getPidPathname(): string
     {
         return sprintf(
             '%s/%s.pid',
@@ -240,7 +218,7 @@ class Daemon implements LoggerInterface
     /**
      * @return File
      */
-    public function getPidFile()
+    public function getPidFile(): File
     {
         if ($this->pidFile === null) {
             $this->pidFile = new File($this->getPidPathname(), 'w+');
@@ -251,7 +229,7 @@ class Daemon implements LoggerInterface
     /**
      * @return boolean
      */
-    public function isDaemonAlreadyRunning()
+    public function isDaemonAlreadyRunning(): bool
     {
         $pidPathName = $this->getPidPathname();
         if (!file_exists($pidPathName)) {
@@ -275,7 +253,7 @@ class Daemon implements LoggerInterface
      * @return self
      * @throws \Exception
      */
-    public function setUserId($userId)
+    public function setUserId(int $userId): self
     {
         $userId = (int)$userId;
         if (!posix_setuid($userId)) {
@@ -296,7 +274,7 @@ class Daemon implements LoggerInterface
      * @return self
      * @throws \Exception
      */
-    public function setGroupId($groupId)
+    public function setGroupId(int $groupId): self
     {
         $groupId = (int)$groupId;
         if (!posix_setgid($groupId)) {
@@ -316,7 +294,7 @@ class Daemon implements LoggerInterface
      * @param integer $pid
      * @return boolean
      */
-    public function isPidAlive($pid)
+    public function isPidAlive(int $pid): bool
     {
         return (bool)posix_kill((int)$pid, 0);
     }
@@ -325,7 +303,7 @@ class Daemon implements LoggerInterface
      * @return self
      * @throws \Exception
      */
-    public function start()
+    public function start(): self
     {
         if (!is_dir($this->getPidPath())) {
             if (!mkdir($this->getPidPath(), 0700, true)) {
@@ -354,7 +332,7 @@ class Daemon implements LoggerInterface
     /**
      * @return self
      */
-    public function stop()
+    public function stop(): self
     {
         $pidFile = $this->getPidFile();
         if (!$pidFile->isFile()) {
@@ -373,146 +351,136 @@ class Daemon implements LoggerInterface
      * @param LoggerInterface $logger
      * @return self
      */
-    public function setLogger(LoggerInterface $logger)
+    public function setLogger(LoggerInterface $logger): self
     {
         $this->logger = $logger;
-
         return $this;
     }
 
     /**
-     * @param string $message
+     * @param mixed $message
      * @param array $context
      * @return self
      */
-    public function emergency($message, array $context = array ())
+    public function emergency($message, array $context = []): self
     {
         if (!$this->logger) {
             return $this;
         }
         $this->logger->emergency($message, $context);
-
         return $this;
     }
 
     /**
-     * @param string $message
+     * @param mixed $message
      * @param array $context
      * @return self
      */
-    public function alert($message, array $context = array ())
+    public function alert($message, array $context = []): self
     {
         if (!$this->logger) {
             return $this;
         }
         $this->logger->alert($message, $context);
-
         return $this;
     }
 
     /**
-     * @param string $message
+     * @param mixed $message
      * @param array $context
      * @return self
      */
-    public function critical($message, array $context = array ())
+    public function critical($message, array $context = []): self
     {
         if (!$this->logger) {
             return $this;
         }
         $this->logger->critical($message, $context);
-
         return $this;
     }
 
     /**
-     * @param string $message
+     * @param mixed $message
      * @param array $context
      * @return self
      */
-    public function error($message, array $context = array ())
+    public function error($message, array $context = []): self
     {
         if (!$this->logger) {
             return $this;
         }
         $this->logger->error($message, $context);
-
         return $this;
     }
 
     /**
-     * @param string $message
+     * @param mixed $message
      * @param array $context
      * @return self
      */
-    public function warning($message, array $context = array ())
+    public function warning($message, array $context = []): self
     {
         if (!$this->logger) {
             return $this;
         }
         $this->logger->warning($message, $context);
-
         return $this;
     }
 
     /**
-     * @param string $message
+     * @param mixed $message
      * @param array $context
      * @return self
      */
-    public function notice($message, array $context = array ())
+    public function notice($message, array $context = []): self
     {
         if (!$this->logger) {
             return $this;
         }
         $this->logger->notice($message, $context);
-
         return $this;
     }
 
     /**
-     * @param string $message
+     * @param mixed $message
      * @param array $context
      * @return self
      */
-    public function info($message, array $context = array ())
+    public function info($message, array $context = []): self
     {
         if (!$this->logger) {
             return $this;
         }
         $this->logger->info($message, $context);
-
         return $this;
     }
 
     /**
-     * @param string $message
+     * @param mixed $message
      * @param array $context
      * @return self
      */
-    public function debug($message, array $context = array ())
+    public function debug($message, array $context = []): self
     {
         if (!$this->logger) {
             return $this;
         }
         $this->logger->debug($message, $context);
-
         return $this;
     }
 
     /**
      * @param mixed $level
-     * @param string $message
+     * @param mixed $message
      * @param array $context
      * @return self
      */
-    public function log($level, $message, array $context = array ())
+    public function log($level, $message, array $context = []): self
     {
         if (!$this->logger) {
             return $this;
         }
         $this->logger->log($level, $message, $context);
-
         return $this;
     }
 
