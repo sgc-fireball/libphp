@@ -17,8 +17,12 @@ class IPv4
      */
     public function __construct(string $ipAddr = null, int $cidr = null)
     {
-        $ipAddr ? $this->setIp($ipAddr) : null;
-        $cidr ? $this->setCIDR($cidr) : null;
+        if ($ipAddr) {
+            $this->setIp($ipAddr);
+        }
+        if ($cidr) {
+            $this->setCIDR($cidr);
+        }
     }
 
     /**
@@ -117,7 +121,7 @@ class IPv4
             throw new \InvalidArgumentException();
         }
         $bin = decbin(ip2long($ipAddr));
-        if (!preg_match('/^(1{0,32})(0{0,32})$/', $bin)) {
+        if (!preg_match('/^(1{0,32})(0{0,32})$/', $bin) && strlen($bin) != 32) {
             throw new \InvalidArgumentException();
         }
         $this->setCIDR(strlen(trim($bin, '0')));

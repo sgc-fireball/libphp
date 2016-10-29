@@ -24,9 +24,6 @@ class SimpleServiceDiscoveryProtocolClient
     /** @var EventHandler */
     private static $eventHandler = null;
 
-    /**
-     * @param integer $discoverTime
-     */
     public function __construct()
     {
         self::$eventHandler = self::$eventHandler ?: EventHandler::get();
@@ -76,6 +73,8 @@ class SimpleServiceDiscoveryProtocolClient
     }
 
     /**
+     * @param string $type
+     * @param integer $discoverTime
      * @return string
      */
     private function buildPacket(string $type = 'NOTIFY', int $discoverTime = 10)
@@ -92,6 +91,12 @@ class SimpleServiceDiscoveryProtocolClient
         return implode("\n", $lines);
     }
 
+    /**
+     * @param string $name
+     * @param callable $callable
+     * @param integer $priority
+     * @return boolean
+     */
     public function addEvent(string $name, callable $callable, int $priority = 0): bool
     {
         return self::$eventHandler->addEvent($name, $callable, $priority);

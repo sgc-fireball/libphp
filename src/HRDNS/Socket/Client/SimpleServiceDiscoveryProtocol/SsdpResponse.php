@@ -9,14 +9,17 @@ class SsdpResponse extends Struct
 
     public function setFromString(string $string)
     {
-        $headers = explode("\n",trim($string));
+        $headers = explode("\n", trim($string));
         unset($headers[0]);
 
         $data = [];
-        array_walk($headers,function(&$line)use(&$data){
-            list($key,$value) = explode(':',$line,2);
-            $data[strtolower($key)] = trim($value);
-        });
+        array_walk(
+            $headers,
+            function (&$line) use (&$data) {
+                list($key, $value) = explode(':', $line, 2);
+                $data[strtolower($key)] = trim($value);
+            }
+        );
         $this->data = $data;
         return $this;
     }
