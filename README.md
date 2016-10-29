@@ -44,28 +44,28 @@ composer test
 
 ```bash
 cd ./libphp
-vendor/bin/phpcs
+bin/phpcs
 ```
    
 ### Test it with PHPUnit
 
 ```bash
 cd ./libphp
-vendor/bin/phpunit
+bin/phpunit
 ```
 
 ### Test it with PHP Copy/Paste Detector
 
 ```bash
 cd ./libphp
-vendor/bin/phpcpd src/
+bin/phpcpd src/
 ```
 
 ### Test it with PHP Mess Detector
 
 ```bash
 cd ./libphp
-vendor/bin/phpmd src/ text cleancode,codesize,controversial,design,naming,unusedcode --suffixes php
+bin/phpmd src/ text cleancode,codesize,controversial,design,naming,unusedcode --suffixes php
 ```
 
 ## About
