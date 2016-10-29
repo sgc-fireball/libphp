@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## *v1.0.0* - php7 to master
+- php7 is now the minimum version level!
+
 ## 2016-10-29
 - adding simple service discover protocol (ssdp) to find universal plug and play (upnp) services
 - adding ssdp client example
