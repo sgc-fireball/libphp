@@ -5,6 +5,23 @@ namespace HRDNS\Socket\Server;
 abstract class UDPServer extends Server
 {
 
+    /** @var String[] */
+    private $acceptedMulticastAddresses = [];
+
+    /**
+     * @param string $ipAddr
+     * @return UDPServer
+     * @throws \InvalidArgumentException
+     */
+    public function addAllowedMulticastAddress(string $ipAddr): self
+    {
+        if (!filter_var($ipAddr, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+            throw new \InvalidArgumentException('Parameter $ipAddr is invalid.');
+        }
+        $this->acceptedMulticastAddresses[] = $ipAddr;
+        return $this;
+    }
+
     /**
      * @return self
      * @throws \Exception
@@ -23,6 +40,15 @@ abstract class UDPServer extends Server
                     $this->port,
                     $errStr
                 )
+            );
+        }
+
+        foreach ($this->acceptedMulticastAddresses as $ipAddr) {
+            socket_set_option(
+                $this->masterSocket,
+                IPPROTO_IP,
+                MCAST_JOIN_GROUP,
+                ['group' => $ipAddr, 'interface' => 0]
             );
         }
 

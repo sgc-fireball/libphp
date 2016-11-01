@@ -2,18 +2,16 @@
 
 namespace HRDNS\Socket\Client;
 
+use HRDNS\Core\EventHandler;
+use HRDNS\Socket\Server\SimpleServiceDiscoveryProtocolServer;
 use HRDNS\Socket\Client\SimpleServiceDiscoveryProtocol\SsdpResponse;
 use HRDNS\Socket\Client\SimpleServiceDiscoveryProtocol\EventDiscover;
-use HRDNS\Core\EventHandler;
 
 /**
  * @see http://www.upnp.org/specs/arch/UPnP-arch-DeviceArchitecture-v1.0-20080424.pdf
  */
 class SimpleServiceDiscoveryProtocolClient
 {
-
-    /** @var array */
-    private $services = [];
 
     /** @var string */
     private $host = '239.255.255.250';
@@ -24,16 +22,29 @@ class SimpleServiceDiscoveryProtocolClient
     /** @var EventHandler */
     private static $eventHandler = null;
 
+    /** @var null|SimpleServiceDiscoveryProtocolServer */
+    private $server = null;
+
     public function __construct()
     {
         self::$eventHandler = self::$eventHandler ?: EventHandler::get();
     }
 
     /**
-     * @param integer $discoverTime
-     * @return SsdpResponse[]
+     * @param SimpleServiceDiscoveryProtocolServer $server
+     * @return $this
      */
-    public function discover(int $discoverTime = 10): array
+    public function setServer(SimpleServiceDiscoveryProtocolServer $server): self
+    {
+        $this->server = $server;
+        return $this;
+    }
+
+    /**
+     * @param integer $discoverTime
+     * @return $this
+     */
+    public function discover(int $discoverTime = 10): self
     {
         $client = new UDPClient();
         $client->setHost($this->host);
@@ -42,34 +53,30 @@ class SimpleServiceDiscoveryProtocolClient
         $client->setAllowBrowscast(true);
         $client->connect();
 
-        // https://tools.ietf.org/html/draft-cai-ssdp-v1-01
-        $client->write($this->buildPacket('OPTIONS', $discoverTime));
-        // free nature
-        $client->write($this->buildPacket('NOTIFY', $discoverTime));
-        $client->write($this->buildPacket('M-SEARCH', $discoverTime));
+        $client->write($this->buildPacket('OPTIONS', max(1, $discoverTime / 2)));
+        $client->write($this->buildPacket('M-SEARCH', max(1, $discoverTime / 2)));
 
         $endTime = time() + $discoverTime;
         while (time() < $endTime) {
+            if ($this->server) {
+                $this->server->listen(1);
+            }
             /** @var string $msg */
             if (!$msg = $client->read()) {
                 usleep(0.01);
                 continue;
             }
 
-            $answer = new SsdpResponse();
-            $answer->setFromString($msg);
-            if (isset($this->services[$answer->getLocation()])) {
-                continue;
-            }
-            $event = new EventDiscover($answer);
             self::$eventHandler->fireEvent(
                 EventDiscover::EVENT_NAME,
-                $event
+                new EventDiscover(
+                    (new SsdpResponse())
+                        ->setFromString($msg)
+                )
             );
-            $this->services[$answer->getLocation()] = $answer;
         }
         $client->disconnect();
-        return $this->services;
+        return $this;
     }
 
     /**

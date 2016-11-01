@@ -6,13 +6,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Command\Command;
 use HRDNS\Socket\Client\SimpleServiceDiscoveryProtocolClient;
+use HRDNS\Socket\Server\SimpleServiceDiscoveryProtocolServer;
 use HRDNS\Socket\Client\SimpleServiceDiscoveryProtocol\EventDiscover;
+use HRDNS\Socket\Client\SimpleServiceDiscoveryProtocol\SsdpResponse;
 
 class SimpleServiceDiscoveryProtocolClientCommand extends Command
 {
 
     /** @var integer */
-    private $discoverTime = 10;
+    private $discoverTime = 60;
 
     protected function configure()
     {
@@ -29,15 +31,29 @@ class SimpleServiceDiscoveryProtocolClientCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $ssdpClient = new SimpleServiceDiscoveryProtocolClient($this->discoverTime);
-        $ssdpClient->addEvent(
+        /** @var SsdpResponse[] $services */
+        $services = [];
+
+        $server = new SimpleServiceDiscoveryProtocolServer();
+        $server->addAllowedMulticastAddress('239.255.255.250');
+        $server->bind();
+
+        $client = new SimpleServiceDiscoveryProtocolClient($this->discoverTime);
+        $client->setServer($server);
+        $client->addEvent(
             EventDiscover::EVENT_NAME,
-            function(EventDiscover $event) {
-                $data = $event->getSsdpResponse();
-                printf("%s\n\t<%s>\n\n",$data->getServer(),$data->getLocation());
+            function (EventDiscover $event) use (&$services) {
+                $service = $event->getSsdpResponse();
+                if (isset($services[$service->getLocation()])) {
+                    return;
+                }
+                $services[$service->getLocation()] = $service;
+                printf("%s\n\t<%s>\n\n", $service->getServer(), $service->getLocation());
             }
         );
-        $ssdpClient->discover($this->discoverTime);
+
+        $client->discover($this->discoverTime);
+
         return 0;
     }
 
