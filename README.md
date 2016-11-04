@@ -14,32 +14,32 @@ composer require sgc-fireball/libphp
 - Event management 
 - PCNTL Signal handling
 - Color convertions
--- rgb2hsv
--- rgb2hsl
--- rgb2hex
--- rgb2cmyk
--- rgb2xterm
--- hsv2rgb
--- hsv2hex
--- hsv2hsl
--- hsv2cmyk
--- hsl2rgb
--- hsl2hex
--- hsl2cmyk
--- hsl2hsv
--- hex2rgb
--- hex2hsl
--- hex2cmyk
--- hex2hsv
--- cmyk2rgb
--- cmyk2hsl
--- cmyk2hex
--- cmyk2hsv
--- xterm2cmyk
--- xterm2hex
--- xterm2hsl
--- xterm2hsv
--- xterm2rgb
+    - rgb2hsv
+    - rgb2hsl
+    - rgb2hex
+    - rgb2cmyk
+    - rgb2xterm
+    - hsv2rgb
+    - hsv2hex
+    - hsv2hsl
+    - hsv2cmyk
+    - hsl2rgb
+    - hsl2hex
+    - hsl2cmyk
+    - hsl2hsv
+    - hex2rgb
+    - hex2hsl
+    - hex2cmyk
+    - hex2hsv
+    - cmyk2rgb
+    - cmyk2hsl
+    - cmyk2hex
+    - cmyk2hsv
+    - xterm2cmyk
+    - xterm2hex
+    - xterm2hsl
+    - xterm2hsv
+    - xterm2rgb
 - FTP wrapper
 - generic TCP client
 - generic UDP client
@@ -61,7 +61,7 @@ composer require sgc-fireball/libphp
 - rind buffer
 - csv wrapper
 - ipv4 and ipv6 calculation
--- subnetting and supernetting
+    - subnetting and supernetting
 - generic struct object
 - url decoder and encoder
 - xml decoder and encoder
