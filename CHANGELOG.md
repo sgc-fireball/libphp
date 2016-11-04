@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2016-11-04
+- update readme.md
+- refactor some tests
+
 ## *v1.0.0* - php7 to master
 - php7 is now the minimum version level!
 

@@ -10,6 +10,62 @@ Install the latest version with
 composer require sgc-fireball/libphp
 ```
 
+## Features
+- Event management 
+- PCNTL Signal handling
+- Color convertions
+-- rgb2hsv
+-- rgb2hsl
+-- rgb2hex
+-- rgb2cmyk
+-- rgb2xterm
+-- hsv2rgb
+-- hsv2hex
+-- hsv2hsl
+-- hsv2cmyk
+-- hsl2rgb
+-- hsl2hex
+-- hsl2cmyk
+-- hsl2hsv
+-- hex2rgb
+-- hex2hsl
+-- hex2cmyk
+-- hex2hsv
+-- cmyk2rgb
+-- cmyk2hsl
+-- cmyk2hex
+-- cmyk2hsv
+-- xterm2cmyk
+-- xterm2hex
+-- xterm2hsl
+-- xterm2hsv
+-- xterm2rgb
+- FTP wrapper
+- generic TCP client
+- generic UDP client
+- SSDP client (Simple Service Discovery Protocol)
+- generic TCP server
+- generic UDP server
+- WebSocket Server
+- SSDP server (Simple Service Discovery Protocol)
+- SSL server validator (using openssl)
+- file wrapper and multiprocess safe file wrapper
+- geoip for ipv4 and ipv6 (based on country codes via ripe database)
+- interval manager (setinterval in js)
+- timer manager (settimeout in js)
+- linux daemon component
+- multi processing manager with processlist administration
+- multiprocessing shared storage via SHM or filesystem.
+- fifo buffer
+- filo buffer
+- rind buffer
+- csv wrapper
+- ipv4 and ipv6 calculation
+-- subnetting and supernetting
+- generic struct object
+- url decoder and encoder
+- xml decoder and encoder
+
 ## Examples
 
 ### TCP Echo Server
