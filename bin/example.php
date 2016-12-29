@@ -13,10 +13,10 @@ use Symfony\Component\Console\Application as BaseApplication;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\ArrayInput;
-
 use HRDNS\Examples\Socket\EchoServer;
 use HRDNS\Examples\Socket\WebSocketServer;
 use HRDNS\Examples\Socket\SimpleServiceDiscoveryProtocolClientCommand;
+use HRDNS\Examples\System\Network\Sniffer;
 
 class Application extends BaseApplication
 {
@@ -37,6 +37,7 @@ class Application extends BaseApplication
         $commands[] = new EchoServer();
         $commands[] = new WebSocketServer();
         $commands[] = new SimpleServiceDiscoveryProtocolClientCommand();
+        $commands[] = new Sniffer();
         return $commands;
     }
 

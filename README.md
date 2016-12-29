@@ -65,6 +65,7 @@ composer require sgc-fireball/libphp
 - generic struct object
 - url decoder and encoder
 - xml decoder and encoder
+- php based incoming network sniffer (icmp, tcp, udp)
 
 ## Examples
 

@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2016-12-29
+- implement incoming network sniffer (icmp, tcp, udp)
+
 ## 2016-11-04
 - update readme.md
 - refactor some tests
