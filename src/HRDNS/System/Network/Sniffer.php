@@ -9,7 +9,7 @@ if (!defined('SO_BINDTODEVICE')) {
 }
 
 if (!defined('SOL_ICMP')) {
-    define('SOL_ICMP',1);
+    define('SOL_ICMP', 1);
 }
 
 /**
@@ -45,8 +45,9 @@ class Sniffer
     /**
      * @param callable $callable
      * @param string $device
+     * @throws \InvalidArgumentException
      */
-    public function __construct($callable, $device = 'lo')
+    public function __construct(callable $callable, string $device = 'lo')
     {
         $this->resetPacketDefinition();
         $this->eventHandler = EventHandler::get();
@@ -78,7 +79,8 @@ class Sniffer
     }
 
     /**
-     * @param integer $limit
+     * @param int $limit
+     * @return null
      */
     public function listen(int $limit = -1)
     {
@@ -86,17 +88,18 @@ class Sniffer
             $limit = $limit == -1 ? -1 : $limit - 1;
             socket_recv($this->tcpSocket, $buffer, 65536, 0);
             if ($buffer && $packet = $this->parsePacket($buffer)) {
-                call_user_func($this->callback,$packet);
+                call_user_func($this->callback, $packet);
             }
             socket_recv($this->udpSocket, $buffer, 65536, 0);
             if ($buffer && $packet = $this->parsePacket($buffer)) {
-                call_user_func($this->callback,$packet);
+                call_user_func($this->callback, $packet);
             }
             socket_recv($this->icmpSocket, $buffer, 65536, 0);
             if ($buffer && $packet = $this->parsePacket($buffer)) {
-                call_user_func($this->callback,$packet);
+                call_user_func($this->callback, $packet);
             }
         }
+        return null;
     }
 
     public function __destruct()
@@ -224,8 +227,12 @@ class Sniffer
         $packet = unpack($this->ipHeader . '/' . $this->icmpHeader, $buffer);
         $data = isset($packet['data']) ? $packet['data'] : '';
         $packet['data'] = '';
-        for ($i=0;$i<strlen($data);$i=$i+2) {
-            $packet['data'] .= chr(hexdec($data[$i] . $data[$i+1]));
+        for ($i = 0; $i < strlen($data); $i = $i += 2) {
+            $packet['data'] .= chr(
+                hexdec(
+                    $data[$i] . $data[$i + 1]
+                )
+            );
         }
         return $packet;
     }
@@ -240,8 +247,12 @@ class Sniffer
         $packet = unpack($this->ipHeader . '/' . $this->udpHeader, $buffer);
         $data = isset($packet['data']) ? $packet['data'] : '';
         $packet['data'] = '';
-        for ($i=0;$i<strlen($data);$i=$i+2) {
-            $packet['data'] .= chr(hexdec($data[$i] . $data[$i+1]));
+        for ($i = 0; $i < strlen($data); $i = $i += 2) {
+            $packet['data'] .= chr(
+                hexdec(
+                    $data[$i] . $data[$i + 1]
+                )
+            );
         }
         return $packet;
     }
@@ -282,8 +293,12 @@ class Sniffer
 
         $data = isset($packet['data']) ? $packet['data'] : '';
         $packet['data'] = '';
-        for ($i=0;$i<strlen($data);$i=$i+2) {
-            $packet['data'] .= chr(hexdec($data[$i] . $data[$i+1]));
+        for ($i = 0; $i < strlen($data); $i = $i += 2) {
+            $packet['data'] .= chr(
+                hexdec(
+                    $data[$i] . $data[$i + 1]
+                )
+            );
         }
 
         return $packet;
