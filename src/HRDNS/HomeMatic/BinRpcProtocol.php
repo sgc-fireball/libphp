@@ -73,20 +73,4 @@ class BinRpcProtocol
         return $this->decoder->decodeResponse($data);
     }
 
-    /**
-     * @param string $data
-     * @return string
-     * @todo remove debug function
-     */
-    public static function debugStrToHex(string $data): string
-    {
-        $result = '';
-        foreach (preg_split('//', $data) as $char) {
-            $hex = dechex(ord($char));
-            $result .= strlen($hex) == 2 ? $hex : '0' . $hex;
-        }
-
-        return $result;
-    }
-
 }
