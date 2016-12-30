@@ -58,7 +58,7 @@ composer require sgc-fireball/libphp
 - multiprocessing shared storage via SHM or filesystem.
 - fifo buffer
 - filo buffer
-- rind buffer
+- ring buffer
 - csv wrapper
 - ipv4 and ipv6 calculation
     - subnetting and supernetting
@@ -66,6 +66,7 @@ composer require sgc-fireball/libphp
 - url decoder and encoder
 - xml decoder and encoder
 - php based incoming network sniffer (icmp, tcp, udp)
+- homematic binrpc decoder/encoder
 
 ## Examples
 

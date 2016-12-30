@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2016-12-30
+- implement HomeMatic binrpc decoder/encoder
+
 ## 2016-12-29
 - implement incoming network sniffer (icmp, tcp, udp)
 
