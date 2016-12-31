@@ -44,14 +44,16 @@ class BinRpcProtocolTest extends \PHPUnit_Framework_TestCase
 
     public function providerTestInteger()
     {
+        $min = pow(2,31) * -1;
+        $max = pow(2,31) - 1;
         return [
-            [PHP_INT_MIN],
-            [PHP_INT_MIN+1],
-            [mt_rand(PHP_INT_MIN, 0)],
+            [$min],
+            [$min+1],
+            [mt_rand($min, 0)],
             [0],
-            [mt_rand(0, PHP_INT_MAX)],
-            [PHP_INT_MAX-1],
-            [PHP_INT_MAX]
+            [mt_rand(0, $max)],
+            [$max-1],
+            [$max]
         ];
     }
 
@@ -141,18 +143,20 @@ class BinRpcProtocolTest extends \PHPUnit_Framework_TestCase
 
     public function providerTestFloat()
     {
+        $min = pow(2,31) * -1;
+        $max = pow(2,31) - 1;
         return [
-            [PHP_INT_MIN],
-            [PHP_INT_MIN+1],
-            [mt_rand(PHP_INT_MIN, -1)],
+            [$min],
+            [$min+1],
+            [mt_rand($min, -1)],
             [-1234.5678],
             [-1],
             [0],
             [1],
             [1234.5678],
-            [mt_rand(1, PHP_INT_MAX)],
-            [PHP_INT_MAX-1],
-            [PHP_INT_MAX],
+            [mt_rand(1, $max)],
+            [$max-1],
+            [$max],
             [3.402823 * pow(10,37)],
             [-3.402823 * pow(10,37)]
         ];
