@@ -88,8 +88,8 @@ class BinRpcEncoder
      */
     private function encodeInteger(int $data): string
     {
-        $min = pow(2,31) * -1;
-        $max = pow(2,31) - 1;
+        $min = pow(2, 31) * -1;
+        $max = pow(2, 31) - 1;
         if ($data < $min || $max < $data) {
             throw new \InvalidArgumentException(
                 'Homematic binrpc supports only int32 bit values.',
