@@ -10,19 +10,19 @@
     <property name="phpunit" value="${basedir}/bin/phpunit"/>
 
     <target name="full-build"
-            depends="prepare,static-analysis,phpunit,phpdox,-check-failure"
+            depends="prepare,composer,static-analysis,phpunit,phpdox,-check-failure"
             description="Performs static analysis, runs the tests, and generates project documentation"/>
 
     <target name="full-build-parallel"
-            depends="prepare,static-analysis-parallel,phpunit,phpdox,-check-failure"
+            depends="prepare,composer,static-analysis-parallel,phpunit,phpdox,-check-failure"
             description="Performs static analysis (executing the tools in parallel), runs the tests, and generates project documentation"/>
 
     <target name="quick-build"
-            depends="prepare,lint,phpunit-no-coverage"
+            depends="prepare,lint,composer,phpunit-no-coverage"
             description="Performs a lint check and runs the tests (without generating code coverage reports)"/>
 
     <target name="static-analysis"
-            depends="lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci"
+            depends="lint,composer,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci"
             description="Performs static analysis"/>
 
     <!-- Adjust the threadCount attribute's value to the number of CPUs -->
@@ -43,11 +43,9 @@
     <target name="clean"
             unless="clean.done"
             description="Cleanup build artifacts">
-        <delete dir="${basedir}/build/api"/>
-        <delete dir="${basedir}/build/coverage"/>
-        <delete dir="${basedir}/build/logs"/>
-        <delete dir="${basedir}/build/pdepend"/>
-        <delete dir="${basedir}/build/phpdox"/>
+        <delete dir="${basedir}/build"/>
+        <delete dir="${basedir}/vendor"/>
+        <delete file="${basedir}/composer.lock"/>
         <property name="clean.done" value="true"/>
     </target>
 
@@ -87,6 +85,15 @@
         </apply>
 
         <property name="lint.done" value="true"/>
+    </target>
+
+    <target name="composer"
+            unless="composer.done"
+            description="Install composer dependencies">
+        <exec executable="composer" taskname="composer">
+            <arg value="install"/>
+        </exec>
+        <property name="composer.done" value="true"/>
     </target>
 
     <target name="phploc"
