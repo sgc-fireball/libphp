@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="name-of-project" default="full-build">
 
-    <property name="pdepend" value="pdepend"/>
-    <property name="phpcpd" value="phpcpd"/>
-    <property name="phpcs" value="phpcs"/>
-    <property name="phpdox" value="phpdox"/>
-    <property name="phploc" value="phploc"/>
-    <property name="phpmd" value="phpmd"/>
-    <property name="phpunit" value="phpunit"/>
+    <property name="pdepend" value="${basedir}/bin/pdepend"/>
+    <property name="phpcpd" value="${basedir}/bin/phpcpd"/>
+    <property name="phpcs" value="${basedir}/bin/phpcs"/>
+    <property name="phpdox" value="${basedir}/bin/phpdox"/>
+    <property name="phploc" value="${basedir}/bin/phploc"/>
+    <property name="phpmd" value="${basedir}/bin/phpmd"/>
+    <property name="phpunit" value="${basedir}/bin/phpunit"/>
 
     <target name="full-build"
             depends="prepare,static-analysis,phpunit,phpdox,-check-failure"

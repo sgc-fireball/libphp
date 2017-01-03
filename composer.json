@@ -24,10 +24,13 @@
     "symfony/console": "~3.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "*",
-    "squizlabs/php_codesniffer": "~2.5",
-    "sebastian/phpcpd": "~2.0",
-    "phpmd/phpmd": "~2.3"
+    "phpunit/phpunit": "@stable",
+    "squizlabs/php_codesniffer": "@stable",
+    "phploc/phploc": "@stable",
+    "pdepend/pdepend": "@stable",
+    "phpmd/phpmd": "@stable",
+    "sebastian/phpcpd": "@stable",
+    "theseer/phpdox": "@stable"
   },
   "suggest": {
     "monolog/monolog": "Allow you a better debbuging",
