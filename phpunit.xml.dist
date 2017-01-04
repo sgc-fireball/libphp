@@ -10,10 +10,10 @@
          syntaxCheck="false">
 
     <php>
-        <ini name="error_reporting" value="-1" />
-        <ini name="intl.default_locale" value="en" />
-        <ini name="intl.error_level" value="0" />
-        <ini name="memory_limit" value="-1" />
+        <ini name="error_reporting" value="-1"/>
+        <ini name="intl.default_locale" value="en"/>
+        <ini name="intl.error_level" value="0"/>
+        <ini name="memory_limit" value="-1"/>
         <const name="PHPUNIT" value="1"/>
     </php>
 
@@ -32,5 +32,11 @@
             <directory suffix=".phpt">tests/HRDNS</directory>
         </testsuite>
     </testsuites>
+
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">src</directory>
+        </whitelist>
+    </filter>
 
 </phpunit>

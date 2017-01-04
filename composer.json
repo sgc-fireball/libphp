@@ -25,6 +25,7 @@
   },
   "require-dev": {
     "phpunit/phpunit": "@stable",
+    "phpunit/php-code-coverage": "@stable",
     "squizlabs/php_codesniffer": "@stable",
     "phploc/phploc": "@stable",
     "pdepend/pdepend": "@stable",
