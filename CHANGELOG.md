@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2017-01-07
+- merge jenkins-ci branch into master (run ```composer build```)
+
 ## 2016-12-30
 - implement HomeMatic binrpc decoder/encoder
 
