@@ -1,8 +1,11 @@
 /.idea/
 /build/
 /vendor/
-/phpunit.xml
+/pdepend.xml
 /phpcs.xml
+/phpdox.xml
+/phpmd.xml
+/phpunit.xml
 /.DS_Store
 /composer.lock
 /composer.phar

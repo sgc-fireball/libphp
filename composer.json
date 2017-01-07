@@ -48,13 +48,19 @@
     "test": [
       "phpcs --config-set ignore_warnings_on_exit 1",
       "phpcs",
-      "phpunit",
+      "phpunit --no-coverage",
       "phpcpd src/"
     ],
-    "check": [
-      "phpmd src/ text cleancode,codesize,controversial,design,naming,unusedcode --suffixes php",
-      "@test"
-    ]
+    "build-cleanup": ["rm -rf build"],
+    "build-prepare": ["mkdir -p build/api", "mkdir -p build/coverage", "mkdir -p build/logs", "mkdir -p build/pdepend", "mkdir -p build/phpdox"],
+    "build": ["@build-cleanup", "@build-prepare", "@phploc-ci", "@pdepend-ci", "@phpmd-ci", "@phpcs-ci", "@phpcpd-ci", "@phpunit-ci"],
+    "phploc-ci": ["phploc --count-tests --log-csv build/logs/phploc.csv --log-xml build/logs/phploc.xml src"],
+    "pdepend-ci": ["pdepend --jdepend-xml=build/logs/jdepend.xml --jdepend-chart=build/pdepend/dependencies.svg --overview-pyramid=build/pdepend/overview-pyramid.svg src"],
+    "phpmd-ci": ["phpmd src/ xml phpmd.xml.dist --suffixes php --reportfile build/logs/pmd.xml --ignore-violations-on-exit"],
+    "phpcs-ci": ["phpcs --config-set ignore_warnings_on_exit 1", "phpcs --report=checkstyle --report-file=build/logs/checkstyle.xml"],
+    "phpcpd-ci": ["phpcpd --log-pmd build/logs/pmd-cpd.xml src"],
+    "phpunit-ci": ["phpunit"],
+    "phpdox-ci": ["phpdox"]
   },
   "config": {
     "bin-dir": "bin",

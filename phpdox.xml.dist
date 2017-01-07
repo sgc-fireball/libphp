@@ -1,13 +1,13 @@
-<phpdox xmlns="http://phpdox.net/config">
- <project name="name-of-project" source="src" workdir="build/phpdox">
-  <collector publiconly="false">
-   <include mask="*.php" />
-  </collector>
-
-  <generator output="build">
-   <build engine="html" enabled="true" output="api">
-    <file extension="html" />
-   </build>
-  </generator>
- </project>
+<?xml version="1.0" encoding="utf-8" ?>
+<phpdox xmlns="http://xml.phpdox.net/config">
+  <project name="sgc-fireball/libphp" source="src" workdir="build/phpdox">
+    <collector publiconly="false" backend="parser">
+        <include mask="*.php" />
+    </collector>
+    <generator output="build">
+      <build engine="html" enabled="true" output="html">
+        <file extension="html" />
+      </build>
+    </generator>
+  </project>
 </phpdox>
