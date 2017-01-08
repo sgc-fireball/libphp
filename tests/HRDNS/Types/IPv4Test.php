@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\HRDNS\Types;
+namespace HRDNS\Tests\Types;
 
 use HRDNS\Types\IPv4;
 

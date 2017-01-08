@@ -1,7 +1,9 @@
 # CHANGELOG
 
-## 2017-01-08
+## 2017-01-08 *v1.1.0*
 - fixed homematic binrpc float and integer negative numbers
+- added redis based message queue
+- fixed test namespaces
 
 ## 2017-01-07
 - merge jenkins-ci branch into master (run ```composer build```)

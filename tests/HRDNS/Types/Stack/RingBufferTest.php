@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\HRDNS\Types\Stack;
+namespace HRDNS\Tests\Types\Stack;
 
 use HRDNS\Types\Stack\RingBuffer;
 

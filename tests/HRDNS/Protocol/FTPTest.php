@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\HRDNS\Protocol;
+namespace HRDNS\Tests\Protocol;
 
 use HRDNS\Protocol\FTP;
 use HRDNS\Exception\IOException;

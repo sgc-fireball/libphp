@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\HRDNS\Core;
+namespace HRDNS\Tests\Core;
 
 use HRDNS\Core\SignalHandler;
 

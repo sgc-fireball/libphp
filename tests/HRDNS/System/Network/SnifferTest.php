@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\HRDNS\General;
+namespace HRDNS\Tests\General;
 
 use HRDNS\System\Network\Sniffer;
 

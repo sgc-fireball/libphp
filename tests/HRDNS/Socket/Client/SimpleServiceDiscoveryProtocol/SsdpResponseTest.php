@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\HRDNS\Socket\Client\SimpleServiceDiscoveryProtocol;
+namespace HRDNS\Tests\Socket\Client\SimpleServiceDiscoveryProtocol;
 
 use HRDNS\Socket\Client\SimpleServiceDiscoveryProtocol\SsdpResponse;
 

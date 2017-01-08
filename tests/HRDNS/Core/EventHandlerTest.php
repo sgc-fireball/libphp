@@ -2,7 +2,7 @@
 
 declare(ticks = 100);
 
-namespace Test\HRDNS\Core;
+namespace HRDNS\Tests\Core;
 
 use HRDNS\Core\Event;
 use HRDNS\Core\EventHandler;

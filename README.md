@@ -67,6 +67,7 @@ composer require sgc-fireball/libphp
 - xml decoder and encoder
 - php based incoming network sniffer (icmp, tcp, udp)
 - homematic binrpc decoder/encoder
+- redis message queue
 
 ## Examples
 

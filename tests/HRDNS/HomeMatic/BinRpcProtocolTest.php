@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\HRDNS\HomeMatic;
+namespace HRDNS\Tests\HomeMatic;
 
 use HRDNS\HomeMatic\BinRpcProtocol;
 

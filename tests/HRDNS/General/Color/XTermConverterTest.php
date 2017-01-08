@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\HRDNS\General\Color;
+namespace HRDNS\Tests\General\Color;
 
 use HRDNS\General\Color\XTermConverter;
 
