@@ -13,12 +13,14 @@ branches:
         - master
         - /^\d+\.\d+\.\d+$/
 
+services:
+  - redis-server
+
 before_script:
   - composer install --dev
 
 script: composer test
 
-# https://docs.travis-ci.com/user/notifications/
 notifications:
   email:
     - rh+github@hrdns.de
