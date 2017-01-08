@@ -18,7 +18,7 @@ class BinRpcProtocolTest extends \PHPUnit_Framework_TestCase
     public function testRequest()
     {
         $method = 'TestFunction123';
-        $plain = (string)$this->protocol->encodeRequest($method,[]);
+        $plain = (string)$this->protocol->encodeRequest($method, []);
         $data = $this->protocol->decodeRequest($plain);
         $this->assertTrue(is_array($data));
         $this->assertTrue(array_key_exists('type', $data));
@@ -44,15 +44,17 @@ class BinRpcProtocolTest extends \PHPUnit_Framework_TestCase
 
     public function providerTestInteger()
     {
-        $min = pow(2,31) * -1;
-        $max = pow(2,31) - 1;
+        $min = pow(2, 31) * -1;
+        $max = pow(2, 31) - 1;
         return [
             [$min],
-            [$min+1],
-            [mt_rand($min, 0)],
+            [$min + 1],
+            [mt_rand($min + 2, -2)],
+            [-1],
             [0],
-            [mt_rand(0, $max)],
-            [$max-1],
+            [1],
+            [mt_rand(2, $max - 2)],
+            [$max - 1],
             [$max]
         ];
     }
@@ -62,17 +64,13 @@ class BinRpcProtocolTest extends \PHPUnit_Framework_TestCase
      */
     public function testInteger(int $int)
     {
-        try {
-            $plain = (string)$this->protocol->encodeResponse(['int' => $int]);
-            $data = $this->protocol->decodeResponse($plain);
-            $this->assertTrue(is_array($data));
-            $this->assertTrue(is_array($data['params']));
-            $this->assertTrue(array_key_exists('int', $data['params']));
-            $this->assertEquals($int, $data['params']['int']);
-            $this->assertTrue( $data['params']['int'] === $int);
-        } catch (\Exception $e) {
-            $this->markTestSkipped(__METHOD__.' '.$e->getMessage());
-        }
+        $plain = (string)$this->protocol->encodeResponse(['int' => $int]);
+        $data = $this->protocol->decodeResponse($plain);
+        $this->assertTrue(is_array($data));
+        $this->assertTrue(is_array($data['params']));
+        $this->assertTrue(array_key_exists('int', $data['params']));
+        $this->assertEquals($int, $data['params']['int']);
+        $this->assertTrue($data['params']['int'] === $int);
     }
 
     public function providerTestBoolean()
@@ -98,7 +96,7 @@ class BinRpcProtocolTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($data['params']));
         $this->assertTrue(array_key_exists('bool', $data['params']));
         $this->assertEquals((bool)$bool, $data['params']['bool']);
-        $this->assertTrue( $data['params']['bool'] === (bool)$bool);
+        $this->assertTrue($data['params']['bool'] === (bool)$bool);
     }
 
     public function testString()
@@ -114,7 +112,7 @@ class BinRpcProtocolTest extends \PHPUnit_Framework_TestCase
 
     public function testStruct()
     {
-        $plain = (string)$this->protocol->encodeResponse(['foo'=>['bar'=>1337]]);
+        $plain = (string)$this->protocol->encodeResponse(['foo' => ['bar' => 1337]]);
         $data = $this->protocol->decodeResponse($plain);
         $this->assertTrue(is_array($data));
         $this->assertTrue(array_key_exists('params', $data));
@@ -130,39 +128,43 @@ class BinRpcProtocolTest extends \PHPUnit_Framework_TestCase
 
     public function testArray()
     {
-        $plain = (string)$this->protocol->encodeResponse([1,2,3]);
+        $plain = (string)$this->protocol->encodeResponse([1, 2, 3]);
         $data = $this->protocol->decodeResponse($plain);
         $this->assertTrue(is_array($data));
         $this->assertTrue(array_key_exists('params', $data));
         $this->assertTrue(is_array($data['params']));
         $this->assertTrue(array_key_exists(0, $data['params']));
-        $this->assertEquals(1,$data['params'][0]);
+        $this->assertEquals(1, $data['params'][0]);
         $this->assertTrue(array_key_exists(1, $data['params']));
-        $this->assertEquals(2,$data['params'][1]);
+        $this->assertEquals(2, $data['params'][1]);
         $this->assertTrue(array_key_exists(2, $data['params']));
-        $this->assertEquals(3,$data['params'][2]);
+        $this->assertEquals(3, $data['params'][2]);
         $this->assertFalse(array_key_exists(3, $data['params']));
         $this->assertFalse(array_key_exists('foo', $data['params']));
     }
 
     public function providerTestFloat()
     {
-        $min = pow(2,31) * -1;
-        $max = pow(2,31) - 1;
+        $min = pow(2, 31) * -1;
+        $max = pow(2, 31) - 1;
         return [
+            [-3.402823 * pow(10, 37)],
             [$min],
-            [$min+1],
+            [$min + 1],
             [mt_rand($min, -1)],
             [-1234.5678],
             [-1],
+            [-0.5],
+            [-0.001],
             [0],
+            [0.001],
+            [0.5],
             [1],
             [1234.5678],
-            [mt_rand(1, $max)],
-            [$max-1],
+            [mt_rand(2, $max - 2)],
+            [$max - 1],
             [$max],
-            [3.402823 * pow(10,37)],
-            [-3.402823 * pow(10,37)]
+            [3.402823 * pow(10, 37)]
         ];
     }
 
@@ -171,26 +173,21 @@ class BinRpcProtocolTest extends \PHPUnit_Framework_TestCase
      */
     public function testFloat(float $float)
     {
-        try {
-            $plain = (string)$this->protocol->encodeResponse(['float' => (float)$float]);
-            $data = $this->protocol->decodeResponse($plain);
-            $this->assertTrue(is_array($data));
-            $this->assertTrue(array_key_exists('params', $data));
-            $this->assertTrue(is_array($data['params']));
-            $this->assertTrue(array_key_exists('float', $data['params']));
+        $plain = (string)$this->protocol->encodeResponse(['float' => (float)$float]);
+        $data = $this->protocol->decodeResponse($plain);
+        $this->assertTrue(is_array($data));
+        $this->assertTrue(array_key_exists('params', $data));
+        $this->assertTrue(is_array($data['params']));
+        $this->assertTrue(array_key_exists('float', $data['params']));
 
-            $min = $float * 0.999999999;
-            $max = $float * 1.000000001;
-            if ($float < 0) {
-                $tmp = $min;
-                $min = $max;
-                $max = $tmp;
-            }
-
-            $this->assertTrue($min <= $data['params']['float'] && $data['params']['float'] <= $max);
-        } catch (\Exception $e) {
-            $this->markTestSkipped(__METHOD__.' '.$e->getMessage());
+        $min = $float * 0.999999999;
+        $max = $float * 1.000000001;
+        if ($float < 0) {
+            $tmp = $min;
+            $min = $max;
+            $max = $tmp;
         }
+        $this->assertTrue($min <= $data['params']['float'] && $data['params']['float'] <= $max);
     }
 
 }

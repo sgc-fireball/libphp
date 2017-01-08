@@ -78,7 +78,7 @@ class BinRpcEncoder
         $exponent = floor(log(abs($data)) / M_LN2) + 1;
         $mantissa = floor(($data * pow(2, -$exponent)) * (1 << 30));
 
-        return pack('NNN', BinRpcProtocol::TYPE_FLOAT, $mantissa, $exponent);
+        return pack('Nll', BinRpcProtocol::TYPE_FLOAT, $mantissa, $exponent);
     }
 
     /**
@@ -92,11 +92,11 @@ class BinRpcEncoder
         $max = pow(2, 31) - 1;
         if ($data < $min || $max < $data) {
             throw new \InvalidArgumentException(
-                'Homematic binrpc supports only int32 bit values.',
+                'Homematic binrpc supports only int32 bit values with (R+).',
                 __LINE__
             );
         }
-        $result = pack('NN', BinRpcProtocol::TYPE_INTEGER, $data);
+        $result = pack('Nl', BinRpcProtocol::TYPE_INTEGER, $data);
 
         return $result;
     }

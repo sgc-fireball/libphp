@@ -120,7 +120,7 @@ class BinRpcDecoder
      */
     private function decodeFloat(string &$data): float
     {
-        $info = unpack('Ntype/Nmantissa/Nexponent', $data);
+        $info = unpack('Ntype/lmantissa/lexponent', $data);
         $result = round((pow(2, $info['exponent'])) * ($info['mantissa'] / (1 << 30)), 6);
         $data = substr($data, 4 + 4 + 4);
 
@@ -133,7 +133,7 @@ class BinRpcDecoder
      */
     private function decodeInteger(string &$data): int
     {
-        $info = @unpack('Ntype/Nvalue', $data);
+        $info = @unpack('Ntype/lvalue', $data);
         $result = (int)$info['value'];
         $data = substr($data, 4 + 4);
 

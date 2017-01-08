@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2017-01-08
+- fixed homematic binrpc float and integer negative numbers
+
 ## 2017-01-07
 - merge jenkins-ci branch into master (run ```composer build```)
 
