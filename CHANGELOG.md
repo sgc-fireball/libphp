@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2017-01-08 *v1.1.1*
+- downgrade phpdox to 0.8.x (@stable is currently broken)
+
 ## 2017-01-08 *v1.1.0*
 - fixed homematic binrpc float and integer negative numbers
 - added redis based message queue

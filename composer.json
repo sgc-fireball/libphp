@@ -31,7 +31,7 @@
     "pdepend/pdepend": "@stable",
     "phpmd/phpmd": "@stable",
     "sebastian/phpcpd": "@stable",
-    "theseer/phpdox": "@stable"
+    "theseer/phpdox": "^0.8"
   },
   "suggest": {
     "monolog/monolog": "Allow you a better debbuging",
