@@ -148,7 +148,7 @@ class Database
         }
         $ip = new IPv4($line[3], (int)(32 - log($line[4]) / log(2)));
         $callbackIpv4 = $this->callbackIpv4;
-        $callbackIpv4($ip, $line[1], $line[5], $line);
+        $callbackIpv4($ip, $line[1], (int)$line[5], $line);
         return $this;
     }
 
@@ -169,7 +169,7 @@ class Database
         }
         $ip = new IPv6($line[3], $line[4]);
         $callbackIpv6 = $this->callbackIpv6;
-        $callbackIpv6($ip, $line[1], $line[5], $line);
+        $callbackIpv6($ip, $line[1], (int)$line[5], $line);
         return $this;
     }
 
@@ -189,7 +189,7 @@ class Database
             return $this;
         }
         $callbackAsn = $this->callbackAsn;
-        $callbackAsn('AS' . $line[3], $line[1], $line[5], $line);
+        $callbackAsn('AS' . $line[3], $line[1], (int)$line[5], $line);
         return $this;
     }
 

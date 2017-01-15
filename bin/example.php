@@ -17,6 +17,7 @@ use HRDNS\Examples\Socket\EchoServer;
 use HRDNS\Examples\Socket\WebSocketServer;
 use HRDNS\Examples\Socket\SimpleServiceDiscoveryProtocolClientCommand;
 use HRDNS\Examples\System\Network\Sniffer;
+use HRDNS\Examples\System\Network\HtaccessBuilderCommand;
 
 class Application extends BaseApplication
 {
@@ -38,6 +39,7 @@ class Application extends BaseApplication
         $commands[] = new WebSocketServer();
         $commands[] = new SimpleServiceDiscoveryProtocolClientCommand();
         $commands[] = new Sniffer();
+        $commands[] = new HtaccessBuilderCommand();
         return $commands;
     }
 

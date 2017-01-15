@@ -24,7 +24,7 @@ class Sniffer extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $allow = preg_quote(",;.:-_!\"§$%&/()=?*[]{}\n ");
+        $allow = preg_quote(",;.:-_!\"$%&/()=?*[]{}\n ");
         $sniffer = new NetworkSniffer(
             function($packet)use($allow){
                 static $hash;
