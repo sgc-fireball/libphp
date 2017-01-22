@@ -356,9 +356,37 @@ class ColorTest extends \PHPUnit_Framework_TestCase
      * @param string $hex
      * @param array $rgb
      */
+    public function test_cmyk2xterm(int $xterm, array $cmyk, array $hsl, array $hsv, string $hex, array $rgb)
+    {
+        $this->assertEquals($xterm, $this->colorConverter->cmyk2xterm($cmyk[0],$cmyk[1],$cmyk[2],$cmyk[3]));
+    }
+
+    /**
+     * @dataProvider dataProvider
+     * @param integer $xterm
+     * @param array $cmyk
+     * @param array $hsl
+     * @param array $hsv
+     * @param string $hex
+     * @param array $rgb
+     */
     public function test_xterm2hex(int $xterm, array $cmyk, array $hsl, array $hsv, string $hex, array $rgb)
     {
         $this->assertEquals($hex, $this->colorConverter->xterm2hex($xterm));
+    }
+
+    /**
+     * @dataProvider dataProvider
+     * @param integer $xterm
+     * @param array $cmyk
+     * @param array $hsl
+     * @param array $hsv
+     * @param string $hex
+     * @param array $rgb
+     */
+    public function test_hex2xterm(int $xterm, array $cmyk, array $hsl, array $hsv, string $hex, array $rgb)
+    {
+        $this->assertEquals($xterm, $this->colorConverter->hex2xterm($hex));
     }
 
     /**
@@ -384,9 +412,37 @@ class ColorTest extends \PHPUnit_Framework_TestCase
      * @param string $hex
      * @param array $rgb
      */
+    public function test_hsl2xterm(int $xterm, array $cmyk, array $hsl, array $hsv, string $hex, array $rgb)
+    {
+        $this->assertEquals($xterm, $this->colorConverter->hsl2xterm($hsl[0],$hsl[1],$hsl[2]));
+    }
+
+    /**
+     * @dataProvider dataProvider
+     * @param integer $xterm
+     * @param array $cmyk
+     * @param array $hsl
+     * @param array $hsv
+     * @param string $hex
+     * @param array $rgb
+     */
     public function test_xterm2hsv(int $xterm, array $cmyk, array $hsl, array $hsv, string $hex, array $rgb)
     {
         $this->assertEquals($hsv, $this->colorConverter->xterm2hsv($xterm));
+    }
+
+    /**
+     * @dataProvider dataProvider
+     * @param integer $xterm
+     * @param array $cmyk
+     * @param array $hsl
+     * @param array $hsv
+     * @param string $hex
+     * @param array $rgb
+     */
+    public function test_hsv2xterm(int $xterm, array $cmyk, array $hsl, array $hsv, string $hex, array $rgb)
+    {
+        $this->assertEquals($xterm, $this->colorConverter->hsv2xterm($hsv[0],$hsv[1],$hsv[2]));
     }
 
     /**
@@ -426,6 +482,11 @@ class ColorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($rgb,$_rgb);
         $_xterm = $this->colorConverter->rgb2xterm($_rgb[0],$_rgb[1],$_rgb[2]);
         $this->assertEquals($xterm,$_xterm);
+    }
+
+    public function testInvalidDataHex2Rgb()
+    {
+        $this->assertEquals([0,0,0],$this->colorConverter->hex2rgb('zzzzzz'));
     }
 
 }

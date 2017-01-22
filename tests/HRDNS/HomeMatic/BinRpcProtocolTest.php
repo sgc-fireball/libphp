@@ -15,6 +15,62 @@ class BinRpcProtocolTest extends \PHPUnit_Framework_TestCase
         $this->protocol = new BinRpcProtocol();
     }
 
+    public function testInvalidDataDecodeShortData()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->protocol->decode('FOO');
+    }
+
+    public function testInvalidDataDecodePrefix()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->protocol->decode('FOOBARRRRRRRRRRRRR');
+    }
+
+    public function testInvalidDataDecodeType()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->protocol->decode('BINFOOBARRRRRRRRRR');
+    }
+
+    public function testInvalidDataDecodeRequestShortData()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->protocol->decodeRequest('FOO');
+    }
+
+    public function testInvalidDataDecodeRequestPrefix()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->protocol->decodeRequest('FOOBARRRRRRRRRRRRRRR');
+    }
+
+    public function testInvalidDataDecodeRequestType()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $data = (string)$this->protocol->encodeResponse([]);
+        $this->protocol->decodeRequest($data);
+    }
+
+    public function testInvalidDataDecodeResponseShortData()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->protocol->decodeResponse('FOO');
+    }
+
+    public function testInvalidDataDecodeResponsePrefix()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->protocol->decodeResponse('FOOBARRRRRRRRRRRRRRR');
+    }
+
+    public function testInvalidDataDecodeResponseType()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $data = (string)$this->protocol->encodeRequest('function',[]);
+        $this->protocol->decodeResponse($data);
+    }
+
     public function testRequest()
     {
         $method = 'TestFunction123';
@@ -40,6 +96,21 @@ class BinRpcProtocolTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('unknown', $data['method']);
         $this->assertTrue(array_key_exists('params', $data));
         $this->assertTrue(is_array($data['params']));
+    }
+
+    public function testUnknownMessage()
+    {
+        $method = 'TestFunction123';
+        $plain = (string)$this->protocol->encodeRequest($method, []);
+        $data = $this->protocol->decode($plain);
+        $this->assertTrue(is_array($data));
+        $this->assertTrue(array_key_exists('type', $data));
+        $this->assertEquals('request', $data['type']);
+        $plain = (string)$this->protocol->encodeResponse([]);
+        $data = $this->protocol->decode($plain);
+        $this->assertTrue(is_array($data));
+        $this->assertTrue(array_key_exists('type', $data));
+        $this->assertEquals('response', $data['type']);
     }
 
     public function providerTestInteger()

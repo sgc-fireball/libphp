@@ -65,10 +65,6 @@ class EventHandler
      */
     public function addEvent(string $name, callable $callable, int $priority = 0): bool
     {
-        $priority = (int)$priority;
-        if (!is_callable($callable)) {
-            return false;
-        }
         $this->prepareEvent($name, $priority);
         $this->events[$name][$priority][] = $callable;
         return true;

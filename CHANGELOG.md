@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2017-01-22
+- improve tests
+
 ## 2017-01-08 *v1.1.1*
 - downgrade phpdox to 0.8.x (@stable is currently broken)
 

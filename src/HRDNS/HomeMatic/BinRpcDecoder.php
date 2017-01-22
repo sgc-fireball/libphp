@@ -12,13 +12,12 @@ class BinRpcDecoder
      */
     public function decode(string $data): array
     {
-        if (substr($data, 0, 3) !== BinRpcProtocol::PREFIX) {
-            throw new \InvalidArgumentException('Argument 1 is not an homematic binrpc string.', 1);
+        if (strlen($data)<4) {
+            throw new \InvalidArgumentException('Argument 1 is to short for a homematic binrpc packet.',1);
         }
-
         $packet = unpack('A3prefix/Ctype', $data);
         if ($packet['prefix'] !== BinRpcProtocol::PREFIX) {
-            throw new \InvalidArgumentException('Argument 1 is not an homematic binrpc string.', 2);
+            throw new \InvalidArgumentException('Argument 1 is not a homematic binrpc string.', 2);
         }
         if ($packet['type'] === BinRpcProtocol::TYPE_REQUEST) {
             return $this->decodeRequest($data);
@@ -36,17 +35,16 @@ class BinRpcDecoder
      */
     public function decodeRequest(string $data): array
     {
-        if (substr($data, 0, 3) !== BinRpcProtocol::PREFIX) {
-            throw new \InvalidArgumentException('Argument 1 is not an homematic binrpc string.', 4);
+        if (strlen($data)<12) {
+            throw new \InvalidArgumentException('Argument 1 is to short for a homematic binrpc packet.',1);
         }
-
         $format = 'A3prefix/Ctype/NmsgSize/NmethodSize';
         $packet = unpack($format, $data);
         if ($packet['prefix'] !== BinRpcProtocol::PREFIX) {
-            throw new \InvalidArgumentException('Argument 1 is not an homematic binrpc string.', 5);
+            throw new \InvalidArgumentException('Argument 1 is not a homematic binrpc string.', 5);
         }
         if ($packet['type'] !== BinRpcProtocol::TYPE_REQUEST) {
-            throw new \InvalidArgumentException('Argument 1 is not an homematic binrpc request.', 6);
+            throw new \InvalidArgumentException('Argument 1 is not a homematic binrpc request.', 6);
         }
         $format .= '/A' . $packet['methodSize'] . 'methodName';
         $packet = unpack($format, $data);
@@ -67,17 +65,16 @@ class BinRpcDecoder
      */
     public function decodeResponse(string $data): array
     {
-        if (substr($data, 0, 3) !== BinRpcProtocol::PREFIX) {
-            throw new \InvalidArgumentException('Argument 1 is not an homematic binrpc string.', 7);
+        if (strlen($data)<8) {
+            throw new \InvalidArgumentException('Argument 1 is to short for a homematic binrpc packet.',1);
         }
-
         $format = 'A3prefix/Ctype/NmsgSize/A*data';
         $packet = unpack($format, $data);
         if ($packet['prefix'] !== BinRpcProtocol::PREFIX) {
-            throw new \InvalidArgumentException('Argument 1 is not an homematic binrpc string.', 8);
+            throw new \InvalidArgumentException('Argument 1 is not a homematic binrpc string.', 8);
         }
         if ($packet['type'] !== BinRpcProtocol::TYPE_RESPONSE) {
-            throw new \InvalidArgumentException('Argument 1 is not an homematic binrpc response.', 9);
+            throw new \InvalidArgumentException('Argument 1 is not a homematic binrpc response.', 9);
         }
 
         $data = substr($data, 3 + 1 + 4);

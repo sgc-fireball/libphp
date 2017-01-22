@@ -8,6 +8,46 @@ use HRDNS\Exception\IOException;
 class FTPTest extends \PHPUnit_Framework_TestCase
 {
 
+    /** @var FTP */
+    private $ftp;
+
+    public function setUp()
+    {
+        $this->ftp = new FTP();
+    }
+
+    public function testHost()
+    {
+        $this->assertEquals('host',$this->ftp->setHost('host')->getHost());
+    }
+
+    public function testPort()
+    {
+        $this->assertEquals(123,$this->ftp->setPort(123)->getPort());
+    }
+
+    public function testUser()
+    {
+        $this->assertEquals('user',$this->ftp->setUser('user')->getUser());
+    }
+
+    public function testSSL()
+    {
+        $this->assertTrue($this->ftp->setSsl(true)->isSsl());
+        $this->assertFalse($this->ftp->setSsl(false)->isSsl());
+    }
+
+    public function testTimeout()
+    {
+        $this->assertEquals(10,$this->ftp->setTimeout(10)->getTimeout());
+    }
+
+    public function testInvalidTimeout()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->ftp->setTimeout(0);
+    }
+
     public function testRipeFtpServer()
     {
         $oDateTime = new \DateTime('yesterday');

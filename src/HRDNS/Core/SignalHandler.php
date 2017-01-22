@@ -127,14 +127,16 @@ class SignalHandler
     }
 
     /**
-     * @param integer $listenerId
-     * @return void
+     * @param string $listenerId
+     * @return bool
      */
-    public static function removeListener(int $listenerId)
+    public static function removeListener(string $listenerId): bool
     {
         if (isset(self::$signalHandler[$listenerId])) {
             unset(self::$signalHandler[$listenerId]);
+            return true;
         }
+        return false;
     }
 
 }

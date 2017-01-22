@@ -18,6 +18,18 @@ class EventHandlerTest extends \PHPUnit_Framework_TestCase
         $this->eventHandler = EventHandler::get();
     }
 
+    public function testFireEvent()
+    {
+        $result = $this->eventHandler->fireEvent('UnknownTestEvent');
+        $this->assertEquals(EventHandler::class, get_class($result));
+    }
+
+    public function testSleep()
+    {
+        $this->expectException(\Exception::class);
+        $this->eventHandler->__sleep();
+    }
+
     public function testClick()
     {
         $clicked = false;
@@ -43,11 +55,11 @@ class EventHandlerTest extends \PHPUnit_Framework_TestCase
             }
         );
 
-        $this->assertEquals(0,$clicks);
+        $this->assertEquals(0, $clicks);
         $this->eventHandler->fireEvent(__METHOD__);
-        $this->assertEquals(1,$clicks);
+        $this->assertEquals(1, $clicks);
         $this->eventHandler->fireEvent(__METHOD__);
-        $this->assertEquals(2,$clicks);
+        $this->assertEquals(2, $clicks);
     }
 
     public function testClicksWithTwoEvents()
@@ -66,9 +78,9 @@ class EventHandlerTest extends \PHPUnit_Framework_TestCase
             }
         );
 
-        $this->assertEquals(0,$clicks);
+        $this->assertEquals(0, $clicks);
         $this->eventHandler->fireEvent(__METHOD__);
-        $this->assertEquals(2,$clicks);
+        $this->assertEquals(2, $clicks);
     }
 
     public function testClicksWithStopPropagation()
@@ -88,9 +100,9 @@ class EventHandlerTest extends \PHPUnit_Framework_TestCase
             }
         );
 
-        $this->assertEquals(0,$clicks);
+        $this->assertEquals(0, $clicks);
         $this->eventHandler->fireEvent(__METHOD__);
-        $this->assertEquals(1,$clicks);
+        $this->assertEquals(1, $clicks);
     }
 
     public function testClicksWithStopPropagationAndPriority()
@@ -111,9 +123,9 @@ class EventHandlerTest extends \PHPUnit_Framework_TestCase
             -1
         );
 
-        $this->assertEquals(0,$clicks);
+        $this->assertEquals(0, $clicks);
         $this->eventHandler->fireEvent(__METHOD__);
-        $this->assertEquals(2,$clicks);
+        $this->assertEquals(2, $clicks);
     }
 
     public function testTicks()
@@ -125,7 +137,7 @@ class EventHandlerTest extends \PHPUnit_Framework_TestCase
                 $ticks++;
             }
         );
-        for ($i = 0 ; $i < 100 ; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             usleep(100);
         }
         $this->assertTrue($ticks > 0);
@@ -137,7 +149,7 @@ class EventHandlerTest extends \PHPUnit_Framework_TestCase
          * phpunit could not test shutdown functions ...
          * so we test if a test exists that can test it.
          */
-        $this->assertTrue(file_exists(__DIR__.'/EventHandlerShutdown.phpt'));
+        $this->assertTrue(file_exists(__DIR__ . '/EventHandlerShutdown.phpt'));
     }
 
 }

@@ -182,7 +182,7 @@ class Color
      * @param float $value
      * @return array
      */
-    public function hsv2rgb(float $hue = 0, float $saturation = 0, float $value = 0): array
+    public function hsv2rgb(float $hue = 0.0, float $saturation = 0.0, float $value = 0.0): array
     {
         $result = [0, 0, 0];
         $hue = abs($hue) % 360;
@@ -255,7 +255,7 @@ class Color
      * @param float $lightness
      * @return array
      */
-    public function hsl2rgb(float $hue = 0, float $saturation = 0, float $lightness = 0): array
+    public function hsl2rgb(float $hue = 0.0, float $saturation = 0.0, float $lightness = 0.0): array
     {
         $hhh = min(max(0, $hue), 359) / 60;
         $saturation = min(max(0, $saturation), 100) / 100;
@@ -324,9 +324,9 @@ class Color
         $blue = hexdec(substr($hex, 4, 2));
 
         return [
-            round($red, 2),
-            round($green, 2),
-            round($blue, 2)
+            round($red, 0),
+            round($green, 0),
+            round($blue, 0)
         ];
     }
 
@@ -339,7 +339,7 @@ class Color
      * @param float $key
      * @return array
      */
-    public function cmyk2rgb(float $cyan = 0, float $magenta = 0, float $yellow = 0, float $key = 0): array
+    public function cmyk2rgb(float $cyan = 0.0, float $magenta = 0.0, float $yellow = 0.0, float $key = 0.0): array
     {
         $cyan = min(max(0, $cyan), 1);
         $magenta = min(max(0, $magenta), 1);
@@ -365,7 +365,7 @@ class Color
      * @param float $lightness
      * @return string
      */
-    public function hsl2hex(float $hue = 0, float $saturation = 0, float $lightness = 0): string
+    public function hsl2hex(float $hue = 0.0, float $saturation = 0.0, float $lightness = 0.0): string
     {
         list($red, $green, $blue) = $this->hsl2rgb($hue, $saturation, $lightness);
         return $this->rgb2hex($red, $green, $blue);
@@ -379,7 +379,7 @@ class Color
      * @param float $lightness
      * @return array
      */
-    public function hsl2cmyk(float $hue = 0, float $saturation = 0, float $lightness = 0): array
+    public function hsl2cmyk(float $hue = 0.0, float $saturation = 0.0, float $lightness = 0.0): array
     {
         list($red, $green, $blue) = $this->hsl2rgb($hue, $saturation, $lightness);
         return $this->rgb2cmyk($red, $green, $blue);
@@ -393,7 +393,7 @@ class Color
      * @param float $lightness
      * @return array
      */
-    public function hsl2hsv(float $hue = 0, float $saturation = 0, float $lightness = 0): array
+    public function hsl2hsv(float $hue = 0.0, float $saturation = 0.0, float $lightness = 0.0): array
     {
         list($red, $green, $blue) = $this->hsl2rgb($hue, $saturation, $lightness);
         return $this->rgb2hsv($red, $green, $blue);
@@ -443,7 +443,7 @@ class Color
      * @param float $value
      * @return string
      */
-    public function hsv2hex(float $hue = 0, float $saturation = 0, float $value = 0): string
+    public function hsv2hex(float $hue = 0.0, float $saturation = 0.0, float $value = 0.0): string
     {
         list($red, $green, $blue) = $this->hsv2rgb($hue, $saturation, $value);
         return $this->rgb2hex($red, $green, $blue);
@@ -457,7 +457,7 @@ class Color
      * @param float $value
      * @return array
      */
-    public function hsv2hsl(float $hue = 0, float $saturation = 0, float $value = 0): array
+    public function hsv2hsl(float $hue = 0.0, float $saturation = 0.0, float $value = 0.0): array
     {
         list($red, $green, $blue) = $this->hsv2rgb($hue, $saturation, $value);
         return $this->rgb2hsl($red, $green, $blue);
@@ -471,7 +471,7 @@ class Color
      * @param float $value
      * @return array
      */
-    public function hsv2cmyk(float $hue = 0, float $saturation = 0, float $value = 0): array
+    public function hsv2cmyk(float $hue = 0.0, float $saturation = 0.0, float $value = 0.0): array
     {
         list($red, $green, $blue) = $this->hsv2rgb($hue, $saturation, $value);
         return $this->rgb2cmyk($red, $green, $blue);
@@ -486,7 +486,7 @@ class Color
      * @param float $key
      * @return string
      */
-    public function cmyk2hex(float $cyan = 0, float $magenta = 0, float $yellow = 0, float $key = 0): string
+    public function cmyk2hex(float $cyan = 0.0, float $magenta = 0.0, float $yellow = 0.0, float $key = 0.0): string
     {
         list($red, $green, $blue) = $this->cmyk2rgb($cyan, $magenta, $yellow, $key);
         return $this->rgb2hex($red, $green, $blue);
@@ -501,7 +501,7 @@ class Color
      * @param float $key
      * @return array
      */
-    public function cmyk2hsl(float $cyan = 0, float $magenta = 0, float $yellow = 0, float $key = 0): array
+    public function cmyk2hsl(float $cyan = 0.0, float $magenta = 0.0, float $yellow = 0.0, float $key = 0.0): array
     {
         list($red, $green, $blue) = $this->cmyk2rgb($cyan, $magenta, $yellow, $key);
         return $this->rgb2hsl($red, $green, $blue);
@@ -516,7 +516,7 @@ class Color
      * @param float $key
      * @return array
      */
-    public function cmyk2hsv(float $cyan = 0, float $magenta = 0, float $yellow = 0, float $key = 0): array
+    public function cmyk2hsv(float $cyan = 0.0, float $magenta = 0.0, float $yellow = 0.0, float $key = 0.0): array
     {
         list($red, $green, $blue) = $this->cmyk2rgb($cyan, $magenta, $yellow, $key);
         return $this->rgb2hsv($red, $green, $blue);
@@ -590,7 +590,7 @@ class Color
      * @param float $key
      * @return integer
      */
-    public function cmyk2xterm(float $cyan = 0, float $magenta = 0, float $yellow = 0, float $key = 0): int
+    public function cmyk2xterm(float $cyan = 0.0, float $magenta = 0.0, float $yellow = 0.0, float $key = 0.0): int
     {
         $hex = $this->cmyk2hex($cyan, $magenta, $yellow, $key);
         return $this->hex2xterm($hex);
@@ -615,7 +615,7 @@ class Color
      * @param float $lightness
      * @return integer
      */
-    public function hsl2xterm(float $hue = 0, float $saturation = 0, float $lightness = 0): int
+    public function hsl2xterm(float $hue = 0.0, float $saturation = 0.0, float $lightness = 0.0): int
     {
         $hex = $this->hsl2hex($hue, $saturation, $lightness);
         return $this->hex2xterm($hex);
@@ -629,7 +629,7 @@ class Color
      * @param float $value
      * @return integer
      */
-    public function hsv2xterm(float $hue = 0, float $saturation = 0, float $value = 0): int
+    public function hsv2xterm(float $hue = 0.0, float $saturation = 0.0, float $value = 0.0): int
     {
         $hex = $this->hsv2hex($hue, $saturation, $value);
         return $this->hex2xterm($hex);
