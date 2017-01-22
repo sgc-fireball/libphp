@@ -12,8 +12,8 @@ class BinRpcDecoder
      */
     public function decode(string $data): array
     {
-        if (strlen($data)<4) {
-            throw new \InvalidArgumentException('Argument 1 is to short for a homematic binrpc packet.',1);
+        if (strlen($data) < 4) {
+            throw new \InvalidArgumentException('Argument 1 is to short for a homematic binrpc packet.', 1);
         }
         $packet = unpack('A3prefix/Ctype', $data);
         if ($packet['prefix'] !== BinRpcProtocol::PREFIX) {
@@ -35,8 +35,8 @@ class BinRpcDecoder
      */
     public function decodeRequest(string $data): array
     {
-        if (strlen($data)<12) {
-            throw new \InvalidArgumentException('Argument 1 is to short for a homematic binrpc packet.',1);
+        if (strlen($data) < 12) {
+            throw new \InvalidArgumentException('Argument 1 is to short for a homematic binrpc packet.', 1);
         }
         $format = 'A3prefix/Ctype/NmsgSize/NmethodSize';
         $packet = unpack($format, $data);
@@ -65,8 +65,8 @@ class BinRpcDecoder
      */
     public function decodeResponse(string $data): array
     {
-        if (strlen($data)<8) {
-            throw new \InvalidArgumentException('Argument 1 is to short for a homematic binrpc packet.',1);
+        if (strlen($data) < 8) {
+            throw new \InvalidArgumentException('Argument 1 is to short for a homematic binrpc packet.', 1);
         }
         $format = 'A3prefix/Ctype/NmsgSize/A*data';
         $packet = unpack($format, $data);

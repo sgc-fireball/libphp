@@ -128,7 +128,7 @@ class SignalHandler
 
     /**
      * @param string $listenerId
-     * @return bool
+     * @return boolean
      */
     public static function removeListener(string $listenerId): bool
     {
