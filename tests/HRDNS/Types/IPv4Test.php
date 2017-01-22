@@ -11,16 +11,14 @@ class IPv4Test extends \PHPUnit_Framework_TestCase
     {
         $ip = new IPv4('192.168.2.1', 24);
         $this->assertEquals('192.168.2.1', $ip->getIp());
-        $ip->setIp('10.0.0.0');
-        $this->assertEquals('10.0.0.0', $ip->getIp());
+        $this->assertEquals('10.0.0.0', $ip->setIp('10.0.0.0')->getIp());
     }
 
     public function testLong()
     {
         $long = ip2long('127.0.0.1');
         $ip = new IPv4();
-        $ip->setLong($long);
-        $this->assertEquals($long, $ip->getLong());
+        $this->assertEquals($long, $ip->setLong($long)->getLong());
     }
 
     public function testInvalidLong()
@@ -34,22 +32,20 @@ class IPv4Test extends \PHPUnit_Framework_TestCase
     {
         $ip = new IPv4('192.168.2.1', 24);
         $this->assertEquals(24, $ip->getCIDR());
-        $ip->setCIDR(16);
-        $this->assertEquals(16, $ip->getCIDR());
+        $this->assertEquals(16, $ip->setCIDR(16)->getCIDR());
     }
 
     public function testSubnetmask()
     {
         $ip = new IPv4('192.168.2.1', 24);
         $this->assertEquals('255.255.255.0', $ip->getSubnetmask());
-        $ip->setSubnetmask('255.255.0.0');
-        $this->assertEquals('255.255.0.0', $ip->getSubnetmask());
+        $this->assertEquals('255.255.0.0', $ip->setSubnetmask('255.255.0.0')->getSubnetmask());
     }
 
     public function testToString()
     {
         $ip = new IPv4('192.168.2.1', 24);
-        $this->assertEquals('192.168.2.1/24',$ip->__toString());
+        $this->assertEquals('192.168.2.1/24', $ip->__toString());
     }
 
     public function testCalculation()

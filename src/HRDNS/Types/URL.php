@@ -134,7 +134,7 @@ class URL
      */
     public function setPassword(string $password): self
     {
-        $this->parts['password'] = $password;
+        $this->parts['pass'] = $password;
         return $this;
     }
 

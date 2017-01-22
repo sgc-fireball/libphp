@@ -7,6 +7,60 @@ use HRDNS\Types\URL;
 class URLTest extends \PHPUnit_Framework_TestCase
 {
 
+    public function testUrl()
+    {
+        $url = new URL('http://www.google.de');
+        $this->assertEquals('http://www.google.de/index.html',$url->setURL('/index.html')->getURL());
+    }
+
+    public function testScheme()
+    {
+        $url = new URL('http://www.google.de');
+        $this->assertEquals('https',$url->setScheme('https')->getScheme());
+    }
+
+    public function testUser()
+    {
+        $url = new URL('http://www.google.de');
+        $this->assertEquals('user',$url->setUser('user')->getUser());
+    }
+
+    public function testPassword()
+    {
+        $url = new URL('http://www.google.de');
+        $this->assertEquals('pass',$url->setPassword('pass')->getPassword());
+    }
+
+    public function testHost()
+    {
+        $url = new URL('http://www.google.de');
+        $this->assertEquals('domain.de',$url->setHost('domain.de')->getHost());
+    }
+
+    public function testPort()
+    {
+        $url = new URL('http://www.google.de');
+        $this->assertEquals(22,$url->setPort(22)->getPort());
+    }
+
+    public function testPath()
+    {
+        $url = new URL('http://www.google.de');
+        $this->assertEquals('/path/to/file.ext',$url->setPath('/path/to/file.ext')->getPath());
+    }
+
+    public function testQuery()
+    {
+        $url = new URL('http://www.google.de');
+        $this->assertEquals('test=test',$url->setQuery('test=test')->getQuery());
+    }
+
+    public function testFragment()
+    {
+        $url = new URL('http://www.google.de');
+        $this->assertEquals('hash',$url->setFragment('hash')->getFragment());
+    }
+
     public function testParse()
     {
         $url = new URL('http://www.google.de');
