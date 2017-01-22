@@ -59,7 +59,7 @@
     "phpmd-ci": ["phpmd src/ xml phpmd.xml.dist --suffixes php --reportfile build/logs/pmd.xml --ignore-violations-on-exit"],
     "phpcs-ci": ["phpcs --config-set ignore_warnings_on_exit 1", "phpcs --report=checkstyle --report-file=build/logs/checkstyle.xml"],
     "phpcpd-ci": ["phpcpd --log-pmd build/logs/pmd-cpd.xml src"],
-    "phpunit-ci": ["phpunit --coverage-html build/coverage --coverage-clover build/logs/clover.xml --coverage-crap4j build/logs/crap4j.xml --log-junit build/logs/junit.xml"],
+    "phpunit-ci": ["phpunit --tap --coverage-html build/coverage --coverage-clover build/logs/clover.xml --coverage-crap4j build/logs/crap4j.xml --log-junit build/logs/junit.xml"],
     "phpdox-ci": ["phpdox"]
   },
   "config": {
