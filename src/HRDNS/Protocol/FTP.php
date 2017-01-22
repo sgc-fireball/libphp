@@ -243,7 +243,8 @@ class FTP
      */
     public function dir(string $path = '.'): array
     {
-        if (($result = @ftp_nlist($this->socket, $path)) === false) {
+        $result = @ftp_nlist($this->socket, $path);
+        if ($result === null || $result === false) {
             throw new IOException(
                 sprintf(
                     'Could not receive file list ftp%s://%s%s:%d/%s',
@@ -265,7 +266,8 @@ class FTP
      */
     public function cd(string $path): self
     {
-        if (@ftp_chdir($this->socket, $path) === false) {
+        $result = @ftp_chdir($this->socket, $path);
+        if ($result === false || $result === null) {
             throw new IOException(
                 sprintf(
                     'Could not change directory ftp%s://%s%s:%d/%s',
@@ -286,7 +288,8 @@ class FTP
      */
     public function pwd(): string
     {
-        if (($path = @ftp_pwd($this->socket)) === false) {
+        $path = @ftp_pwd($this->socket);
+        if ($path === false || $path === null) {
             throw new IOException(
                 sprintf(
                     'Could receive pwd folder ftp%s://%s%s:%d/%s',
@@ -309,7 +312,8 @@ class FTP
      */
     public function chmod(int $chmod, string $path): self
     {
-        if (@ftp_chmod($this->socket, $chmod, $path) === false) {
+        $result = @ftp_chmod($this->socket, $chmod, $path);
+        if ($result === false || $result === null) {
             throw new IOException(
                 sprintf(
                     'Could set chmod on ftp%s://%s%s:%d/%s',
@@ -331,7 +335,8 @@ class FTP
      */
     public function rm(string $path): self
     {
-        if (@ftp_delete($this->socket, $path) === false) {
+        $result = @ftp_delete($this->socket, $path);
+        if ($result === false || $result === null) {
             throw new IOException(
                 sprintf(
                     'Could not remove ftp%s://%s%s:%d/%s',
@@ -353,7 +358,8 @@ class FTP
      */
     public function mkdir(string $path): self
     {
-        if (@ftp_mkdir($this->socket, $path) === false) {
+        $result = @ftp_mkdir($this->socket, $path);
+        if ($result === false || $result === null) {
             throw new IOException(
                 sprintf(
                     'Could not create folder ftp%s://%s%s:%d/%s',
@@ -375,7 +381,8 @@ class FTP
      */
     public function rmdir(string $path): self
     {
-        if (@ftp_rmdir($this->socket, $path) === false) {
+        $result = @ftp_rmdir($this->socket, $path);
+        if ($result === false || $result === null) {
             throw new IOException(
                 sprintf(
                     'Could remove directory ftp%s://%s%s:%d/%s',
@@ -397,7 +404,8 @@ class FTP
      */
     public function size(string $path): int
     {
-        if (($size = @ftp_size($this->socket, $path)) === -1) {
+        $size = @ftp_size($this->socket, $path);
+        if ($size === -1 || $size === false || $size === null) {
             throw new IOException(
                 sprintf(
                     'Could not read size from ftp%s://%s%s:%d/%s',
@@ -419,7 +427,8 @@ class FTP
      */
     public function modifiedTime(string $path): int
     {
-        if (($time = @ftp_mdtm($this->socket, $path)) === -1) {
+        $time = @ftp_mdtm($this->socket, $path);
+        if ($time === -1 || $time === null || $time === false) {
             throw new IOException(
                 sprintf(
                     'Could read modification time from ftp%s://%s%s:%d/%s',
