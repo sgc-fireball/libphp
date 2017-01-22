@@ -54,10 +54,10 @@ class IPv4
      */
     public function setLong(int $long): self
     {
-        if ($long < 0 || $long > pow(2, 32)) {
+        if ($long < 0 || $long > pow(2, 32)-1) {
             throw new \InvalidArgumentException();
         }
-        $this->ipAddr = ip2long($long);
+        $this->ipAddr = long2ip($long);
         return $this;
     }
 

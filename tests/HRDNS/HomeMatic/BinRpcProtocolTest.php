@@ -24,7 +24,8 @@ class BinRpcProtocolTest extends \PHPUnit_Framework_TestCase
     public function testInvalidDataDecodePrefix()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->protocol->decode('FOOBARRRRRRRRRRRRR');
+        $data = pack('A3CA*', BinRpcProtocol::PREFIX, 0xfffe, 'FOOBAR');
+        $this->protocol->decode($data);
     }
 
     public function testInvalidDataDecodeType()
@@ -67,7 +68,15 @@ class BinRpcProtocolTest extends \PHPUnit_Framework_TestCase
     public function testInvalidDataDecodeResponseType()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $data = (string)$this->protocol->encodeRequest('function',[]);
+        $data = (string)$this->protocol->encodeRequest('function', []);
+        $this->protocol->decodeResponse($data);
+    }
+
+    public function testInvalidDataDecode()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $data = $this->protocol->encodeResponse(['test' => 'test']);
+        $data = substr($data, 0, -10) . 'AAAAAAAAAA';
         $this->protocol->decodeResponse($data);
     }
 
@@ -144,6 +153,18 @@ class BinRpcProtocolTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($data['params']['int'] === $int);
     }
 
+    public function testInvalidInteger()
+    {
+        if (!defined('PHP_INT_SIZE')) {
+            $this->markTestSkipped();
+        }
+        if (PHP_INT_SIZE == 4) {
+            $this->markTestSkipped();
+        }
+        $this->expectException(\InvalidArgumentException::class);
+        $this->protocol->encodeResponse(['int' => 9223372036854775807]);
+    }
+
     public function providerTestBoolean()
     {
         return [
@@ -195,6 +216,23 @@ class BinRpcProtocolTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(array_key_exists('bar', $data['params']['foo']));
         $this->assertEquals(1337, $data['params']['foo']['bar']);
         $this->assertTrue(1337 === $data['params']['foo']['bar']);
+    }
+
+    public function testObject()
+    {
+        $data = [];
+        $data['foo'] = new \stdClass();
+        $data['foo']->bar = 1;
+        $plain = (string)$this->protocol->encodeResponse($data);
+        $data = $this->protocol->decodeResponse($plain);
+        $this->assertTrue(is_array($data));
+        $this->assertTrue(array_key_exists('params', $data));
+        $this->assertTrue(is_array($data['params']));
+        $this->assertTrue(array_key_exists('foo', $data['params']));
+        $this->assertTrue(is_array($data['params']['foo']));
+        $this->assertTrue(array_key_exists('bar', $data['params']['foo']));
+        $this->assertTrue(is_int($data['params']['foo']['bar']));
+        $this->assertEquals(1,$data['params']['foo']['bar']);
     }
 
     public function testArray()

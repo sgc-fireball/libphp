@@ -39,4 +39,23 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(count($data) > 0);
     }
 
+    public function testValid()
+    {
+        if (self::$skipped) {
+            $this->markTestSkipped();
+        }
+        $validator = $this->getMockBuilder(Validator::class)->setMethods(['verifySingle'])->getMock();
+        $validator->method('verifySingle')->will($this->returnValue(1));
+
+        $result = $validator->verify('domain.de', 80);
+        $this->assertTrue(is_array($result));
+        $this->assertTrue(array_key_exists('host', $result));
+        $this->assertEquals('domain.de', $result['host']);
+        $this->assertEquals(80, $result['port']);
+        $this->assertTrue(array_key_exists('protocol', $result));
+        $this->assertTrue(count($result['protocol']) > 0);
+        $this->assertTrue(array_key_exists('results', $result));
+        $this->assertTrue(count($result['results']) > 0);
+    }
+
 }
