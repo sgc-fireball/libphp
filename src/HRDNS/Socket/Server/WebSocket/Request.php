@@ -15,7 +15,7 @@ class Request
 
     private $header = [];
 
-    public static function parse(string $string): self
+    public static function parse(string $string)
     {
         $lines = explode("\n", trim($string));
         $method = '';

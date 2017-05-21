@@ -11,7 +11,7 @@ class UDPClient extends Client
      * @return self
      * @throws \Exception
      */
-    public function connect(): self
+    public function connect()
     {
         if (is_resource($this->socket)) {
             return $this;

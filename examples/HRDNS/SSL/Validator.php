@@ -15,7 +15,7 @@ class Validator extends Command
 
     const DEFAULT_HOST = '127.0.0.1';
     const DEFAULT_PORT = 443;
-    const COMMAND_NAME = 'exmaple:sslvalidator';
+    const COMMAND_NAME = 'example:sslvalidator';
 
     /** @var string */
     private $host = null;

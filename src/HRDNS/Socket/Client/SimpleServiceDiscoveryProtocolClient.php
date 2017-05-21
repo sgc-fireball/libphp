@@ -34,7 +34,7 @@ class SimpleServiceDiscoveryProtocolClient
      * @param SimpleServiceDiscoveryProtocolServer $server
      * @return $this
      */
-    public function setServer(SimpleServiceDiscoveryProtocolServer $server): self
+    public function setServer(SimpleServiceDiscoveryProtocolServer $server)
     {
         $this->server = $server;
         return $this;
@@ -44,7 +44,7 @@ class SimpleServiceDiscoveryProtocolClient
      * @param integer $discoverTime
      * @return $this
      */
-    public function discover(int $discoverTime = 10): self
+    public function discover(int $discoverTime = 10)
     {
         $client = new UDPClient();
         $client->setHost($this->host);

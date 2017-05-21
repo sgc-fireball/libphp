@@ -26,7 +26,7 @@ class HtaccessBuilderCommand extends Command
 
     protected function configure()
     {
-        $this->setName('exmaple:htaccess:builder');
+        $this->setName('example:htaccess:builder');
         $this->setProcessTitle($this->getName());
         $this->setDescription('A htaccess builder command.');
         $this->setHelp('');

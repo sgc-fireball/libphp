@@ -26,7 +26,7 @@ class IPv6
      * @return self
      * @throws \InvalidArgumentException
      */
-    public function setIp(string $ipAddr): self
+    public function setIp(string $ipAddr)
     {
         if (!filter_var($ipAddr, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
             throw new \InvalidArgumentException();
@@ -65,7 +65,7 @@ class IPv6
      * @return self
      * @throws \RuntimeException
      */
-    public function setLong($long): self
+    public function setLong($long)
     {
         if (!function_exists('gmp_init') || !function_exists('gmp_strval')) {
             throw new \RuntimeException(
@@ -99,7 +99,7 @@ class IPv6
      * @return self
      * @throws \InvalidArgumentException
      */
-    public function setCIDR(int $cidr): self
+    public function setCIDR(int $cidr)
     {
         if ($cidr < 0 || $cidr > 128) {
             throw new \InvalidArgumentException();
@@ -121,7 +121,7 @@ class IPv6
      * @return self
      * @throws \InvalidArgumentException
      */
-    public function setSubnetmask(string $ipAddr): self
+    public function setSubnetmask(string $ipAddr)
     {
         if (!filter_var($ipAddr, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
             throw new \InvalidArgumentException();

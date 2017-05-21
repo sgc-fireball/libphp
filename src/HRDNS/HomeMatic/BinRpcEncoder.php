@@ -7,23 +7,18 @@ class BinRpcEncoder
 
     /**
      * @param string $methodName
-     * @param array $data
+     * @param array $arguments
      * @return string
      */
-    public function encodeRequest(string $methodName, array $data = []): string
+    public function encodeRequest(string $methodName, array $arguments = []): string
     {
-        $content = $this->encodeData($data);
+        $content = '';
+        foreach ($arguments as $argument) {
+            $content .= $this->encodeData($argument);
+        }
 
-        return pack(
-            'A3CNNA*NA*',
-            BinRpcProtocol::PREFIX,
-            BinRpcProtocol::TYPE_REQUEST,
-            8 + strlen($methodName) + strlen($content),
-            strlen($methodName),
-            $methodName,
-            count($data),
-            $content
-        );
+        return pack('A3CNNA*NA*', BinRpcProtocol::PREFIX, BinRpcProtocol::TYPE_REQUEST,
+            8 + strlen($methodName) + strlen($content), strlen($methodName), $methodName, count($arguments), $content);
     }
 
     /**
@@ -34,13 +29,18 @@ class BinRpcEncoder
     {
         $content = $this->encodeData($data);
 
-        return pack(
-            'A3CNA*',
-            BinRpcProtocol::PREFIX,
-            BinRpcProtocol::TYPE_RESPONSE,
-            strlen($content),
-            $content
-        );
+        return pack('A3CNA*', BinRpcProtocol::PREFIX, BinRpcProtocol::TYPE_RESPONSE, strlen($content), $content);
+    }
+
+    /**
+     * @param array $data
+     * @return string
+     */
+    public function encodeError(array $data): string
+    {
+        $content = $this->encodeData($data);
+
+        return pack('A3CNA*', BinRpcProtocol::PREFIX, BinRpcProtocol::TYPE_ERROR, strlen($content), $content);
     }
 
     /**
@@ -61,9 +61,7 @@ class BinRpcEncoder
                 return $this->encodeString((string)$data);
             case is_array($data) && isset($data[0]):
                 return $this->encodeArray((array)$data);
-            case is_array($data) && !isset($data[0]):
-                return $this->encodeStruct((array)$data);
-            case is_object($data):
+            case (is_array($data) && !isset($data[0])) || is_object($data):
                 return $this->encodeStruct((array)$data);
         }
         throw new \InvalidArgumentException('Invalid argument 1, unable to convert into binrpc format.');
@@ -78,7 +76,7 @@ class BinRpcEncoder
         $exponent = floor(log(abs($data)) / M_LN2) + 1;
         $mantissa = floor(($data * pow(2, -$exponent)) * (1 << 30));
 
-        return pack('Nll', BinRpcProtocol::TYPE_FLOAT, $mantissa, $exponent);
+        return pack('NNN', BinRpcProtocol::TYPE_FLOAT, $mantissa, $exponent);
     }
 
     /**
@@ -91,12 +89,9 @@ class BinRpcEncoder
         $min = pow(2, 31) * -1;
         $max = pow(2, 31) - 1;
         if ($data < $min || $max < $data) {
-            throw new \InvalidArgumentException(
-                'Homematic binrpc supports only int32 bit values with (R+).',
-                __LINE__
-            );
+            throw new \InvalidArgumentException('Homematic binrpc supports only int32 bit values with (R+).', __LINE__);
         }
-        $result = pack('Nl', BinRpcProtocol::TYPE_INTEGER, $data);
+        $result = pack('NN', BinRpcProtocol::TYPE_INTEGER, $data);
 
         return $result;
     }

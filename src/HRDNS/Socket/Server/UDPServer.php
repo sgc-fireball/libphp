@@ -13,7 +13,7 @@ abstract class UDPServer extends Server
      * @return UDPServer
      * @throws \InvalidArgumentException
      */
-    public function addAllowedMulticastAddress(string $ipAddr): self
+    public function addAllowedMulticastAddress(string $ipAddr)
     {
         if (!filter_var($ipAddr, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
             throw new \InvalidArgumentException('Parameter $ipAddr is invalid.');
@@ -26,7 +26,7 @@ abstract class UDPServer extends Server
      * @return self
      * @throws \Exception
      */
-    public function bind(): self
+    public function bind()
     {
         $this->masterSocket = @socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
         if ($this->masterSocket === null) {
@@ -73,7 +73,7 @@ abstract class UDPServer extends Server
      * @param integer $limit
      * @return self
      */
-    public function listen(int $limit = -1): self
+    public function listen(int $limit = -1)
     {
         while (!$this->isTerminated && ($limit > 0 || $limit == -1)) {
             $limit = $limit == -1 ? -1 : $limit - 1;
@@ -114,7 +114,7 @@ abstract class UDPServer extends Server
     /**
      * @return self
      */
-    protected function workOnMasterSocket(): self
+    protected function workOnMasterSocket()
     {
         if (@socket_recvfrom(
             $this->masterSocket,
@@ -145,7 +145,7 @@ abstract class UDPServer extends Server
     /**
      * @return self
      */
-    protected function workOnClientSockets(): self
+    protected function workOnClientSockets()
     {
         foreach ($this->clients as $client) {
             if ($this->isTerminated) {

@@ -26,25 +26,25 @@ class Response
         $this->setCode($code);
     }
 
-    public function setVersion(string $version): self
+    public function setVersion(string $version)
     {
         $this->version = $version;
         return $this;
     }
 
-    public function setBody(string $body): self
+    public function setBody(string $body)
     {
         $this->body = $body;
         return $this;
     }
 
-    public function setCode(int $code): self
+    public function setCode(int $code)
     {
         $this->code = $code;
         return $this;
     }
 
-    public function addHeader(string $key, string $value): self
+    public function addHeader(string $key, string $value)
     {
         $this->headers[$key] = $value;
         return $this;

@@ -18,7 +18,7 @@ class SimpleServiceDiscoveryProtocolClientCommand extends Command
 
     protected function configure()
     {
-        $this->setName('exmaple:' . strtolower(str_replace('.php', '', basename(__FILE__))));
+        $this->setName('example:' . strtolower(str_replace('.php', '', basename(__FILE__))));
         $this->setProcessTitle($this->getName());
         $this->setDescription('A SSDP client to find UPNP devices.');
         $this->setHelp('');

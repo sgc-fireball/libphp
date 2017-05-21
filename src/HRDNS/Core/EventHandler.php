@@ -14,7 +14,7 @@ class EventHandler
     /**
      * @return self
      */
-    public static function get(): self
+    public static function get()
     {
         if (!(self::$instance instanceof self)) {
             self::$instance = new self();
@@ -44,7 +44,7 @@ class EventHandler
      * @param integer $priority
      * @return self
      */
-    private function prepareEvent(string $name, int $priority = 0): self
+    private function prepareEvent(string $name, int $priority = 0)
     {
         $priority = (int)$priority;
         if (!isset($this->events[$name])) {
@@ -75,7 +75,7 @@ class EventHandler
      * @param EventInterface|null $event
      * @return self
      */
-    public function fireEvent(string $name, EventInterface $event = null): self
+    public function fireEvent(string $name, EventInterface $event = null)
     {
         if (!isset($this->events[$name])) {
             return $this;

@@ -41,7 +41,7 @@ class FTP
      * @return self
      * @throws \InvalidArgumentException
      */
-    public function setHost(string $host): self
+    public function setHost(string $host)
     {
         if (!$host) {
             throw new \InvalidArgumentException('Invalid ftp host.');
@@ -63,7 +63,7 @@ class FTP
      * @return self
      * @throws \InvalidArgumentException
      */
-    public function setPort(int $port): self
+    public function setPort(int $port)
     {
         if ($port < 1 || $port > 65535) {
             throw new \InvalidArgumentException('Invalid ftp port.');
@@ -84,7 +84,7 @@ class FTP
      * @param string $user
      * @return self
      */
-    public function setUser(string $user): self
+    public function setUser(string $user)
     {
         $this->user = $user;
         return $this;
@@ -102,7 +102,7 @@ class FTP
      * @param string $password
      * @return self
      */
-    public function setPassword(string $password): self
+    public function setPassword(string $password)
     {
         $this->password = $password;
         return $this;
@@ -120,7 +120,7 @@ class FTP
      * @param boolean $ssl
      * @return self
      */
-    public function setSsl(bool $ssl): self
+    public function setSsl(bool $ssl)
     {
         $this->ssl = $ssl;
         return $this;
@@ -131,7 +131,7 @@ class FTP
      * @return self
      * @throws \InvalidArgumentException
      */
-    public function setTimeout(int $timeout): self
+    public function setTimeout(int $timeout)
     {
         if ($timeout < 1) {
             throw new \InvalidArgumentException('The timeout must be greater then 0 second.');
@@ -152,7 +152,7 @@ class FTP
      * @return self
      * @throws IOException
      */
-    public function connect(): self
+    public function connect()
     {
         $this->disconnect();
 
@@ -264,7 +264,7 @@ class FTP
      * @return self
      * @throws IOException
      */
-    public function cd(string $path): self
+    public function cd(string $path)
     {
         $result = @ftp_chdir($this->socket, $path);
         if ($result === false || $result === null) {
@@ -310,7 +310,7 @@ class FTP
      * @return self
      * @throws IOException
      */
-    public function chmod(int $chmod, string $path): self
+    public function chmod(int $chmod, string $path)
     {
         $result = @ftp_chmod($this->socket, $chmod, $path);
         if ($result === false || $result === null) {
@@ -333,7 +333,7 @@ class FTP
      * @return self
      * @throws IOException
      */
-    public function rm(string $path): self
+    public function rm(string $path)
     {
         $result = @ftp_delete($this->socket, $path);
         if ($result === false || $result === null) {
@@ -356,7 +356,7 @@ class FTP
      * @return self
      * @throws IOException
      */
-    public function mkdir(string $path): self
+    public function mkdir(string $path)
     {
         $result = @ftp_mkdir($this->socket, $path);
         if ($result === false || $result === null) {
@@ -379,7 +379,7 @@ class FTP
      * @return self
      * @throws IOException
      */
-    public function rmdir(string $path): self
+    public function rmdir(string $path)
     {
         $result = @ftp_rmdir($this->socket, $path);
         if ($result === false || $result === null) {
@@ -449,7 +449,7 @@ class FTP
      * @return self
      * @throws IOException
      */
-    public function get(string $from, string $to): self
+    public function get(string $from, string $to)
     {
         if (!@ftp_get($this->socket, $to, $from, FTP_BINARY, 0)) {
             throw new IOException(
@@ -473,7 +473,7 @@ class FTP
      * @throws IOException
      * @throws \RuntimeException
      */
-    public function put(string $from, string $to): self
+    public function put(string $from, string $to)
     {
         if (!file_exists($from)) {
             throw new \RuntimeException('Files does not exists: ' . $from);

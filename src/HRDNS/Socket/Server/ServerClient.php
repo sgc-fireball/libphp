@@ -43,7 +43,7 @@ class ServerClient
      * @param resource|null $socket
      * @return self
      */
-    public function setSocket($socket): self
+    public function setSocket($socket)
     {
         if (!is_resource($socket)) {
             $socket = null;
@@ -57,7 +57,7 @@ class ServerClient
      * @param mixed $value
      * @return self
      */
-    public function setAttribute(string $key, $value): self
+    public function setAttribute(string $key, $value)
     {
         $this->attributes[$key] = $value;
         return $this;
@@ -89,7 +89,7 @@ class ServerClient
      * @param string $host
      * @return self
      */
-    public function setHost(string $host): self
+    public function setHost(string $host)
     {
         $this->host = $host;
         return $this;
@@ -108,7 +108,7 @@ class ServerClient
      * @return self
      * @throws \InvalidArgumentException
      */
-    public function setPort(int $port): self
+    public function setPort(int $port)
     {
         if ($port < 0 || $port > 65535) {
             throw new \InvalidArgumentException('The port ' . $port . ' is not allowed.');

@@ -34,13 +34,14 @@ abstract class Server
      * @return self
      * @throws \InvalidArgumentException
      */
-    public function setListen(string $listen): self
+    public function setListen(string $listen)
     {
         $block = '(\d{1,2}|1\d{1,2}|2(0|1|2|3|4)(\d{1})|25(0|1|2|3|4|5))';
         if (!preg_match('/^((' . $block . '\.){3}' . $block . ')$/', $listen)) {
             throw new \InvalidArgumentException('The listen ip ' . $listen . ' is invalid.');
         }
         $this->listen = $listen;
+
         return $this;
     }
 
@@ -49,12 +50,13 @@ abstract class Server
      * @return self
      * @throws \InvalidArgumentException
      */
-    public function setPort(int $port): self
+    public function setPort(int $port)
     {
         if ($port < 1 || $port > 65535) {
             throw new \InvalidArgumentException('The port ' . $port . ' is not allowed.');
         }
         $this->port = $port;
+
         return $this;
     }
 
@@ -63,13 +65,14 @@ abstract class Server
      * @return self
      * @throws \InvalidArgumentException
      */
-    public function setBufferLength(int $bufferLength): self
+    public function setBufferLength(int $bufferLength)
     {
         $bufferLength = (int)$bufferLength;
         if (($bufferLength % 8) !== 0) {
             throw new \InvalidArgumentException('The buffer length must be divisible by 8.');
         }
         $this->bufferLength = $bufferLength;
+
         return $this;
     }
 
@@ -78,19 +81,21 @@ abstract class Server
      * @param integer $timeoutUSeconds
      * @return self
      */
-    public function setTimeout(int $timeoutSeconds, int $timeoutUSeconds): self
+    public function setTimeout(int $timeoutSeconds, int $timeoutUSeconds)
     {
         $this->timeoutSeconds = $timeoutSeconds;
         $this->timeoutUSeconds = $timeoutUSeconds;
+
         return $this;
     }
 
     /**
      * @return self
      */
-    public function terminated(): self
+    public function terminated()
     {
         $this->isTerminated = true;
+
         return $this;
     }
 

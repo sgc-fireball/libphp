@@ -50,7 +50,7 @@ abstract class WebSocket extends TCPServer
      * @param string $buffer
      * @return self
      */
-    public function onIncoming(ServerClient $client, string $buffer): self
+    public function onIncoming(ServerClient $client, string $buffer)
     {
         if (!$client->getAttribute('_websocket_handshake')) {
             return $this->handleHttpRequest($client, $buffer);
@@ -132,7 +132,7 @@ abstract class WebSocket extends TCPServer
      * @param Request $request
      * @return self
      */
-    protected function acceptConnection(ServerClient $client, Request $request): self
+    protected function acceptConnection(ServerClient $client, Request $request)
     {
         $acceptKey = $request->getHeader('sec-websocket-key');
         $acceptKey .= '258EAFA5-E914-47DA-95CA-C5AB0DC85B11';
@@ -154,7 +154,7 @@ abstract class WebSocket extends TCPServer
      * @param Request $request
      * @return self
      */
-    protected function sendBadRequest(ServerClient $client, Request $request): self
+    protected function sendBadRequest(ServerClient $client, Request $request)
     {
         $response = $this->getResponse($client, $request);
         $response->setCode(400);
@@ -169,7 +169,7 @@ abstract class WebSocket extends TCPServer
      * @param string $buffer
      * @return self
      */
-    public function handleHttpRequest(ServerClient $client, string $buffer): self
+    public function handleHttpRequest(ServerClient $client, string $buffer)
     {
         $request = Request::parse($buffer);
 
@@ -200,7 +200,7 @@ abstract class WebSocket extends TCPServer
      * @param string $buffer
      * @return self
      */
-    protected function handleWebSocketRequest(ServerClient $client, string $buffer): self
+    protected function handleWebSocketRequest(ServerClient $client, string $buffer)
     {
         $buffer = $client->getAttribute('_websocket_buffer') . $buffer;
         $client->setAttribute('_websocket_buffer', '');
@@ -246,7 +246,7 @@ abstract class WebSocket extends TCPServer
      * @param string $buffer
      * @return self
      */
-    public function sendWebSocket(ServerClient $client, string $buffer): self
+    public function sendWebSocket(ServerClient $client, string $buffer)
     {
         $this->onWebSocketOutgoing($client, $buffer);
         $frame = new Frame(
@@ -265,7 +265,7 @@ abstract class WebSocket extends TCPServer
      * @param ServerClient $client
      * @return self
      */
-    public function sendWebSocketPing(ServerClient $client): self
+    public function sendWebSocketPing(ServerClient $client)
     {
         $hash = hash(
             'sha256',

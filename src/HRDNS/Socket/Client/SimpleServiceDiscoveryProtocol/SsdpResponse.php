@@ -22,7 +22,7 @@ class SsdpResponse extends Struct
      * @param string $string
      * @return self
      */
-    public function setFromString(string $string): self
+    public function setFromString(string $string)
     {
         $headers = explode("\n", trim($string));
         if (!preg_match('/^HTTP\/(\d\.\d) ([\d]{3}) (.*)$/', $headers[0], $matches)) {
