@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2017-05-22
+- implement testing color functions: rgb2xyb, xyb2rgb for philips hue lamps
+- skip homematic negative float and integer tests
+
 ## 2017-03-12
 - fix binrpc protocol
 

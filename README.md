@@ -40,6 +40,8 @@ composer require sgc-fireball/libphp
     - xterm2hsl
     - xterm2hsv
     - xterm2rgb
+    - xyb2rgb (testing!!!)
+    - rgb2xyb (testing!!!)
 - FTP wrapper
 - generic TCP client
 - generic UDP client
