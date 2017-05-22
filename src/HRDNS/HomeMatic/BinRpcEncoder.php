@@ -17,8 +17,16 @@ class BinRpcEncoder
             $content .= $this->encodeData($argument);
         }
 
-        return pack('A3CNNA*NA*', BinRpcProtocol::PREFIX, BinRpcProtocol::TYPE_REQUEST,
-            8 + strlen($methodName) + strlen($content), strlen($methodName), $methodName, count($arguments), $content);
+        return pack(
+            'A3CNNA*NA*',
+            BinRpcProtocol::PREFIX,
+            BinRpcProtocol::TYPE_REQUEST,
+            8 + strlen($methodName) + strlen($content),
+            strlen($methodName),
+            $methodName,
+            count($arguments),
+            $content
+        );
     }
 
     /**

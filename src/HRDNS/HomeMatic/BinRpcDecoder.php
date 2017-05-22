@@ -2,6 +2,7 @@
 
 namespace HRDNS\HomeMatic;
 
+use InvalidArgumentException;
 use HRDNS\Exception\HomeMaticIOException;
 
 class BinRpcDecoder
@@ -10,16 +11,17 @@ class BinRpcDecoder
     /**
      * @param string $data
      * @return array
-     * @throws \InvalidArgumentException
+     * @throws HomeMaticIOException
+     * @throws InvalidArgumentException
      */
     public function decode(string $data): array
     {
         if (strlen($data) < 4) {
-            throw new \InvalidArgumentException('Argument 1 is to short for a homematic binrpc packet. (1)', 1);
+            throw new InvalidArgumentException('Argument 1 is to short for a homematic binrpc packet. (1)', 1);
         }
         $packet = unpack('A3prefix/Ctype', $data);
         if ($packet['prefix'] !== BinRpcProtocol::PREFIX) {
-            throw new \InvalidArgumentException('Argument 1 is not a homematic binrpc string.', 2);
+            throw new InvalidArgumentException('Argument 1 is not a homematic binrpc string.', 2);
         }
         if ($packet['type'] === BinRpcProtocol::TYPE_REQUEST) {
             return $this->decodeRequest($data);
@@ -31,32 +33,33 @@ class BinRpcDecoder
             $error = $this->decodeError($data);
             throw new HomeMaticIOException($error['params']['faultString'], (int)$error['params']['faultCode']);
         }
-        throw new \InvalidArgumentException('Argument 1 is an invalid homematic binrpc message type.', 3);
+        throw new InvalidArgumentException('Argument 1 is an invalid homematic binrpc message type.', 3);
     }
 
     /**
      * @param string $data
      * @return array
-     * @throws \InvalidArgumentException
+     * @throws HomeMaticIOException
+     * @throws InvalidArgumentException
      */
     public function decodeRequest(string $data): array
     {
         if (strlen($data) < 12) {
-            throw new \InvalidArgumentException('Argument 1 is to short for a homematic binrpc packet. (2)', 4);
+            throw new InvalidArgumentException('Argument 1 is to short for a homematic binrpc packet. (2)', 4);
         }
         $format = 'A3prefix/Ctype/NmsgSize/NmethodSize';
         $packet = unpack($format, $data);
         if ($packet['prefix'] !== BinRpcProtocol::PREFIX) {
-            throw new \InvalidArgumentException('Argument 1 is not a homematic binrpc string.', 5);
+            throw new InvalidArgumentException('Argument 1 is not a homematic binrpc string.', 5);
         }
         if ($packet['type'] !== BinRpcProtocol::TYPE_REQUEST) {
-            throw new \InvalidArgumentException('Argument 1 is not a homematic binrpc request.', 6);
+            throw new InvalidArgumentException('Argument 1 is not a homematic binrpc request.', 6);
         }
-        $format .= '/A' . $packet['methodSize'] . 'methodName/Ncount';
+        $format .= '/A'.$packet['methodSize'].'methodName/Ncount';
         $packet = unpack($format, $data);
 
-        if (strlen($data)-8 != $packet['msgSize']) {
-            throw new HomeMaticIOException('Not enough data.',HomeMaticIOException::ERROR_PARSER_NOT_ENOUGH_INPUT);
+        if (strlen($data) - 8 != $packet['msgSize']) {
+            throw new HomeMaticIOException('Not enough data.', HomeMaticIOException::ERROR_PARSER_NOT_ENOUGH_INPUT);
         }
 
         $data = substr($data, 3 + 1 + 4 + 4 + $packet['methodSize'] + 4);
@@ -76,24 +79,25 @@ class BinRpcDecoder
     /**
      * @param string $data
      * @return array
-     * @throws \InvalidArgumentException
+     * @throws HomeMaticIOException
+     * @throws InvalidArgumentException
      */
     public function decodeResponse(string $data): array
     {
         if (strlen($data) < 8) {
-            throw new \InvalidArgumentException('Argument 1 is to short for a homematic binrpc packet. (3)', 7);
+            throw new InvalidArgumentException('Argument 1 is to short for a homematic binrpc packet. (3)', 7);
         }
         $format = 'A3prefix/Ctype/NmsgSize/A*data';
         $packet = unpack($format, $data);
         if ($packet['prefix'] !== BinRpcProtocol::PREFIX) {
-            throw new \InvalidArgumentException('Argument 1 is not a homematic binrpc string.', 8);
+            throw new InvalidArgumentException('Argument 1 is not a homematic binrpc string.', 8);
         }
         if ($packet['type'] !== BinRpcProtocol::TYPE_RESPONSE && $packet['type'] !== BinRpcProtocol::TYPE_ERROR) {
-            throw new \InvalidArgumentException('Argument 1 is not a homematic binrpc response.', 9);
+            throw new InvalidArgumentException('Argument 1 is not a homematic binrpc response.', 9);
         }
 
-        if (strlen($data)-8 != $packet['msgSize']) {
-            throw new HomeMaticIOException('Not enough data.',HomeMaticIOException::ERROR_PARSER_NOT_ENOUGH_INPUT);
+        if (strlen($data) - 8 != $packet['msgSize']) {
+            throw new HomeMaticIOException('Not enough data.', HomeMaticIOException::ERROR_PARSER_NOT_ENOUGH_INPUT);
         }
 
         $data = substr($data, 3 + 1 + 4);
@@ -101,7 +105,7 @@ class BinRpcDecoder
         return [
             'type' => 'response',
             'method' => 'unknown',
-            'params' => $this->decodeData($data)
+            'params' => $this->decodeData($data),
         ];
     }
 
@@ -120,12 +124,12 @@ class BinRpcDecoder
     /**
      * @param string $data
      * @return mixed
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     private function decodeData(string &$data)
     {
         if (!strlen($data)) {
-            throw new \InvalidArgumentException('Argument 1 could not be empty.', 10);
+            throw new InvalidArgumentException('Argument 1 could not be empty.', 10);
         }
         $info = unpack('Ntype', $data);
         if (is_array($info) && array_key_exists('type', $info)) {
@@ -143,11 +147,13 @@ class BinRpcDecoder
                 case BinRpcProtocol::TYPE_STRUCT:
                     return $this->decodeStruct($data);
                 default:
-                    throw new \InvalidArgumentException('Invalid type ' . $info['type'] . ' found in binrpc request.',
-                        11);
+                    throw new InvalidArgumentException(
+                        'Invalid type '.$info['type'].' found in binrpc request.',
+                        11
+                    );
             }
         }
-        throw new \InvalidArgumentException('Invalid argument 1. unable to convert from binrpc format.', 12);
+        throw new InvalidArgumentException('Invalid argument 1. unable to convert from binrpc format.', 12);
     }
 
     /**
@@ -159,7 +165,7 @@ class BinRpcDecoder
         $info = unpack('Ntype/Nmantissa/Nexponent', $data);
         $data = substr($data, 4 + 4 + 4);
 
-        return round((pow(2, $info['exponent'])) * ($info['mantissa'] / (1 << 30)),6);
+        return round((pow(2, $info['exponent'])) * ($info['mantissa'] / (1 << 30)), 6);
     }
 
     /**
@@ -193,7 +199,7 @@ class BinRpcDecoder
     private function decodeString(string &$data): string
     {
         $info = unpack('Ntype/Nsize', $data);
-        $info = unpack('Ntype/Nsize/A' . $info['size'] . 'content', $data);
+        $info = unpack('Ntype/Nsize/A'.$info['size'].'content', $data);
         $data = substr($data, 4 + 4 + $info['size']);
 
         return (string)$info['content'];
@@ -226,7 +232,7 @@ class BinRpcDecoder
         $data = substr($data, 4 + 4);
         for ($i = 0; $i < $info['count']; $i++) {
             $item = unpack('Nsize', $data);
-            $item = unpack('Nsize/A' . $item['size'] . 'key', $data);
+            $item = unpack('Nsize/A'.$item['size'].'key', $data);
             $key = $item['key'];
             $data = substr($data, 4 + $item['size']);
             $result[$key] = $this->decodeData($data);

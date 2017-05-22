@@ -32,24 +32,48 @@ class TCPClient extends Client
         if ($this->socket === false) {
             $errNo = @socket_last_error($this->socket);
             $errStr = @socket_strerror($errNo);
-            throw new \Exception(sprintf('ERROR[%d] create tcp://%s:%s - %s', $errNo, $this->host, $this->port,
-                $errStr));
+            throw new \Exception(
+                sprintf(
+                    'ERROR[%d] create tcp://%s:%s - %s',
+                    $errNo,
+                    $this->host,
+                    $this->port,
+                    $errStr
+                )
+            );
         }
 
-        @socket_set_option($this->socket, SOL_SOCKET, SO_RCVTIMEO, [
-            'sec' => $this->timeoutSeconds,
-            'usec' => $this->timeoutUSeconds
-        ]);
-        @socket_set_option($this->socket, SOL_SOCKET, SO_SNDTIMEO, [
-            'sec' => $this->timeoutSeconds,
-            'usec' => $this->timeoutUSeconds
-        ]);
+        @socket_set_option(
+            $this->socket,
+            SOL_SOCKET,
+            SO_RCVTIMEO,
+            [
+                'sec' => $this->timeoutSeconds,
+                'usec' => $this->timeoutUSeconds,
+            ]
+        );
+        @socket_set_option(
+            $this->socket,
+            SOL_SOCKET,
+            SO_SNDTIMEO,
+            [
+                'sec' => $this->timeoutSeconds,
+                'usec' => $this->timeoutUSeconds,
+            ]
+        );
 
         if (@socket_connect($this->socket, $this->host, $this->port) === false) {
             $errNo = @socket_last_error($this->socket);
             $errStr = @socket_strerror($errNo);
-            throw new \Exception(sprintf('ERROR[%d] connect tcp://%s:%s - %s', $errNo, $this->host, $this->port,
-                $errStr));
+            throw new \Exception(
+                sprintf(
+                    'ERROR[%d] connect tcp://%s:%s - %s',
+                    $errNo,
+                    $this->host,
+                    $this->port,
+                    $errStr
+                )
+            );
         }
         if (!$this->blocking) {
             socket_set_nonblock($this->socket);
@@ -59,9 +83,9 @@ class TCPClient extends Client
     }
 
     /**
-     * @todo fix mixed return types!
-     * @param integer|null $length
-     * @return string|boolean
+     * @param int|null $length
+     * @param mixed|null $type
+     * @return boolean|string
      */
     public function read(int $length = null, $type = null)
     {

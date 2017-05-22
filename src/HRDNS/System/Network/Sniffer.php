@@ -207,7 +207,7 @@ class Sniffer
 
         $packet['ipTOS'] = [
             'precedence' => $packet['ipTOS'] & 0xE0, // Prioritaet
-            'delay' => $packet['ipTOS'] & 0x10, // Verzögerung
+            'delay' => $packet['ipTOS'] & 0x10, // Verzoegerung
             'throughput' => $packet['ipTOS'] & 0x08, // Durchsatz
             'reliability' => $packet['ipTOS'] & 0x04, // Zuverlaessigkeit
             'reserved' => $packet['ipTOS'] & 0x03 // Reserviert

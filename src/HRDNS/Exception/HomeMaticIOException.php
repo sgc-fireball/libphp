@@ -17,10 +17,10 @@ class HomeMaticIOException extends IOException
     const ERROR_INVALID_DUTYCYCLE = -8;
     const ERROR_DEVICE_OUT_OF_DISTANCE = -9;
 
-    public function __construct($message = "", $code = 0, \Exception $previous = null)
+    public function __construct($message = '', $code = 0, \Throwable $previous = null)
     {
         $newMessage = '';
-        $message = trim($message,"\r\n\t :");
+        $message = trim($message, "\r\n\t :");
         switch ($code) {
             case self::ERROR_GENERAL:
                 $newMessage = 'Allgemeiner Fehler';
@@ -50,7 +50,7 @@ class HomeMaticIOException extends IOException
                 $newMessage = 'Das Gerät ist nicht in Reichweite';
                 break;
         }
-        parent::__construct('Error[' . $code . '] ' . $newMessage . ' (' . $message . ')', $code, $previous);
+        parent::__construct('Error['.$code.'] '.$newMessage.' ('.$message.')', $code, $previous);
     }
 
 }
