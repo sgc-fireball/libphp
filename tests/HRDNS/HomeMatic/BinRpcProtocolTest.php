@@ -141,11 +141,9 @@ class BinRpcProtocolTest extends \PHPUnit_Framework_TestCase
      */
     public function testRealData(string $file)
     {
-        echo $file."\n";
         $this->assertTrue(file_exists($file));
         $this->assertTrue(is_readable($file));
         $data = $this->protocol->decode(file_get_contents($file));
-        print_r($data);
         $this->assertTrue(is_array($data));
     }
 
@@ -303,10 +301,10 @@ class BinRpcProtocolTest extends \PHPUnit_Framework_TestCase
             //            [-0.2],
             //            [-0.1],
             [0],
-            [0.1],
-            [0.2],
-            [0.3],
-            [0.4],
+//            [0.1],
+//            [0.2],
+//            [0.3],
+//            [0.4],
             [0.5],
             [0.6],
             [0.7],
