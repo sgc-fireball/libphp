@@ -76,28 +76,32 @@ class BinRpcEncoder
     }
 
     /**
+     * @see https://de.wikipedia.org/wiki/Einfache_Genauigkeit
+     * @see http://zogg-jm.ch/IEEE_754_Umwandlung_Gleitkomma_zu_32_u_64_Bit.html
+     * @see https://github.com/openhab/openhab1-addons/blob/db62be70e9cd9561036d8925a177a2e37aaa4bd4/bundles/binding/org.openhab.binding.homematic/src/main/java/org/openhab/binding/homematic/internal/binrpc/BinRpcRequest.java
      * @param float $data
      * @return string
      */
     private function encodeFloat(float $data): string
     {
-        $exponent = floor(log(abs($data)) / M_LN2) + 1;
+        $exponent = floor(log(abs($data)) / 0.6931471805599453) + 1;
         $mantissa = floor(($data * pow(2, -$exponent)) * (1 << 30));
+        $result = pack('NNN', BinRpcProtocol::TYPE_FLOAT, $mantissa, $exponent);
 
-        return pack('NNN', BinRpcProtocol::TYPE_FLOAT, $mantissa, $exponent);
+        return $result;
     }
 
     /**
+     * does not supports negative values!
+     *
      * @param integer $data
      * @return string
      * @throws \InvalidArgumentException
      */
     private function encodeInteger(int $data): string
     {
-        $min = pow(2, 31) * -1;
-        $max = pow(2, 31) - 1;
-        if ($data < $min || $max < $data) {
-            throw new \InvalidArgumentException('Homematic binrpc supports only int32 bit values with (R+).', __LINE__);
+        if ($data < 0 || 2147483647 < $data) {
+            throw new \InvalidArgumentException('Homematic binrpc supports only uint32 bit values with.');
         }
         $result = pack('NN', BinRpcProtocol::TYPE_INTEGER, $data);
 
