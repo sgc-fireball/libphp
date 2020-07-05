@@ -80,6 +80,13 @@ class BinRpcProtocolTest extends \PHPUnit_Framework_TestCase
         $this->protocol->decodeResponse($data);
     }
 
+    public function testInvalidDataDecodeNull()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $data = $this->protocol->encodeResponse(['test' => null]);
+        $this->protocol->decodeResponse($data);
+    }
+
     public function testRequest()
     {
         $method = 'TestFunction123';
