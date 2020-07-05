@@ -32,7 +32,7 @@ class Struct
      * @return self
      * @throws \Exception
      */
-    public function __set($key, $value): self
+    public function __set($key, $value)
     {
         if (!isset($this->data[$key])) {
             throw new \Exception(sprintf('%s does not exists on %s', $key, __CLASS__));
@@ -75,7 +75,7 @@ class Struct
      * @param array $data
      * @return self
      */
-    public function setArray(array $data): self
+    public function setArray(array $data)
     {
         $this->data = $data;
         return $this;
@@ -94,7 +94,7 @@ class Struct
      * @return self
      * @throws \Exception
      */
-    public function loadFromJSON(string $json): self
+    public function loadFromJSON(string $json)
     {
         $data = json_decode($json);
         $data = $data instanceof \stdClass ? (array)$data : false;
@@ -118,7 +118,7 @@ class Struct
      * @return self
      * @throws \Exception
      */
-    public function loadFromSerialize(string $serialize): self
+    public function loadFromSerialize(string $serialize)
     {
         $data = unserialize($serialize);
         if (!is_array($data)) {

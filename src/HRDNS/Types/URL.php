@@ -29,7 +29,7 @@ class URL
      * @param string $url
      * @return self
      */
-    public function setURL(string $url): self
+    public function setURL(string $url)
     {
         if (empty($url)) {
             return $this;
@@ -96,7 +96,7 @@ class URL
      * @param string $scheme
      * @return self
      */
-    public function setScheme(string $scheme): self
+    public function setScheme(string $scheme)
     {
         $this->parts['scheme'] = $scheme;
         return $this;
@@ -114,7 +114,7 @@ class URL
      * @param string $user
      * @return self
      */
-    public function setUser(string $user): self
+    public function setUser(string $user)
     {
         $this->parts['user'] = $user;
         return $this;
@@ -132,7 +132,7 @@ class URL
      * @param string $password
      * @return self
      */
-    public function setPassword(string $password): self
+    public function setPassword(string $password)
     {
         $this->parts['pass'] = $password;
         return $this;
@@ -150,7 +150,7 @@ class URL
      * @param string $host
      * @return self
      */
-    public function setHost(string $host): self
+    public function setHost(string $host)
     {
         $this->parts['host'] = $host;
         return $this;
@@ -168,7 +168,7 @@ class URL
      * @param integer $port
      * @return self
      */
-    public function setPort(int $port): self
+    public function setPort(int $port)
     {
         $this->parts['port'] = $port;
         return $this;
@@ -186,7 +186,7 @@ class URL
      * @param string $path
      * @return self
      */
-    public function setPath(string $path): self
+    public function setPath(string $path)
     {
         $this->parts['path'] = $path;
         return $this;
@@ -204,7 +204,7 @@ class URL
      * @param string $query
      * @return self
      */
-    public function setQuery(string $query): self
+    public function setQuery(string $query)
     {
         $this->parts['query'] = $query;
         return $this;
@@ -222,7 +222,7 @@ class URL
      * @param string $fragment
      * @return self
      */
-    public function setFragment(string $fragment): self
+    public function setFragment(string $fragment)
     {
         $this->parts['fragment'] = $fragment;
         return $this;

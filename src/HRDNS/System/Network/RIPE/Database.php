@@ -48,7 +48,7 @@ class Database
      * @return Database
      * @throws IOException
      */
-    public function download(string $target): self
+    public function download(string $target)
     {
         $date = new \DateTime('yesterday');
 
@@ -89,7 +89,7 @@ class Database
      * @throws IOException
      * @throws \RuntimeException
      */
-    public function decompress(string $file): self
+    public function decompress(string $file)
     {
         if (($content = file_get_contents($file)) === false) {
             throw new IOException('Could not read file: ' . $file);
@@ -107,7 +107,7 @@ class Database
      * @param string $file
      * @return Database
      */
-    public function convert(string $file): self
+    public function convert(string $file)
     {
         $csv = new CSV($file, '|');
         $csv->open();
@@ -131,7 +131,7 @@ class Database
         return $this;
     }
 
-    public function handleIpv4(array $line): self
+    public function handleIpv4(array $line)
     {
         /**
          * [0] => ripencc
@@ -152,7 +152,7 @@ class Database
         return $this;
     }
 
-    public function handleIpv6(array $line): self
+    public function handleIpv6(array $line)
     {
         /**
          * [0] => ripencc
@@ -173,7 +173,7 @@ class Database
         return $this;
     }
 
-    public function handleAsn(array $line): self
+    public function handleAsn(array $line)
     {
         /**
          * [0] => ripencc

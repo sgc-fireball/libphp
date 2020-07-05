@@ -53,7 +53,7 @@ class CSV implements \Iterator, \ArrayAccess
      * @return CSV
      * @throws IOException
      */
-    public function open(): self
+    public function open()
     {
         if (($this->fp = fopen($this->file, 'rw+')) === false) {
             throw new IOException();
@@ -129,7 +129,7 @@ class CSV implements \Iterator, \ArrayAccess
     /**
      * @return CSV
      */
-    public function close(): self
+    public function close()
     {
         @fclose($this->fp);
         $this->fp = null;

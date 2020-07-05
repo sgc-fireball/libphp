@@ -51,7 +51,7 @@ class Timer
     /**
      * @return self
      */
-    public static function getInstance(): self
+    public static function getInstance()
     {
         if (self::$instance !== null) {
             return self::$instance;
@@ -90,7 +90,7 @@ class Timer
      * @return self
      * @SuppressWarnings(PHPMD.ElseExpression)
      */
-    protected function checkTimeouts(): self
+    protected function checkTimeouts()
     {
         if (!count($this->timeouts)) {
             return $this;
@@ -123,7 +123,7 @@ class Timer
      * @return self
      * @SuppressWarnings(PHPMD.ElseExpression)
      */
-    protected function checkIntervals(): self
+    protected function checkIntervals()
     {
         if (!count($this->intervals)) {
             return $this;
@@ -173,7 +173,7 @@ class Timer
      * @param string $timerId
      * @return self
      */
-    public function clearTimeout(string $timerId): self
+    public function clearTimeout(string $timerId)
     {
         if (isset($this->timeouts[$timerId])) {
             unset($this->timeouts[$timerId]);
@@ -207,7 +207,7 @@ class Timer
      * @param string $intervalId
      * @return self
      */
-    public function clearInterval(string $intervalId): self
+    public function clearInterval(string $intervalId)
     {
         if (isset($this->intervals[$intervalId])) {
             unset($this->intervals[$intervalId]);

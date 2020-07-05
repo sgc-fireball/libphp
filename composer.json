@@ -24,7 +24,7 @@
     "symfony/console": "~3.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "@stable",
+    "phpunit/phpunit": "~5.0",
     "phpunit/php-code-coverage": "@stable",
     "squizlabs/php_codesniffer": "@stable",
     "phploc/phploc": "@stable",

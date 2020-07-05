@@ -46,7 +46,7 @@ class Frame
      * @param string $buffer
      * @return self
      */
-    public static function decode(string $buffer): self
+    public static function decode(string $buffer)
     {
         $data = unpack('C2header', $buffer);
         $frame = [

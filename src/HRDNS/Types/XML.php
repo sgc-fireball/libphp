@@ -52,7 +52,7 @@ class XML
      * @return self
      * @SuppressWarnings(PHPMD.boolArgumentFlag)
      */
-    public function setRoot(): self
+    public function setRoot()
     {
         $this->root = true;
         return $this;
@@ -78,7 +78,7 @@ class XML
      * @param string $name
      * @return self
      */
-    public function setName(string $name): self
+    public function setName(string $name)
     {
         $this->name = $name;
         return $this;
@@ -96,7 +96,7 @@ class XML
      * @param string $value
      * @return self
      */
-    public function setValue(string $value): self
+    public function setValue(string $value)
     {
         if (strlen($value) > 256) {
             $this->setCData(true);
@@ -120,7 +120,7 @@ class XML
      * @param boolean $cData
      * @return self
      */
-    public function setCData(bool $cData): self
+    public function setCData(bool $cData)
     {
         $this->cData = $cData;
         return $this;
@@ -148,7 +148,7 @@ class XML
      * @param array $attributes
      * @return self
      */
-    public function setAttributes(array $attributes = []): self
+    public function setAttributes(array $attributes = [])
     {
         $this->attributes = $attributes;
         return $this;
@@ -159,7 +159,7 @@ class XML
      * @param mixed $value
      * @return self
      */
-    public function setAttribute(string $name, $value = null): self
+    public function setAttribute(string $name, $value = null)
     {
         $this->attributes[$name] = $value;
         return $this;
@@ -195,7 +195,7 @@ class XML
      * @param string $charset
      * @return self
      */
-    public function setCharset(string $charset): self
+    public function setCharset(string $charset)
     {
         $this->charset = $charset;
         return $this;

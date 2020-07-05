@@ -30,7 +30,7 @@ class IPv4
      * @return self
      * @throws \InvalidArgumentException
      */
-    public function setIp(string $ipAddr): self
+    public function setIp(string $ipAddr)
     {
         if (!filter_var($ipAddr, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
             throw new \InvalidArgumentException();
@@ -52,7 +52,7 @@ class IPv4
      * @return IPv4
      * @throws \InvalidArgumentException
      */
-    public function setLong(int $long): self
+    public function setLong(int $long)
     {
         if ($long < 0 || $long > pow(2, 32)-1) {
             throw new \InvalidArgumentException();
@@ -93,7 +93,7 @@ class IPv4
      * @return self
      * @throws \InvalidArgumentException
      */
-    public function setCIDR(int $cidr): self
+    public function setCIDR(int $cidr)
     {
         if ($cidr < 0 || $cidr > 32) {
             throw new \InvalidArgumentException();
@@ -115,7 +115,7 @@ class IPv4
      * @return self
      * @throws \InvalidArgumentException
      */
-    public function setSubnetmask(string $ipAddr): self
+    public function setSubnetmask(string $ipAddr)
     {
         if (!filter_var($ipAddr, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
             throw new \InvalidArgumentException();

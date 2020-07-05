@@ -76,7 +76,7 @@ class BinRpcProtocolTest extends \PHPUnit_Framework_TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         $data = $this->protocol->encodeResponse(['test' => 'test']);
-        $data = substr($data, 0, -10) . 'AAAAAAAAAA';
+        $data = substr($data, 0, -10).'AAAAAAAAAA';
         $this->protocol->decodeResponse($data);
     }
 
@@ -129,20 +129,45 @@ class BinRpcProtocolTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('response', $data['type']);
     }
 
+    public function providerTestRealData()
+    {
+        $assetDir = realpath(__DIR__.'/../../assets/homematic/binrpc/');
+        $files = glob($assetDir.'/*.bin');
+        array_walk(
+            $files,
+            function (&$value) {
+                $value = [$value];
+            }
+        );
+
+        return $files;
+    }
+
+    /**
+     * @dataProvider providerTestRealData
+     */
+    public function testRealData(string $file)
+    {
+        $this->assertTrue(file_exists($file));
+        $this->assertTrue(is_readable($file));
+        $data = $this->protocol->decode(file_get_contents($file));
+        $this->assertTrue(is_array($data));
+    }
+
     public function providerTestInteger()
     {
-        $min = pow(2, 31) * -1;
-        $max = pow(2, 31) - 1;
         return [
-            [$min],
-            [$min + 1],
-            [mt_rand($min + 2, -2)],
-            [-1],
+            //            [-2147483648],
+            //            [-2147483647],
+            //            [mt_rand(-2147483646, -2)],
+            //            [-2],
+            //            [-1],
             [0],
             [1],
-            [mt_rand(2, $max - 2)],
-            [$max - 1],
-            [$max]
+            [2],
+            [mt_rand(2, 2147483645)],
+            [2147483646],
+            [2147483647],
         ];
     }
 
@@ -179,7 +204,7 @@ class BinRpcProtocolTest extends \PHPUnit_Framework_TestCase
             [0],
             [1],
             [true],
-            [false]
+            [false],
         ];
     }
 
@@ -239,7 +264,7 @@ class BinRpcProtocolTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($data['params']['foo']));
         $this->assertTrue(array_key_exists('bar', $data['params']['foo']));
         $this->assertTrue(is_int($data['params']['foo']['bar']));
-        $this->assertEquals(1,$data['params']['foo']['bar']);
+        $this->assertEquals(1, $data['params']['foo']['bar']);
     }
 
     public function testArray()
@@ -263,24 +288,43 @@ class BinRpcProtocolTest extends \PHPUnit_Framework_TestCase
     {
         $min = pow(2, 31) * -1;
         $max = pow(2, 31) - 1;
+
         return [
-            [-3.402823 * pow(10, 37)],
-            [$min],
-            [$min + 1],
-            [mt_rand($min, -1)],
-            [-1234.5678],
-            [-1],
-            [-0.5],
-            [-0.001],
+            //            [-3.402823 * pow(10, 37)],
+            //            [$min],
+            //            [$min + 1],
+            //            [mt_rand($min, -1)],
+            //            [-532410.000000],
+            //            [-1234.5678],
+            //            [-2],
+            //            [-1],
+            //            [-0.9],
+            //            [-0.8],
+            //            [-0.7],
+            //            [-0.6],
+            //            [-0.5],
+            //            [-0.4],
+            //            [-0.3],
+            //            [-0.2],
+            //            [-0.1],
             [0],
-            [0.001],
+//            [0.1],
+//            [0.2],
+//            [0.3],
+//            [0.4],
             [0.5],
+            [0.6],
+            [0.7],
+            [0.8],
+            [0.9],
             [1],
+            [2],
             [1234.5678],
+            [532410.000000],
             [mt_rand(2, $max - 2)],
             [$max - 1],
             [$max],
-            [3.402823 * pow(10, 37)]
+            [3.402823 * pow(10, 37)],
         ];
     }
 
@@ -295,15 +339,23 @@ class BinRpcProtocolTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(array_key_exists('params', $data));
         $this->assertTrue(is_array($data['params']));
         $this->assertTrue(array_key_exists('float', $data['params']));
-
-        $min = $float * 0.999999999;
-        $max = $float * 1.000000001;
+        $min = $float * 0.999999;
+        $max = $float * 1.000001;
         if ($float < 0) {
             $tmp = $min;
             $min = $max;
             $max = $tmp;
         }
-        $this->assertTrue($min <= $data['params']['float'] && $data['params']['float'] <= $max);
+        $this->assertTrue(
+            $min <= $data['params']['float'] && $data['params']['float'] <= $max,
+            sprintf(
+                'Value is not in range. (value: %.6f, expect: %.6f, min: %.6f, max: %.6f)',
+                $data['params']['float'],
+                $float,
+                $min,
+                $max
+            )
+        );
     }
 
 }

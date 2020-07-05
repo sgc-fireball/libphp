@@ -63,9 +63,10 @@ class Process
      * @param mixed $value
      * @return self
      */
-    public function addOption(string $key, $value): self
+    public function addOption(string $key, $value)
     {
         $this->options[(string)$key] = $value;
+
         return $this;
     }
 
@@ -96,14 +97,17 @@ class Process
     {
         if (is_callable($command)) {
             $this->command = $command;
+
             return $this;
         }
         if (is_string($command) && file_exists($command) && is_readable($command)) {
             $this->command = function (Process $process) use ($command) {
                 return require_once($command);
             };
+
             return $this;
         }
+
         return false;
     }
 
@@ -136,8 +140,10 @@ class Process
             $this->endTime = microtime(true);
             $this->exitCode = pcntl_wexitstatus($status);
             $this->pid = 0;
+
             return false;
         }
+
         return true;
     }
 
@@ -147,7 +153,7 @@ class Process
      * @SuppressWarnings(PHPMD.NPathComplexity)
      * @SuppressWarnings(PHPMD.ExitExpression)
      */
-    public function start(array $whiteList = []): self
+    public function start(array $whiteList = [])
     {
         $this->startTime = microtime(true);
         $this->pid = pcntl_fork();
@@ -159,7 +165,7 @@ class Process
             return $this;
         }
         $this->pid = posix_getpid();
-        $whiteList = array_merge($whiteList, array('this', 'whiteList'));
+        $whiteList = array_merge($whiteList, ['this', 'whiteList']);
         $vars = array_keys(get_defined_vars());
         foreach ($vars as $var) {
             if (in_array($var, $whiteList)) {
@@ -193,16 +199,29 @@ class Process
         }
         $round = 0;
         do {
-            posix_kill($this->pid, $signal);
+            $this->sendSignal($signal);
             $round++;
             sleep(1);
         } while ($this->isRunning() && $round < $sec);
         if ($this->pid > 0) {
-            posix_kill($this->pid, SIGKILL);
+            $this->sendSignal(SIGKILL);
         }
         $this->exitCode = self::EXITCODE_KILLED;
 
         return !$this->isRunning();
+    }
+
+    /**
+     * @param int $signal
+     * @return boolean
+     */
+    public function sendSignal(int $signal)
+    {
+        if (!$this->isRunning()) {
+            return false;
+        }
+
+        return posix_kill($this->pid, $signal);
     }
 
     /**

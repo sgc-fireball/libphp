@@ -12,7 +12,7 @@ abstract class TCPServer extends Server
      * @param integer $maxClients
      * @return self
      */
-    public function setMaxClients(int $maxClients): self
+    public function setMaxClients(int $maxClients)
     {
         $this->maxClients = max(1, (int)$maxClients);
         return $this;
@@ -22,7 +22,7 @@ abstract class TCPServer extends Server
      * @return self
      * @throws \Exception
      */
-    public function bind(): self
+    public function bind()
     {
         $this->masterSocket = @socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
         @socket_set_option($this->masterSocket, SOL_SOCKET, SO_REUSEADDR, 1);
@@ -77,7 +77,7 @@ abstract class TCPServer extends Server
      * @param integer $limit
      * @return self
      */
-    public function listen(int $limit = -1): self
+    public function listen(int $limit = -1)
     {
         while (!$this->isTerminated && ($limit > 0 || $limit == -1)) {
             $this->workOnMasterSocket();
@@ -140,7 +140,7 @@ abstract class TCPServer extends Server
     /**
      * @return self
      */
-    protected function workOnMasterSocket(): self
+    protected function workOnMasterSocket()
     {
         $socket = @socket_accept($this->masterSocket);
         if (is_resource($socket)) {
@@ -159,7 +159,7 @@ abstract class TCPServer extends Server
      * @param resource[] $read
      * @return self
      */
-    protected function workOnClientSockets(array $read = []): self
+    protected function workOnClientSockets(array $read = [])
     {
         /** @var resource $socket */
         foreach ($read as $socket) {
@@ -183,7 +183,7 @@ abstract class TCPServer extends Server
      * @param ServerClient $client
      * @return self
      */
-    protected function workOnClientSocket(ServerClient $client): self
+    protected function workOnClientSocket(ServerClient $client)
     {
         $bytes = @socket_recv($client->getSocket(), $buffer, $this->bufferLength, 0);
         if ($bytes !== 0 && $bytes !== false) {

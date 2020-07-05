@@ -40,6 +40,8 @@ composer require sgc-fireball/libphp
     - xterm2hsl
     - xterm2hsv
     - xterm2rgb
+    - xyb2rgb (testing!!!)
+    - rgb2xyb (testing!!!)
 - FTP wrapper
 - generic TCP client
 - generic UDP client
@@ -75,8 +77,8 @@ composer require sgc-fireball/libphp
 Start the TCP Echo Server in Console 1:
 ```bash
 cd ./libphp
-php bin/example.php exmaple:echoserver --help
-php bin/example.php exmaple:echoserver --listen 127.0.0.1 --port 12345
+php bin/example.php example:echoserver --help
+php bin/example.php example:echoserver --listen 127.0.0.1 --port 12345
 ```
 Start another Console to connect to TCP Echo Server:
 ```bash

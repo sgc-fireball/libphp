@@ -44,9 +44,9 @@ class MessageQueueTest extends \PHPUnit_Framework_TestCase
             if (!$redis->connect('127.0.0.1')) {
                 throw new \RedisException('Could not connect to 127.0.0.1:6379');
             }
-        } catch (\RedisException $e) {
+        } catch (\Exception $e) {
             $this->markTestSkipped($e->getMessage());
-            }
+        }
         $redisDriver = new RedisDriver($redis);
         $messageQueue = new MessageQueue($this->testQueue, $redisDriver);
         $messageQueue->add(['test' => $this->random]);

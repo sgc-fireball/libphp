@@ -29,7 +29,7 @@ class SimpleServiceDiscoveryProtocolServer extends UDPServer
      * @return $this
      * @throws \InvalidArgumentException
      */
-    public function addService(array $service): self
+    public function addService(array $service)
     {
         if (!isset($service['location'])) {
             throw new \InvalidArgumentException('Missing service parameter: location');

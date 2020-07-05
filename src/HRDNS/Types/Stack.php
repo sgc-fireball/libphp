@@ -74,7 +74,7 @@ abstract class Stack implements \Iterator
      * @param mixed $element
      * @return self
      */
-    public function push($element): self
+    public function push($element)
     {
         $this->elements[] = $element;
         return $this;
@@ -98,7 +98,7 @@ abstract class Stack implements \Iterator
      * @param mixed $element
      * @return self
      */
-    public function remove($element): self
+    public function remove($element)
     {
         $key = array_search($element, $this->elements, true);
         if ($key === false) {

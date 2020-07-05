@@ -154,7 +154,7 @@ class Daemon implements LoggerInterface
      * @param string $instance
      * @return self
      */
-    public function setInstanceName(string $instance): self
+    public function setInstanceName(string $instance)
     {
         $this->instanceName = $instance;
         return $this;
@@ -164,7 +164,7 @@ class Daemon implements LoggerInterface
      * @param string $processName
      * @return self
      */
-    public function setProcessName(string $processName): self
+    public function setProcessName(string $processName)
     {
         $this->processName = $processName;
         return $this;
@@ -191,7 +191,7 @@ class Daemon implements LoggerInterface
      * @return self
      * @throws \InvalidArgumentException
      */
-    public function setPidPath(string $pidPath): self
+    public function setPidPath(string $pidPath)
     {
         if (!is_dir($pidPath)) {
             throw new \InvalidArgumentException('The folder ' . $pidPath . ' does not exists.');
@@ -253,7 +253,7 @@ class Daemon implements LoggerInterface
      * @return self
      * @throws \Exception
      */
-    public function setUserId(int $userId): self
+    public function setUserId(int $userId)
     {
         $userId = (int)$userId;
         if (!posix_setuid($userId)) {
@@ -274,7 +274,7 @@ class Daemon implements LoggerInterface
      * @return self
      * @throws \Exception
      */
-    public function setGroupId(int $groupId): self
+    public function setGroupId(int $groupId)
     {
         $groupId = (int)$groupId;
         if (!posix_setgid($groupId)) {
@@ -303,7 +303,7 @@ class Daemon implements LoggerInterface
      * @return self
      * @throws \Exception
      */
-    public function start(): self
+    public function start()
     {
         if (!is_dir($this->getPidPath())) {
             if (!mkdir($this->getPidPath(), 0700, true)) {
@@ -332,7 +332,7 @@ class Daemon implements LoggerInterface
     /**
      * @return self
      */
-    public function stop(): self
+    public function stop()
     {
         $pidFile = $this->getPidFile();
         if (!$pidFile->isFile()) {
@@ -351,7 +351,7 @@ class Daemon implements LoggerInterface
      * @param LoggerInterface $logger
      * @return self
      */
-    public function setLogger(LoggerInterface $logger): self
+    public function setLogger(LoggerInterface $logger)
     {
         $this->logger = $logger;
         return $this;
@@ -362,7 +362,7 @@ class Daemon implements LoggerInterface
      * @param array $context
      * @return self
      */
-    public function emergency($message, array $context = []): self
+    public function emergency($message, array $context = [])
     {
         if (!$this->logger) {
             return $this;
@@ -376,7 +376,7 @@ class Daemon implements LoggerInterface
      * @param array $context
      * @return self
      */
-    public function alert($message, array $context = []): self
+    public function alert($message, array $context = [])
     {
         if (!$this->logger) {
             return $this;
@@ -390,7 +390,7 @@ class Daemon implements LoggerInterface
      * @param array $context
      * @return self
      */
-    public function critical($message, array $context = []): self
+    public function critical($message, array $context = [])
     {
         if (!$this->logger) {
             return $this;
@@ -404,7 +404,7 @@ class Daemon implements LoggerInterface
      * @param array $context
      * @return self
      */
-    public function error($message, array $context = []): self
+    public function error($message, array $context = [])
     {
         if (!$this->logger) {
             return $this;
@@ -418,7 +418,7 @@ class Daemon implements LoggerInterface
      * @param array $context
      * @return self
      */
-    public function warning($message, array $context = []): self
+    public function warning($message, array $context = [])
     {
         if (!$this->logger) {
             return $this;
@@ -432,7 +432,7 @@ class Daemon implements LoggerInterface
      * @param array $context
      * @return self
      */
-    public function notice($message, array $context = []): self
+    public function notice($message, array $context = [])
     {
         if (!$this->logger) {
             return $this;
@@ -446,7 +446,7 @@ class Daemon implements LoggerInterface
      * @param array $context
      * @return self
      */
-    public function info($message, array $context = []): self
+    public function info($message, array $context = [])
     {
         if (!$this->logger) {
             return $this;
@@ -460,7 +460,7 @@ class Daemon implements LoggerInterface
      * @param array $context
      * @return self
      */
-    public function debug($message, array $context = []): self
+    public function debug($message, array $context = [])
     {
         if (!$this->logger) {
             return $this;
@@ -475,7 +475,7 @@ class Daemon implements LoggerInterface
      * @param array $context
      * @return self
      */
-    public function log($level, $message, array $context = []): self
+    public function log($level, $message, array $context = [])
     {
         if (!$this->logger) {
             return $this;

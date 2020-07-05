@@ -64,7 +64,7 @@ class ProcessList implements \Iterator
      * @param Process $process
      * @return self
      */
-    public function addProcess(Process $process): self
+    public function addProcess(Process $process)
     {
         $this->processes[$process->getId()] = $process;
         return $this;
@@ -75,7 +75,7 @@ class ProcessList implements \Iterator
      * @return ProcessList
      * @throws \InvalidArgumentException
      */
-    public function setWorker(int $worker): self
+    public function setWorker(int $worker)
     {
         if ($worker < 1) {
             throw new \InvalidArgumentException('Invalid value '.$worker.' count. Minimum 1 worker must be exist.');
@@ -101,7 +101,7 @@ class ProcessList implements \Iterator
     /**
      * @return self
      */
-    public function start(): self
+    public function start()
     {
         $active = 0;
         /** @var Process $process */

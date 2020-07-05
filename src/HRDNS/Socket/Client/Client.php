@@ -27,7 +27,7 @@ abstract class Client
      * @param string $host
      * @return self
      */
-    public function setHost(string $host): self
+    public function setHost(string $host)
     {
         $this->host = $host;
         return $this;
@@ -46,7 +46,7 @@ abstract class Client
      * @return self
      * @throws \Exception
      */
-    public function setPort(int $port): self
+    public function setPort(int $port)
     {
         if ($port < 0 || $port > 65535) {
             throw new \Exception('The port ' . $port . ' is not allowed.');
@@ -68,7 +68,7 @@ abstract class Client
      * @param integer $timeoutUSeconds
      * @return self
      */
-    public function setTimeout(int $timeoutSeconds, int $timeoutUSeconds): self
+    public function setTimeout(int $timeoutSeconds, int $timeoutUSeconds)
     {
         $this->timeoutSeconds = $timeoutSeconds;
         $this->timeoutUSeconds = $timeoutUSeconds;
@@ -80,7 +80,7 @@ abstract class Client
      * @return self
      * @throws \Exception
      */
-    public function setBufferLength(int $bufferLength): self
+    public function setBufferLength(int $bufferLength)
     {
         $bufferLength = (int)$bufferLength;
         if (($bufferLength % 8) !== 0) {
@@ -93,7 +93,7 @@ abstract class Client
     /**
      * @return self
      */
-    public function disconnect(): self
+    public function disconnect()
     {
         @socket_close($this->socket);
         $this->socket = null;

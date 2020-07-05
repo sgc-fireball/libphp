@@ -6,14 +6,15 @@ class BinRpcProtocol
 {
 
     const PREFIX = 'Bin';
-    const TYPE_REQUEST = 0x0000;
-    const TYPE_RESPONSE = 0x0001;
-    const TYPE_INTEGER = 0x0001;
-    const TYPE_BOOL = 0x0002;
-    const TYPE_STRING = 0x0003;
-    const TYPE_FLOAT = 0x0004;
-    const TYPE_STRUCT = 0x0101;
-    const TYPE_ARRAY = 0x0100;
+    const TYPE_REQUEST = 0;
+    const TYPE_RESPONSE = 1;
+    const TYPE_ERROR = 255;
+    const TYPE_INTEGER = 1;
+    const TYPE_BOOL = 2;
+    const TYPE_STRING = 3;
+    const TYPE_FLOAT = 4;
+    const TYPE_ARRAY = 256;
+    const TYPE_STRUCT = 257;
 
     /** @var BinRpcEncoder */
     private $encoder = null;
@@ -44,6 +45,16 @@ class BinRpcProtocol
     public function encodeResponse(array $data): string
     {
         return $this->encoder->encodeResponse($data);
+    }
+
+    /**
+     * @param int $code
+     * @param string $message
+     * @return string
+     */
+    public function encodeError(int $code = -1, string $message = 'Unknown error.'): string
+    {
+        return $this->encoder->encodeError(['faultCode' => $code, 'faultString' => $message]);
     }
 
     /**

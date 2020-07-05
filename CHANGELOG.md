@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 2017-05-22
+- implement testing color functions: rgb2xyb, xyb2rgb for philips hue lamps
+- skip homematic negative float and integer tests
+
+## 2017-03-12
+- fix binrpc protocol
+
 ## 2017-01-22
 - improve tests
 
@@ -68,7 +75,7 @@
 - update to PHP7
 
 ## 2016-01-23
-- remove old exmaple
+- remove old example
 - implement symfony/console
 - implement symfony command example
 - update code style in tests, examples, bin
