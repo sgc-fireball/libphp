@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\Types;
 
@@ -163,10 +163,10 @@ class IPv4
         return strtoupper(
             sprintf(
                 '2002:%s:%s:%s:%s::',
-                str_pad(dechex($block1), 4, '0', STR_PAD_LEFT),
-                str_pad(dechex($block2), 4, '0', STR_PAD_LEFT),
-                str_pad(dechex($block3), 4, '0', STR_PAD_LEFT),
-                str_pad(dechex($block4), 4, '0', STR_PAD_LEFT)
+                str_pad(dechex((int)$block1), 4, '0', STR_PAD_LEFT),
+                str_pad(dechex((int)$block2), 4, '0', STR_PAD_LEFT),
+                str_pad(dechex((int)$block3), 4, '0', STR_PAD_LEFT),
+                str_pad(dechex((int)$block4), 4, '0', STR_PAD_LEFT)
             )
         );
     }

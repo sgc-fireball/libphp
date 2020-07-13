@@ -1,7 +1,7 @@
 --TEST--
 Testing \HRDNS\Socket\Server\TCPServer - client connect
 --FILE--
-<?php
+<?php declare(strict_types=1);
 $basePath = preg_replace('/\/tests\/.*/', '', realpath(__DIR__));
 require_once($basePath . '/tests/bootstrap.php');
 

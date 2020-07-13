@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\Socket\Client;
 
@@ -17,8 +17,8 @@ class UDPClient extends Client
             return $this;
         }
         $this->socket = @socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
-        if ($this->socket === false) {
-            $errNo = @socket_last_error($this->socket);
+        if (!$this->socket) {
+            $errNo = @socket_last_error();
             $errStr = @socket_strerror($errNo);
             throw new \Exception(
                 sprintf(

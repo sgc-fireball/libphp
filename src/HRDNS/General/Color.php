@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\General;
 
@@ -243,9 +243,9 @@ class Color
         }
 
         return [
-            round($result[0] * 255, 0),
-            round($result[1] * 255, 0),
-            round($result[2] * 255, 0)
+            (int)round($result[0] * 255, 0),
+            (int)round($result[1] * 255, 0),
+            (int)round($result[2] * 255, 0)
         ];
     }
 
@@ -302,9 +302,9 @@ class Color
         $blue = ($blue + $magenta) * 255;
 
         return [
-            round($red, 0),
-            round($green, 0),
-            round($blue, 0)
+            (int)round($red, 0),
+            (int)round($green, 0),
+            (int)round($blue, 0)
         ];
     }
 
@@ -326,9 +326,9 @@ class Color
         $blue = hexdec(substr($hex, 4, 2));
 
         return [
-            round($red, 0),
-            round($green, 0),
-            round($blue, 0)
+            (int)round($red, 0),
+            (int)round($green, 0),
+            (int)round($blue, 0)
         ];
     }
 
@@ -353,9 +353,9 @@ class Color
         $blue = (1 - $yellow) * (1 - $key) * 255;
 
         return [
-            round($red, 0),
-            round($green, 0),
-            round($blue, 0)
+            (int)round($red, 0),
+            (int)round($green, 0),
+            (int)round($blue, 0)
         ];
     }
 
@@ -737,9 +737,9 @@ class Color
 
         // Calculate the xy values from the XYZ values
         $x = $X + $Y + $Z;
-        $x = $x === 0 ? 0 : $X / $x;
+        $x = $x == 0 ? 0 : $X / $x;
         $y = $X + $Y + $Z;
-        $y = $y === 0 ? 0 : $Y / $y;
+        $y = $y == 0 ? 0 : $Y / $y;
 
         // Use the Y value of XYZ as brightness The Y value indicates the brightness of the converted color.
         return [round($x, 6), round($y, 6), min(254, max(0, round($Y * 255, 0)))];

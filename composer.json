@@ -19,23 +19,23 @@
   },
   "type": "library",
   "require": {
-    "php": ">=7.0",
+    "php": ">=7.2",
+    "ext-gmp": "*",
+    "ext-imap": "*",
+    "ext-redis": "*",
     "psr/log": "~1.0",
     "symfony/console": "~3.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "~5.0",
+    "phpunit/phpunit": "@stable",
     "phpunit/php-code-coverage": "@stable",
     "squizlabs/php_codesniffer": "@stable",
     "phploc/phploc": "@stable",
     "pdepend/pdepend": "@stable",
     "phpmd/phpmd": "@stable",
+    "phpstan/phpstan": "@stable",
     "sebastian/phpcpd": "@stable",
-    "theseer/phpdox": "^0.8"
-  },
-  "suggest": {
-    "monolog/monolog": "Allow you a better debbuging",
-    "php-console/php-console": "Allow you to debug php code in the browser"
+    "theseer/phpdox": "@stable"
   },
   "autoload": {
     "psr-4": {
@@ -60,12 +60,10 @@
     "phpcs-ci": ["phpcs --config-set ignore_warnings_on_exit 1", "phpcs --report=checkstyle --report-file=build/logs/checkstyle.xml"],
     "phpcpd-ci": ["phpcpd --log-pmd build/logs/pmd-cpd.xml src"],
     "phpunit-ci": ["phpunit --tap --coverage-html build/coverage --coverage-clover build/logs/clover.xml --coverage-crap4j build/logs/crap4j.xml --log-junit build/logs/junit.xml"],
-    "phpdox-ci": ["phpdox"]
+    "phpdox-ci": ["phpdox"],
+    "phpstan-ci": ["phpstan analyse"]
   },
   "config": {
-    "bin-dir": "bin",
-    "platform": {
-      "php": "7.0.0"
-    }
+    "bin-dir": "bin"
   }
 }

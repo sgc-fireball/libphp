@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\Core;
 
@@ -45,7 +45,7 @@ class SignalHandler
     static protected $signalHandler = [];
 
     /** @var string[] */
-    static protected $signalNames = array(
+    static protected $signalNames = [
         1 => 'SIGHUP',
         2 => 'SIGINT',
         3 => 'SIGQUIT',
@@ -78,7 +78,7 @@ class SignalHandler
         0 => 'SIGNULL',
         9 => 'SIGKILL',
         19 => 'SIGSTOP',
-    );
+    ];
 
     /**
      * @return boolean
@@ -91,10 +91,10 @@ class SignalHandler
     public static function init()
     {
         foreach (array_keys(self::$signalNames) as $signal) {
-            if (in_array($signal, array(self::SIGNULL, self::SIGKILL, self::SIGSTOP))) {
+            if (in_array($signal, [self::SIGNULL, self::SIGKILL, self::SIGSTOP])) {
                 continue;
             }
-            pcntl_signal($signal, array(__CLASS__, 'fireSignalHandler'));
+            pcntl_signal($signal, [__CLASS__, 'fireSignalHandler']);
         }
     }
 
@@ -104,7 +104,7 @@ class SignalHandler
      */
     public static function fireSignalHandler(int $signal)
     {
-        $terminated = !in_array($signal, array(self::SIGCHLD, self::SIGWINCH));
+        $terminated = !in_array($signal, [self::SIGCHLD, self::SIGWINCH]);
         foreach (self::$signalHandler as $fnc) {
             if (!call_user_func($fnc, $signal)) {
                 $terminated = false;

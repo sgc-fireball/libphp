@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\Socket\Client;
 
@@ -95,7 +95,9 @@ abstract class Client
      */
     public function disconnect()
     {
-        @socket_close($this->socket);
+        if (is_resource($this->socket)) {
+            @socket_close($this->socket);
+        }
         $this->socket = null;
         return $this;
     }

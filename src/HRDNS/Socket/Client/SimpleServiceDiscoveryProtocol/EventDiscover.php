@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\Socket\Client\SimpleServiceDiscoveryProtocol;
 
@@ -10,7 +10,7 @@ class EventDiscover extends Event
     const EVENT_NAME = 'SimpleServiceDiscoveryProtocolClient:discover';
 
     /** @var SsdpResponse */
-    private $service = [];
+    private $service;
 
     /**
      * @param SsdpResponse $service

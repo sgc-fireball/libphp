@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 declare(ticks = 100);
 
@@ -7,13 +7,13 @@ namespace HRDNS\Tests\Core;
 use HRDNS\Core\Event;
 use HRDNS\Core\EventHandler;
 
-class EventHandlerTest extends \PHPUnit_Framework_TestCase
+class EventHandlerTest extends \PHPUnit\Framework\TestCase
 {
 
     /** @var EventHandler */
     private $eventHandler;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->eventHandler = EventHandler::get();
     }

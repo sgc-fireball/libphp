@@ -1,7 +1,7 @@
 --TEST--
 Testing \SplFileObject - write
 --FILE--
-<?php
+<?php declare(strict_types=1);
 $pathname = tempnam(sys_get_temp_dir(), 'phpunit');
 $file = new \SplFileObject($pathname, 'a+');
 $file->fwrite('test1234');

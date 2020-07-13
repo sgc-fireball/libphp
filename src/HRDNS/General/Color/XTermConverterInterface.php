@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\General\Color;
 
@@ -6,7 +6,7 @@ interface XTermConverterInterface
 {
 
     /**
-     * @return mixed
+     * @return array
      */
     public static function getMap(): array;
 

@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\Tests\Core;
 
 use HRDNS\Core\Event;
 
-class EventTest extends \PHPUnit_Framework_TestCase
+class EventTest extends \PHPUnit\Framework\TestCase
 {
 
     public function testPropagationStatus()

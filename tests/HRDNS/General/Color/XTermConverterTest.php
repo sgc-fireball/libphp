@@ -1,16 +1,16 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\Tests\General\Color;
 
 use HRDNS\General\Color\XTermConverter;
 
-class XTermConverterTest extends \PHPUnit_Framework_TestCase
+class XTermConverterTest extends \PHPUnit\Framework\TestCase
 {
 
     /** @var XTermConverter */
     private $converter = null;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->converter = new XTermConverter();
@@ -30,7 +30,7 @@ class XTermConverterTest extends \PHPUnit_Framework_TestCase
     {
         $result = [];
         foreach (XTermConverter::getMap() as $hex => $xterm) {
-            $result[] = [$hex, $xterm];
+            $result[] = [(string)$hex, $xterm];
         }
         return $result;
     }
@@ -38,7 +38,7 @@ class XTermConverterTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider dataProvider
      */
-    public function testXterm2Hex($hex, $xterm)
+    public function testXterm2Hex(string $hex, int $xterm)
     {
         $this->assertEquals($hex, $this->converter->xterm2hex($xterm));
     }
@@ -46,7 +46,7 @@ class XTermConverterTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider dataProvider
      */
-    public function testHex2Xterm($hex, $xterm)
+    public function testHex2Xterm(string $hex, int $xterm)
     {
         $this->assertEquals($xterm, $this->converter->hex2xterm($hex));
     }
@@ -73,10 +73,10 @@ class XTermConverterTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataXterm2HexProvider
-     * @param $hex
-     * @param $xterm
+     * @param string $hex
+     * @param int $xterm
      */
-    public function testXterm2Hex2($hex, $xterm)
+    public function testXterm2Hex2(string $hex, int $xterm)
     {
         $this->assertEquals($hex, $this->converter->xterm2hex($xterm));
     }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\Types;
 
@@ -93,11 +93,12 @@ class XML
     }
 
     /**
-     * @param string $value
+     * @param mixed $value
      * @return self
      */
-    public function setValue(string $value)
+    public function setValue($value)
     {
+        $value = (string)$value;
         if (strlen($value) > 256) {
             $this->setCData(true);
         }
@@ -351,7 +352,7 @@ class XML
             } else {
                 list($nodeName, $note) = explode(';', $nodeName);
             }
-            $xml = $xml->getChild($nodeName, $note);
+            $xml = $xml->getChild($nodeName, (int)$note);
             if (!$xml) {
                 return false;
             }

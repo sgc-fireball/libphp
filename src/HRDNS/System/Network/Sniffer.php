@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\System\Network;
 
@@ -19,7 +19,13 @@ class Sniffer
 {
 
     /** @var resource|null */
+    private $icmpSocket = null;
+
+    /** @var resource|null */
     private $tcpSocket = null;
+
+    /** @var resource|null */
+    private $udpSocket = null;
 
     /** @var EventHandler */
     private $eventHandler;

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\Types\Stack;
 
@@ -13,25 +13,17 @@ class RingBuffer extends Stack
     /** @var int */
     protected $index = 0;
 
-    /**
-     * @param integer $size
-     * @param array $elements
-     */
     public function __construct(int $size = 1024, array $elements = [])
     {
         $this->size = (int)$size;
         $this->size = $this->size < 1 ? 1 : $this->size;
         parent::__construct($elements);
         $count = $this->count();
-        for ($i = $count ; $i < $this->size ; $i++) {
+        for ($i = $count; $i < $this->size; $i++) {
             $this->elements[$i] = null;
         }
     }
 
-    /**
-     * @param mixed $element
-     * @return Stack
-     */
     public function push($element): Stack
     {
         $this->elements[$this->index++] = $element;
@@ -39,17 +31,11 @@ class RingBuffer extends Stack
         return $this;
     }
 
-    /**
-     * @return integer
-     */
     public function key(): int
     {
         return $this->position;
     }
 
-    /**
-     * @return mixed
-     */
     public function pop()
     {
         if (!isset($this->elements[$this->position])) {
@@ -62,10 +48,6 @@ class RingBuffer extends Stack
         return $element;
     }
 
-    /**
-     * @param mixed $element
-     * @return Stack
-     */
     public function remove($element): Stack
     {
         $key = array_search($element, $this->elements, true);
@@ -77,13 +59,11 @@ class RingBuffer extends Stack
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function __sleep(): array
     {
         $array = parent::__sleep();
-        $array += ['size', 'in'];
+        $array[] = 'size';
+        $array[] = 'in';
         return $array;
     }
 

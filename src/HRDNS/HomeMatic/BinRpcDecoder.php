@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\HomeMatic;
 
@@ -111,13 +111,12 @@ class BinRpcDecoder
 
     /**
      * @param string $data
-     * @return mixed
+     * @return array
      */
     public function decodeError(string $data): array
     {
         $result = $this->decodeResponse($data);
         $result['type'] = 'error';
-
         return $result;
     }
 
@@ -159,7 +158,9 @@ class BinRpcDecoder
     /**
      * @see https://de.wikipedia.org/wiki/Einfache_Genauigkeit
      * @see http://zogg-jm.ch/IEEE_754_Umwandlung_Gleitkomma_zu_32_u_64_Bit.html
-     * @see https://github.com/openhab/openhab1-addons/blob/db62be70e9cd9561036d8925a177a2e37aaa4bd4/bundles/binding/org.openhab.binding.homematic/src/main/java/org/openhab/binding/homematic/internal/binrpc/BinRpcResponse.java#L119
+     * @see https://github.com/openhab/openhab1-addons/blob/db62be70e9cd9561036d8925a177a2e37aaa4bd4
+     *      /bundles/binding/org.openhab.binding.homematic/src/main/java/org/openhab/binding
+     *      /homematic/internal/binrpc/BinRpcResponse.java#L119
      * @todo need to fix?
      * @param string $data
      * @return float
@@ -170,7 +171,7 @@ class BinRpcDecoder
         $data = substr($data, 12);
         $info = unpack('Ntype/Nmantissa/Nexponent', $floatData);
         $result = round(($info['mantissa'] / (1 << 30)) * pow(2, $info['exponent']), 6);
-        if (is_infinite($result) || $result === 'INF') {
+        if (is_infinite($result)) {
             @trigger_error(
                 sprintf("Invalid binrpc float data found: %s\n%s", bin2hex($floatData), print_r($info, true)),
                 E_USER_WARNING

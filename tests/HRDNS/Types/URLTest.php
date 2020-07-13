@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tests\HRDNS\Types;
 
 use HRDNS\Types\URL;
 
-class URLTest extends \PHPUnit_Framework_TestCase
+class URLTest extends \PHPUnit\Framework\TestCase
 {
 
     public function testUrl()

@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tests\HRDNS\Types;
 
 use HRDNS\Types\IPv6;
 
-class IPv6Test extends \PHPUnit_Framework_TestCase
+class IPv6Test extends \PHPUnit\Framework\TestCase
 {
 
     public function testIp()

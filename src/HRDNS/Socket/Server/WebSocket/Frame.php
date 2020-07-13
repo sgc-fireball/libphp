@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\Socket\Server\WebSocket;
 
@@ -26,14 +26,14 @@ class Frame
     /** @var bool */
     private $rsv3 = false;
 
-    /** @var bool */
-    private $opcode = false;
+    /** @var int */
+    private $opcode = 0;
 
     /** @var bool */
     private $mask = false;
 
-    /** @var bool */
-    private $length = false;
+    /** @var int */
+    private $length = 0;
 
     /** @var string */
     private $body = '';
@@ -137,7 +137,7 @@ class Frame
 
         $masking = str_split($this->masking);
         if ($this->mask) {
-            $frame .= $masking;
+            $frame .= $this->masking;
         }
 
         for ($i = 0 ; $i < $length ; $i++) {

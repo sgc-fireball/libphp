@@ -1,16 +1,16 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\Tests\HomeMatic;
 
 use HRDNS\HomeMatic\BinRpcProtocol;
 
-class BinRpcProtocolTest extends \PHPUnit_Framework_TestCase
+class BinRpcProtocolTest extends \PHPUnit\Framework\TestCase
 {
 
     /** @var BinRpcProtocol */
     private $protocol = null;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->protocol = new BinRpcProtocol();
     }
@@ -200,9 +200,6 @@ class BinRpcProtocolTest extends \PHPUnit_Framework_TestCase
     public function providerTestBoolean()
     {
         return [
-            ['A'],
-            [0],
-            [1],
             [true],
             [false],
         ];

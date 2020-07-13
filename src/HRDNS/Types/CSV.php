@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\Types;
 
@@ -22,7 +22,7 @@ class CSV implements \Iterator, \ArrayAccess
     /** @var int */
     private $line = 0;
 
-    /** @var resource */
+    /** @var resource|null */
     private $fp = null;
 
     /** @var int */
@@ -131,7 +131,9 @@ class CSV implements \Iterator, \ArrayAccess
      */
     public function close()
     {
-        @fclose($this->fp);
+        if (is_resource($this->fp)) {
+            @fclose($this->fp);
+        }
         $this->fp = null;
         $this->tell = 0;
         return $this;

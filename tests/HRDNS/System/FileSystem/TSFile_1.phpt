@@ -1,8 +1,8 @@
 --TEST--
 Testing HRDNS\System\FileSystem\TSFile - read
 --FILE--
-<?php
-if (version_compare(phpversion(), 5.11, '<')) {
+<?php declare(strict_types=1);
+if (version_compare(phpversion(), '5.11', '<')) {
     echo 'test1234';
     exit(0);
 }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\Socket\Server;
 
@@ -14,7 +14,7 @@ abstract class Server
     /** @var int */
     protected $bufferLength = 8192;
 
-    /** @var resource */
+    /** @var resource|null */
     protected $masterSocket = null;
 
     /** @var bool */

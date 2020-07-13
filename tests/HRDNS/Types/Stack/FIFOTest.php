@@ -1,16 +1,16 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\Tests\Types\Stack;
 
 use HRDNS\Types\Stack\FIFO;
 
-class FIFOTest extends \PHPUnit_Framework_TestCase
+class FIFOTest extends \PHPUnit\Framework\TestCase
 {
 
     /** @var FIFO */
     private $fifo;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->fifo = new FIFO([1, 2, 3]);
     }

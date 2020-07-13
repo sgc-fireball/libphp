@@ -1,7 +1,7 @@
 --TEST--
 Testing HRDNS\SharedMemory\SHM - return
 --FILE--
-<?php
+<?php declare(strict_types=1);
 
 use HRDNS\System\Process\Process;
 use HRDNS\System\SharedStorage\SHM;
@@ -30,7 +30,7 @@ if (isset($_SERVER['USER']) && $_SERVER['USER']!='root') {
             }
             $count = (int)$shm->read();
             $count++;
-            if (!$shm->write($count)) {
+            if (!$shm->write((string)$count)) {
                 return 3;
             }
             return 0;
@@ -44,7 +44,7 @@ if (isset($_SERVER['USER']) && $_SERVER['USER']!='root') {
         printf("Test SHM Key %d already exists. Abort test to preventing damage the system!\n", $shm->getKey());
         exit(1);
     }
-    if (!$shm->write(1)) {
+    if (!$shm->write('1')) {
         printf("Could not write 1 to shm key %d\n", $shm->getKey());
         exit(2);
     }

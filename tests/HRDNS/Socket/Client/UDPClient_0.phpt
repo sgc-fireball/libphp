@@ -1,7 +1,7 @@
 --TEST--
 Testing \HRDNS\Socket\Client\UDPClient - check client
 --FILE--
-<?php
+<?php declare(strict_types=1);
 $basePath = preg_replace('/\/tests\/.*/', '', realpath(__DIR__));
 require_once($basePath . '/tests/bootstrap.php');
 
@@ -38,7 +38,7 @@ try {
     while ($data === false && time() < $end) {
         $data = $client->read();
         if ($data === false) {
-            sleep(0.5);
+            usleep(500000);
         }
     }
     $client->disconnect();

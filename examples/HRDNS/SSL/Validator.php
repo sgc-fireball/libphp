@@ -57,18 +57,16 @@ class Validator extends Command
 
             $questionHost = new Question(
                 sprintf('<info>Host <comment>[%s]<comment>:</info>', $this->host),
-                $this->host,
-                '/^[a-z0-9\.-]$/'
+                $this->host
             );
 
             $questionPort = new Question(
                 sprintf('<info>Port <comment>[%s]<comment>:</info>', $this->port),
-                $this->port,
-                '/^[0-9]{1,5}$/'
+                $this->port
             );
 
-            $this->host = $questionHelper->ask($input,$output,$questionHost);
-            $this->port = $questionHelper->ask($input,$output,$questionPort);
+            $this->host = $questionHelper->ask($input, $output, $questionHost);
+            $this->port = $questionHelper->ask($input, $output, $questionPort);
 
             $output->writeln('');
         }
@@ -96,40 +94,40 @@ class Validator extends Command
         $length = 0;
         array_walk(
             $protocols,
-            function(&$value) use (&$length) {
-                $length = max($length,strlen($value));
+            function (&$value) use (&$length) {
+                $length = max($length, strlen($value));
             }
         );
         array_walk(
             $ciphers,
-            function(&$value) use (&$length) {
-                $length = max($length,strlen($value));
+            function (&$value) use (&$length) {
+                $length = max($length, strlen($value));
             }
         );
         $length += 7;
 
-        $progress = new ProgressBar($output,count($ciphers)*count($protocols));
+        $progress = new ProgressBar($output, count($ciphers) * count($protocols));
         #$progress->setFormat('verbose');
         $progress->start();
-        foreach ( $protocols as $protocol ) {
+        foreach ($protocols as $protocol) {
             if (!isset($result[$protocol])) {
                 $result[$protocol] = array();
             }
-            foreach ( $ciphers as $cipher ) {
+            foreach ($ciphers as $cipher) {
                 $progress->setMessage(
                     sprintf(
                         '%s %s',
-                        str_replace('_','.',strtoupper($protocol)),
+                        str_replace('_', '.', strtoupper($protocol)),
                         strtoupper($cipher)
                     )
                 );
-                if ( $validator->verifySingle($this->host,$this->port,$protocol,$cipher) ) {
+                if ($validator->verifySingle($this->host, $this->port, $protocol, $cipher)) {
                     $result[$protocol][] = $cipher;
                 }
                 ob_start();
                 $progress->advance();
                 $output->write(
-                    ' '.
+                    ' ' .
                     str_pad(
                         $progress->getMessage(),
                         $length,
@@ -144,12 +142,12 @@ class Validator extends Command
 
         $output->write("\n\n");
 
-        foreach ( $result as $protocol => &$ciphers ) {
-            foreach ( $ciphers as $cipher) {
+        foreach ($result as $protocol => &$ciphers) {
+            foreach ($ciphers as $cipher) {
                 $output->writeln(
                     sprintf(
                         '<info>%s</info> :: <comment>%s</comment>',
-                        str_replace('_','.',strtoupper($protocol)),
+                        str_replace('_', '.', strtoupper($protocol)),
                         strtoupper($cipher)
                     )
                 );

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\Socket\Server;
 
@@ -9,7 +9,7 @@ use HRDNS\Socket\Client\SimpleServiceDiscoveryProtocol\EventDiscover;
 class SimpleServiceDiscoveryProtocolServer extends UDPServer
 {
 
-    /** @var EventHandler */
+    /** @var EventHandler|null */
     private static $eventHandler = null;
 
     /** @var array */
@@ -17,7 +17,9 @@ class SimpleServiceDiscoveryProtocolServer extends UDPServer
 
     public function __construct()
     {
-        self::$eventHandler = self::$eventHandler ?: EventHandler::get();
+        if (is_null(static::$eventHandler)) {
+            static::$eventHandler = EventHandler::get();
+        }
 
         $this->setTimeout(1, 0);
         $this->setPort(1900);
@@ -56,7 +58,7 @@ class SimpleServiceDiscoveryProtocolServer extends UDPServer
             if ($response->getHttpCode() !== 200) {
                 return;
             }
-            self::$eventHandler->fireEvent(
+            static::$eventHandler->fireEvent(
                 EventDiscover::EVENT_NAME,
                 new EventDiscover($response)
             );
@@ -92,7 +94,7 @@ class SimpleServiceDiscoveryProtocolServer extends UDPServer
      */
     public function addEvent(string $name, callable $callable, int $priority = 0): bool
     {
-        return self::$eventHandler->addEvent($name, $callable, $priority);
+        return static::$eventHandler->addEvent($name, $callable, $priority);
     }
 
     /**

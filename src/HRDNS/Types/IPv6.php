@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\Types;
 
@@ -75,7 +75,12 @@ class IPv6
                 )
             );
         }
-        $ipAddr = str_pad(gmp_strval(gmp_init($long, 10), 16), '0', 32, STR_PAD_LEFT);
+        $ipAddr = str_pad(
+            gmp_strval(gmp_init($long, 10), 16),
+            32,
+            '0',
+            STR_PAD_LEFT
+        );
         $ipAddr = self::compress(substr(preg_replace('/([A-f0-9]{4})/', '$1:', $ipAddr), 0, -1));
         $this->setIp($ipAddr);
         return $this;
@@ -209,7 +214,7 @@ class IPv6
             $ipAddr,
             function (&$value) {
                 if ($value != '') {
-                    $value = ltrim($value, 0);
+                    $value = ltrim($value, '0');
                     $value = empty($value) ? 0 : $value;
                 }
             }

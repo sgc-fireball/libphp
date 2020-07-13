@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\Types;
 
@@ -63,7 +63,7 @@ class GPS
             $this->longitudeHours = (int)$match[6];
             $this->longitudeMinutes = (int)$match[7];
             $this->longitudeSeconds = (float)((int)$match[8] / 1000 * 60);
-        } elseif (preg_match("/^(N|S)\s{0,1}(\d{1,2}) (\d{1,2}) (\d{1,2}) (E|O|W)\s{0,1}(\d{1,2}) (\d{1,2}) (\d{1,2})$/", $position, $match)) {
+        } elseif (preg_match('/^(N|S)\s{0,1}(\d{1,2}) (\d{1,2}) (\d{1,2}) (E|O|W)\s{0,1}(\d{1,2}) (\d{1,2}) (\d{1,2})$/', $position, $match)) {
             if ($match[5] == 'O') {
                 $match[5] = 'E';
             }
@@ -186,15 +186,16 @@ class GPS
         }
 
         $theta = $longitudeA - $longitudeB;
-        $dist = sin(deg2rad($latitudeA)) * sin(deg2rad($latitudeB)) + cos(deg2rad($latitudeA)) * cos(deg2rad($latitudeB)) * cos(deg2rad($theta));
+        $dist = sin(deg2rad($latitudeA)) * sin(deg2rad($latitudeB))
+            + cos(deg2rad($latitudeA)) * cos(deg2rad($latitudeB)) * cos(deg2rad($theta));
         $dist = acos($dist);
         $dist = rad2deg($dist);
         $miles = $dist * 60 * 1.1515;
         $unit = strtoupper($unit);
 
-        if ($unit == "K") {
+        if ($unit === 'K') {
             return ($miles * 1.609344);
-        } else if ($unit == "N") {
+        } elseif ($unit === 'N') {
             return ($miles * 0.8684);
         } else {
             return $miles;

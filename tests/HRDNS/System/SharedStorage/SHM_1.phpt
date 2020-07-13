@@ -1,7 +1,7 @@
 --TEST--
 Testing HRDNS\SharedStorage\SHM - create
 --FILE--
-<?php
+<?php declare(strict_types=1);
 
 use HRDNS\System\SharedStorage\SHM;
 

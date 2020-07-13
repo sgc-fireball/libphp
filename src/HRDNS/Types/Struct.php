@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\Types;
 
@@ -96,8 +96,7 @@ class Struct
      */
     public function loadFromJSON(string $json)
     {
-        $data = json_decode($json);
-        $data = $data instanceof \stdClass ? (array)$data : false;
+        $data = json_decode($json, true);
         if (!is_array($data)) {
             throw new \Exception(sprintf('Fail to load from JSON.'));
         }

@@ -78,7 +78,8 @@ class Sniffer extends Command
             }, $input->getOption('device')
         );
 
-        $durotation = $input->getOption('time') == -1 ? PHP_INT_MAX : (int)$input->getOption('time');
+        $durotation = (int)$input->getOption('time');
+        $durotation = $durotation == -1 ? PHP_INT_MAX : $durotation;
         $endTime = time() + $durotation;
         while (time() < $endTime) {
             $sniffer->listen(100);

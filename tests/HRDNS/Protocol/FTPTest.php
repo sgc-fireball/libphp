@@ -1,24 +1,24 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\Tests\Protocol;
 
 use HRDNS\Protocol\FTP;
 use HRDNS\Exception\IOException;
 
-class FTPTest extends \PHPUnit_Framework_TestCase
+class FTPTest extends \PHPUnit\Framework\TestCase
 {
 
     /** @var FTP */
     private $ftp;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->ftp = new FTP();
     }
 
     public function testHost()
     {
-        $this->assertEquals('host',$this->ftp->setHost('host')->getHost());
+        $this->assertEquals('host', $this->ftp->setHost('host')->getHost());
     }
 
     public function testInvalidHost()
@@ -29,7 +29,7 @@ class FTPTest extends \PHPUnit_Framework_TestCase
 
     public function testPort()
     {
-        $this->assertEquals(123,$this->ftp->setPort(123)->getPort());
+        $this->assertEquals(123, $this->ftp->setPort(123)->getPort());
     }
 
     public function testInvalidPortLow()
@@ -46,12 +46,12 @@ class FTPTest extends \PHPUnit_Framework_TestCase
 
     public function testUser()
     {
-        $this->assertEquals('user',$this->ftp->setUser('user')->getUser());
+        $this->assertEquals('user', $this->ftp->setUser('user')->getUser());
     }
 
     public function testPassword()
     {
-        $this->assertEquals('pass',$this->ftp->setPassword('pass')->getPassword());
+        $this->assertEquals('pass', $this->ftp->setPassword('pass')->getPassword());
     }
 
     public function testSSL()
@@ -62,7 +62,7 @@ class FTPTest extends \PHPUnit_Framework_TestCase
 
     public function testTimeout()
     {
-        $this->assertEquals(10,$this->ftp->setTimeout(10)->getTimeout());
+        $this->assertEquals(10, $this->ftp->setTimeout(10)->getTimeout());
     }
 
     public function testInvalidTimeout()
@@ -87,10 +87,11 @@ class FTPTest extends \PHPUnit_Framework_TestCase
         $ftp->setPort(1);
         $ftp->setUser('');
         $ftp->setPassword('');
-        $this->assertEquals(FTP::class,get_class($ftp->login()));
+        $this->expectException(IOException::class);
+        $ftp->connect();
+        $this->assertEquals(FTP::class, get_class($ftp->login()));
         $ftp->setUser('anonymous');
         $ftp->setPassword('anonymous@anonymous');
-        $this->expectException(IOException::class);
         $ftp->login();
     }
 
@@ -126,7 +127,7 @@ class FTPTest extends \PHPUnit_Framework_TestCase
     {
         $this->expectException(IOException::class);
         $ftp = new FTP();
-        $ftp->chmod(1,'a');
+        $ftp->chmod(1, 'a');
     }
 
     public function testInvalidRm()
@@ -168,21 +169,21 @@ class FTPTest extends \PHPUnit_Framework_TestCase
     {
         $this->expectException(IOException::class);
         $ftp = new FTP();
-        $ftp->get('foo','bar');
+        $ftp->get('foo', 'bar');
     }
 
     public function testInvalidPut1()
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(IOException::class);
         $ftp = new FTP();
-        $ftp->put('foo','bar');
+        $ftp->put('foo', 'bar');
     }
 
     public function testInvalidPut2()
     {
         $this->expectException(IOException::class);
         $ftp = new FTP();
-        $ftp->put('/dev/null','bar');
+        $ftp->put('/dev/null', 'bar');
     }
 
     public function testRipeFtpServer()
@@ -202,7 +203,7 @@ class FTPTest extends \PHPUnit_Framework_TestCase
             $this->assertGreaterThan(0, count($ftp->dir()));
             $ftp->disconnect();
         } catch (IOException $e) {
-            if (strpos($e,'Could not connect to')===0) {
+            if (strpos($e->getMessage(), 'Could not connect to') === 0) {
                 $this->markTestSkipped($e->getMessage());
             }
             throw $e;

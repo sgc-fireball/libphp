@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\System\FileSystem;
 
@@ -20,13 +20,13 @@ class File extends \SplFileObject
 
     /**
      * @todo fix mixed return types!
-     * @param mixed $string
+     * @param string $string
      * @param integer|null $length
      * @return integer|boolean
      */
-    public function write($string, int $length = null)
+    public function write(string $string, int $length = null)
     {
-        return parent::fwrite($string, $length ?: mb_strlen($string));
+        return parent::fwrite($string, (int)($length ?: mb_strlen($string)));
     }
 
     /**

@@ -38,7 +38,7 @@ class SimpleServiceDiscoveryProtocolClientCommand extends Command
         $server->addAllowedMulticastAddress('239.255.255.250');
         $server->bind();
 
-        $client = new SimpleServiceDiscoveryProtocolClient($this->discoverTime);
+        $client = new SimpleServiceDiscoveryProtocolClient();
         $client->setServer($server);
         $client->addEvent(
             EventDiscover::EVENT_NAME,

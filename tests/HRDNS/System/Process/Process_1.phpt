@@ -1,7 +1,7 @@
 --TEST--
 Testing HRDNS\System\Process\Process - return
 --FILE--
-<?php
+<?php declare(strict_types=1);
 $basePath = preg_replace('/\/tests\/.*/', '', realpath(__DIR__));
 require_once($basePath . '/tests/bootstrap.php');
 

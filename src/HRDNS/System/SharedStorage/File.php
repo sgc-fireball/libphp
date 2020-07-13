@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\System\SharedStorage;
 
@@ -8,7 +8,7 @@ class File
     /** @var string */
     protected $file = '';
 
-    /** @var resource */
+    /** @var resource|null */
     protected $filePointer = null;
 
     /**
@@ -75,7 +75,7 @@ class File
         if (!$this->selfLock('w')) {
             return false;
         }
-        $result = fwrite($this->filePointer, $data, mb_strlen($data, 'UTF-8')) !== false;
+        $result = fwrite($this->filePointer, $data, (int)mb_strlen($data, 'UTF-8')) !== false;
         $this->selfUnlock();
         return $result;
     }
@@ -105,7 +105,7 @@ class File
             $errors++;
             if ($errors > 10) {
                 @fclose($this->filePointer);
-                $this->filePointer = false;
+                $this->filePointer = null;
             }
         }
         return is_resource($this->filePointer);

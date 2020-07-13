@@ -1,16 +1,16 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\Tests\Types\Stack;
 
 use HRDNS\Types\Stack\FILO;
 
-class FILOTest extends \PHPUnit_Framework_TestCase
+class FILOTest extends \PHPUnit\Framework\TestCase
 {
 
     /** @var FILO */
     private $filo;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->filo = new FILO([1, 2, 3]);
     }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\Socket\Client;
 
@@ -30,7 +30,7 @@ class TCPClient extends Client
         }
         $this->socket = @socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
         if ($this->socket === false) {
-            $errNo = @socket_last_error($this->socket);
+            $errNo = @socket_last_error();
             $errStr = @socket_strerror($errNo);
             throw new \Exception(
                 sprintf(

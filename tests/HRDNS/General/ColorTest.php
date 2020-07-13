@@ -1,16 +1,16 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\Tests\General;
 
 use HRDNS\General\Color;
 
-class ColorTest extends \PHPUnit_Framework_TestCase
+class ColorTest extends \PHPUnit\Framework\TestCase
 {
 
     /** @var Color */
     private $colorConverter;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->colorConverter = new Color();
     }

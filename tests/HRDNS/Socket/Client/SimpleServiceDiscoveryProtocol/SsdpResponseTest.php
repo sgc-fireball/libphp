@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\Tests\Socket\Client\SimpleServiceDiscoveryProtocol;
 
 use HRDNS\Socket\Client\SimpleServiceDiscoveryProtocol\SsdpResponse;
 
-class SsdpResponseTest extends \PHPUnit_Framework_TestCase
+class SsdpResponseTest extends \PHPUnit\Framework\TestCase
 {
 
     /** @var SsdpResponse */
@@ -13,7 +13,7 @@ class SsdpResponseTest extends \PHPUnit_Framework_TestCase
     /** @var SsdpResponse */
     private $ssdpResponseString;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->ssdpResponseStruct = new SsdpResponse([
             'location' => 'http://127.0.0.1/desc.xml',

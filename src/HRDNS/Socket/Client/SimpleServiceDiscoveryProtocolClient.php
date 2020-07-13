@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\Socket\Client;
 
@@ -19,7 +19,7 @@ class SimpleServiceDiscoveryProtocolClient
     /** @var int */
     private $port = 1900;
 
-    /** @var EventHandler */
+    /** @var EventHandler|null */
     private static $eventHandler = null;
 
     /** @var null|SimpleServiceDiscoveryProtocolServer */
@@ -27,7 +27,9 @@ class SimpleServiceDiscoveryProtocolClient
 
     public function __construct()
     {
-        self::$eventHandler = self::$eventHandler ?: EventHandler::get();
+        if (is_null(static::$eventHandler)) {
+            static::$eventHandler = EventHandler::get();
+        }
     }
 
     /**
@@ -63,7 +65,7 @@ class SimpleServiceDiscoveryProtocolClient
             }
             /** @var string $msg */
             if (!$msg = $client->read()) {
-                usleep(0.01);
+                usleep(1);
                 continue;
             }
 

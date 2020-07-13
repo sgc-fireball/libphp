@@ -27,7 +27,7 @@ class Application extends BaseApplication
     const AUTHOR_NAME = 'Richard Huelsberg';
     const AUTHOR_EMAIL = 'rh@hrdns.de';
 
-    public function __construct($name = 'UNKNOWN', $version = 'UNKNOWN')
+    public function __construct()
     {
         parent::__construct(self::APP_NAME, self::APP_VERSION);
     }

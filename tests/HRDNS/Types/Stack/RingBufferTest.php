@@ -1,16 +1,16 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\Tests\Types\Stack;
 
 use HRDNS\Types\Stack\RingBuffer;
 
-class RingBufferTest extends \PHPUnit_Framework_TestCase
+class RingBufferTest extends \PHPUnit\Framework\TestCase
 {
 
     /** @var RingBuffer */
     private $ringBuffer;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->ringBuffer = new RingBuffer(5, [1, 2, 3, 4, 5]);
     }

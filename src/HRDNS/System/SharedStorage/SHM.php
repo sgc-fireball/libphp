@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\System\SharedStorage;
 
@@ -67,7 +67,7 @@ class SHM
     public function write(string $data): bool
     {
         $data = (string)$data;
-        if ($this->exists($this->shmKey)) {
+        if ($this->exists()) {
             $this->delete();
         }
         $size = mb_strlen($data, 'UTF-8');
@@ -75,7 +75,7 @@ class SHM
         if (!$shmId) {
             return false;
         }
-        if (@shmop_write($shmId, $data, 0)===false) {
+        if (@shmop_write($shmId, $data, 0) === false) {
             return false;
         }
         @shmop_close($shmId);

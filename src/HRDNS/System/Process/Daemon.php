@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\System\Process;
 
@@ -51,7 +51,7 @@ class Daemon implements LoggerInterface
     /** @var string */
     protected $instanceName = 'daemon';
 
-    /** @var LoggerInterface */
+    /** @var LoggerInterface|null */
     protected $logger = null;
 
     /**
@@ -75,9 +75,11 @@ class Daemon implements LoggerInterface
     {
         $system = posix_uname();
         $backtrace = debug_backtrace();
-        $starter = array_pop($backtrace);
+        while (!isset($starter) || $starter['file'] === 'Standard input code') {
+            $starter = array_pop($backtrace);
+        }
         unset($backtrace);
-        $startFile = isset($starter['file']) ? $starter['file'] : 'Daemon';
+        $startFile = isset($starter['file']) ? basename($starter['file']) : 'Daemon';
         $startFile = $startFile == '-' ? 'Daemon' : $startFile;
         unset($starter);
 
@@ -318,7 +320,8 @@ class Daemon implements LoggerInterface
         $pidFile = $this->getPidFile();
         $pidFile->ftruncate(0);
         $pidFile->fseek(0, SEEK_SET);
-        if ($pidFile->write($this->pid) === null) {
+        $result = $pidFile->write((string)$this->pid);
+        if ($result === false) {
             throw new \Exception(
                 sprintf(
                     'Could not write pid to pidfile %s',

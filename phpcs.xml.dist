@@ -34,6 +34,14 @@
         <type>warning</type>
     </rule>
 
+    <rule ref="Squiz.Commenting.FunctionComment.SpacingAfterParamName">
+        <type>warning</type>
+    </rule>
+
+    <rule ref="Squiz.Commenting.FunctionComment.ParamCommentFullStop">
+        <type>warning</type>
+    </rule>
+
     <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman">
         <exclude name="Generic.Functions.OpeningFunctionBraceBsdAllman.BraceOnSameLine"/>
     </rule>

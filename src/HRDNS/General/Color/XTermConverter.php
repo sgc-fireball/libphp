@@ -1,15 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\General\Color;
 
 class XTermConverter implements XTermConverterInterface
 {
 
-    /**
-     * @private
-     * @static
-     * @var array
-     */
     private static $map = [
         '000000' => 0,
         '800000' => 1,
@@ -269,24 +264,17 @@ class XTermConverter implements XTermConverterInterface
         'eeeeee' => 255
     ];
 
-    /**
-     * @return mixed
-     */
     public static function getMap(): array
     {
-        return self::$map;
+        return static::$map;
     }
 
-    /**
-     * @param integer $xterm
-     * @return string
-     */
     public function xterm2hex(int $xterm): string
     {
         $xterm = min(max(0, $xterm), 255);
-        $data = array_flip(self::$map);
+        $data = array_flip(static::$map);
         if (isset($data[$xterm])) {
-            return $data[$xterm];
+            return (string)$data[$xterm];
         }
         $data = array_flip(
             [
@@ -301,19 +289,15 @@ class XTermConverter implements XTermConverterInterface
                 '808080' => 244
             ]
         );
-        return $data[$xterm];
+        return (string)$data[$xterm];
     }
 
-    /**
-     * @param string $hexIn
-     * @return integer
-     */
     public function hex2xterm(string $hexIn): int
     {
         $result = 0;
         $diff = hexdec('fffffff');
         $dec = hexdec($hexIn);
-        foreach (self::$map as $hex => $xterm) {
+        foreach (static::$map as $hex => $xterm) {
             if ($hexIn == $hex) {
                 return $xterm;
             }

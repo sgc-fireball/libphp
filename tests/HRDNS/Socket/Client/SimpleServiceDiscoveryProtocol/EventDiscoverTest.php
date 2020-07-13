@@ -1,17 +1,17 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\Tests\Socket\Client\SimpleServiceDiscoveryProtocol;
 
 use HRDNS\Socket\Client\SimpleServiceDiscoveryProtocol\SsdpResponse;
 use HRDNS\Socket\Client\SimpleServiceDiscoveryProtocol\EventDiscover;
 
-class EventDiscoverTest extends \PHPUnit_Framework_TestCase
+class EventDiscoverTest extends \PHPUnit\Framework\TestCase
 {
 
     /** @var EventDiscover */
     private $event;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->event = new EventDiscover(
             new SsdpResponse(

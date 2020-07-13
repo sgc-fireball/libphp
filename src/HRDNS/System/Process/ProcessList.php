@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\System\Process;
 
@@ -112,9 +112,8 @@ class ProcessList implements \Iterator
             if ($active >= $this->worker) {
                 return $this;
             }
-            if ($process->start()) {
-                $active++;
-            }
+            $process->start();
+            $active++;
         }
         return $this;
     }

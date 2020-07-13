@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 declare(ticks = 100);
 
@@ -6,7 +6,7 @@ namespace HRDNS\Tests\Core;
 
 use HRDNS\Exception\IOException;
 
-class IOExceptionTest extends \PHPUnit_Framework_TestCase
+class IOExceptionTest extends \PHPUnit\Framework\TestCase
 {
 
     public function testClassExists()

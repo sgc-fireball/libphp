@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\System\Network\RIPE;
 
@@ -18,13 +18,13 @@ class Database
      */
     private $url = 'ftp://anonymous:anonymous@ftp.ripe.net/ripe/stats/%Y/delegated-ripencc-extended-%Y%m%d.bz2';
 
-    /** @var callable */
+    /** @var callable|null */
     private $callbackIpv4 = null;
 
-    /** @var callable */
+    /** @var callable|null */
     private $callbackIpv6 = null;
 
-    /** @var callable */
+    /** @var callable|null */
     private $callbackAsn = null;
 
     /**
@@ -146,7 +146,7 @@ class Database
         if (!$this->callbackIpv4) {
             return $this;
         }
-        $ip = new IPv4($line[3], (int)(32 - log($line[4]) / log(2)));
+        $ip = new IPv4($line[3], (int)(32 - log((int)$line[4]) / log(2)));
         $callbackIpv4 = $this->callbackIpv4;
         $callbackIpv4($ip, $line[1], (int)$line[5], $line);
         return $this;
@@ -167,7 +167,7 @@ class Database
         if (!$this->callbackIpv6) {
             return $this;
         }
-        $ip = new IPv6($line[3], $line[4]);
+        $ip = new IPv6($line[3], (int)$line[4]);
         $callbackIpv6 = $this->callbackIpv6;
         $callbackIpv6($ip, $line[1], (int)$line[5], $line);
         return $this;

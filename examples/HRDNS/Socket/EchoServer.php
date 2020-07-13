@@ -160,14 +160,12 @@ class EchoServer extends Command
 
             $questionHost = new Question(
                 sprintf('<info>Host <comment>[%s]<comment>:</info>', $this->host),
-                $this->host,
-                '/^[a-z0-9\.-]$/'
+                $this->host
             );
 
             $questionPort = new Question(
                 sprintf('<info>Port <comment>[%s]<comment>:</info>', $this->port),
-                $this->port,
-                '/^[0-9]{1,5}$/'
+                $this->port
             );
 
             $this->host = $questionHelper->ask($input,$output,$questionHost);

@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\Tests\Protocol;
 
 use HRDNS\SSL\Validator;
 
-class ValidatorTest extends \PHPUnit_Framework_TestCase
+class ValidatorTest extends \PHPUnit\Framework\TestCase
 {
 
     /** @var bool */
@@ -13,7 +13,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     /** @var Validator */
     private $validator;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         try {
             $this->validator = new Validator();
@@ -44,8 +44,8 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         if (self::$skipped) {
             $this->markTestSkipped();
         }
-        $validator = $this->getMockBuilder(Validator::class)->setMethods(['verifySingle'])->getMock();
-        $validator->method('verifySingle')->will($this->returnValue(1));
+        $validator = $this->getMockBuilder(Validator::class)->onlyMethods(['verifySingle'])->getMock();
+        $validator->method('verifySingle')->will($this->returnValue(true));
 
         $result = $validator->verify('domain.de', 80);
         $this->assertTrue(is_array($result));

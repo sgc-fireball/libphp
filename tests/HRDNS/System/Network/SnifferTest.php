@@ -1,16 +1,16 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\Tests\General;
 
 use HRDNS\System\Network\Sniffer;
 
-class SnifferTest extends \PHPUnit_Framework_TestCase
+class SnifferTest extends \PHPUnit\Framework\TestCase
 {
 
     /** @var Sniffer */
     private $sniffer;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $mockBuilder = $this->getMockBuilder(Sniffer::class);
         $mockBuilder->disableOriginalConstructor();

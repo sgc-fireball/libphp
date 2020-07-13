@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\Tests\Core;
 
 use HRDNS\Core\SignalHandler;
 
-class SignalHandlerTest extends \PHPUnit_Framework_TestCase
+class SignalHandlerTest extends \PHPUnit\Framework\TestCase
 {
 
     static private $terminated = false;
@@ -19,7 +19,7 @@ class SignalHandlerTest extends \PHPUnit_Framework_TestCase
         return self::$terminated;
     }
 
-    public function setUp()
+    protected function setUp(): void
     {
         SignalHandler::init();
         self::$listenerId = SignalHandler::addListener(

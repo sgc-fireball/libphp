@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\Socket\Server;
 
@@ -145,7 +145,7 @@ abstract class WebSocket extends TCPServer
         $response->addHeader('Connection', 'Upgrade');
         $response->addHeader('Upgrade', 'websocket');
         $response->addHeader('Sec-WebSocket-Accept', $acceptKey);
-        $this->send($client, $response);
+        $this->send($client, $response->__toString());
         return $this;
     }
 
@@ -159,7 +159,7 @@ abstract class WebSocket extends TCPServer
         $response = $this->getResponse($client, $request);
         $response->setCode(400);
         $response->addHeader('Connection', 'Close');
-        $this->send($client, $response);
+        $this->send($client, $response->__toString());
         $this->disconnect($client);
         return $this;
     }

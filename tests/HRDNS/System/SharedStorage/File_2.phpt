@@ -1,7 +1,7 @@
 --TEST--
 Testing HRDNS\SharedMemory\File - return
 --FILE--
-<?php
+<?php declare(strict_types=1);
 $basePath = preg_replace('/\/tests\/.*/', '', realpath(__DIR__));
 require_once($basePath . '/tests/bootstrap.php');
 use HRDNS\System\Process\Process;
@@ -21,7 +21,7 @@ $process1->setCommand(
         }
         $count = (int)$file->read();
         $count++;
-        if (!$file->write($count)) {
+        if (!$file->write((string)$count)) {
             return 3;
         }
         return 0;
@@ -35,7 +35,7 @@ if ($file->exists()) {
     printf("Test FilePath %s already exists. Abort test to preventing damage the system!\n", $file->getFile());
     exit(1);
 }
-if (!$file->write(1)) {
+if (!$file->write('1')) {
     printf("Could not write 1 to file %s\n", $file->getFile());
     exit(2);
 }

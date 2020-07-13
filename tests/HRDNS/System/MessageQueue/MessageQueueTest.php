@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\Tests\MessageQueue;
 
@@ -7,19 +7,19 @@ use HRDNS\System\MessageQueue\MessageQueue;
 use HRDNS\System\MessageQueue\MessageQueueInterface;
 
 
-class MessageQueueTest extends \PHPUnit_Framework_TestCase
+class MessageQueueTest extends \PHPUnit\Framework\TestCase
 {
 
     /** @var string */
     private $testQueue;
 
-    /** @var strinfg */
+    /** @var string */
     private $random;
 
-    public function setUp()
+    protected function setUp(): void
     {
-        $this->testQueue = $this->testQueue ?? 'test:'.hash('sha256',microtime(true));
-        $this->random = hash('sha256', microtime(true));
+        $this->testQueue = $this->testQueue ?? 'test:'.hash('sha256',(string)microtime(true));
+        $this->random = hash('sha256', (string)microtime(true));
     }
 
     public function testMessageQueueArrayDriver()
@@ -39,6 +39,7 @@ class MessageQueueTest extends \PHPUnit_Framework_TestCase
         if (!class_exists('Redis')) {
             $this->markTestSkipped('Could not found redis extension.');
         }
+        $redis = null;
         try {
             $redis = new \Redis();
             if (!$redis->connect('127.0.0.1')) {

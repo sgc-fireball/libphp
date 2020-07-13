@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\Core;
 
@@ -24,19 +24,10 @@ class EventHandler
 
     private function __construct()
     {
-        $self = $this;
         $this->prepareEvent('tick');
         $this->prepareEvent('shutdown');
-        \register_tick_function(
-            function () use ($self) {
-                $self->fireEvent('tick');
-            }
-        );
-        register_shutdown_function(
-            function () use ($self) {
-                $self->fireEvent('shutdown');
-            }
-        );
+        register_tick_function([$this, 'fireEvent'], 'tick');
+        register_shutdown_function([$this, 'fireEvent'], 'shutdown');
     }
 
     /**
@@ -93,8 +84,8 @@ class EventHandler
     }
 
     /**
-     * @throws \Exception
      * @return void
+     * @throws \Exception
      */
     public function __sleep()
     {

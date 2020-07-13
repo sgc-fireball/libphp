@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HRDNS\Tests\Types;
 
 use HRDNS\Types\IPv4;
 
-class IPv4Test extends \PHPUnit_Framework_TestCase
+class IPv4Test extends \PHPUnit\Framework\TestCase
 {
 
     public function testIp()

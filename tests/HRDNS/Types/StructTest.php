@@ -1,19 +1,15 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tests\HRDNS\Types;
 
 use HRDNS\Types\Struct;
 
-class StructTest extends \PHPUnit_Framework_TestCase
+class StructTest extends \PHPUnit\Framework\TestCase
 {
 
     public function testConstruct()
     {
-        $struct = new Struct(
-            array(
-                'test' => 'test'
-            )
-        );
+        $struct = new Struct(['test' => 'test']);
         $this->assertEquals('test', $struct->test);
     }
 
